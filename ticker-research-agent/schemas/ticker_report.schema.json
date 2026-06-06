@@ -1,0 +1,577 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ticker_report.schema.json",
+  "title": "Canonical Ticker Research Report",
+  "description": "One canonical record per ticker. Stored at ticker_research_knowledge/tickers/<TICKER>/canonical.json. Loop 17 writes this. The HTML report template renders directly from this object.",
+  "type": "object",
+  "required": [
+    "ticker",
+    "name",
+    "asset_class",
+    "sector",
+    "as_of",
+    "cycle",
+    "composite_score",
+    "conviction_tier",
+    "direction",
+    "subscores",
+    "thesis",
+    "near_term_outlook",
+    "long_term_outlook",
+    "fair_value",
+    "evidence_summary",
+    "risks",
+    "invalidation_triggers",
+    "correlated_tickers",
+    "iteration_log_count",
+    "schema_version"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "default": "1.0" },
+    "ticker": {
+      "type": "string",
+      "pattern": "^[A-Z0-9.\\-]{1,10}$",
+      "description": "Uppercase ticker symbol."
+    },
+    "name": { "type": "string" },
+    "asset_class": {
+      "type": "string",
+      "enum": ["STOCK", "ETF", "CRYPTO"],
+      "description": "Determines subscore variants and source tiers consulted."
+    },
+    "sector": { "type": "string" },
+    "subsector": { "type": "string" },
+    "exchange": { "type": "string" },
+    "currency": { "type": "string", "default": "USD" },
+    "as_of": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 timestamp the report represents (data freshness reference)."
+    },
+    "cycle": { "type": "integer", "minimum": 1, "description": "Monotonic cycle counter for this ticker." },
+    "run_mode": { "type": "string", "enum": ["cold", "warm", "delta"] },
+    "data_availability": {
+      "type": "string",
+      "enum": ["FULL", "PARTIAL", "LOW"],
+      "description": "Set to LOW for thin float / limited coverage tickers."
+    },
+
+    "price": {
+      "type": "object",
+      "properties": {
+        "current": { "type": "number" },
+        "open": { "type": "number" },
+        "prior_close": { "type": "number" },
+        "day_change_pct": { "type": "number" },
+        "ytd_pct": { "type": "number" },
+        "high_52w": { "type": "number" },
+        "low_52w": { "type": "number" },
+        "rel_volume": { "type": "number", "description": "Today's volume / 20-day average." },
+        "atr_14": { "type": "number" },
+        "moving_averages": {
+          "type": "object",
+          "properties": {
+            "sma_20": { "type": "number" },
+            "sma_50": { "type": "number" },
+            "sma_100": { "type": "number" },
+            "sma_200": { "type": "number" },
+            "ema_20": { "type": "number" },
+            "ema_50": { "type": "number" }
+          }
+        },
+        "indicators": {
+          "type": "object",
+          "properties": {
+            "rsi_14": { "type": "number" },
+            "macd": { "type": "object", "properties": { "macd": { "type": "number" }, "signal": { "type": "number" }, "hist": { "type": "number" } } },
+            "adx_14": { "type": "number" },
+            "bollinger_position_pct": { "type": "number" }
+          }
+        },
+        "key_levels": {
+          "type": "object",
+          "properties": {
+            "supports": { "type": "array", "items": { "type": "number" } },
+            "resistances": { "type": "array", "items": { "type": "number" } }
+          }
+        }
+      }
+    },
+
+    "composite_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "conviction_tier": {
+      "type": "string",
+      "enum": ["MAXIMUM", "HIGH", "MODERATE", "LOW", "VERY_LOW", "NONE"]
+    },
+    "direction": {
+      "type": "string",
+      "enum": ["STRONGLY_BULLISH", "BULLISH", "NEUTRAL", "BEARISH", "STRONGLY_BEARISH"]
+    },
+
+    "subscores": {
+      "type": "object",
+      "description": "10-dimension subscores. Each 0-100. See policies/weights.json for weights and sign conventions.",
+      "required": [
+        "earnings_fundamentals",
+        "institutional_activity",
+        "momentum_price",
+        "valuation_fair_value",
+        "analyst_sentiment",
+        "news_catalyst",
+        "quant_factor",
+        "options_short_interest",
+        "social_community_sentiment",
+        "sector_macro"
+      ],
+      "properties": {
+        "earnings_fundamentals": { "$ref": "#/$defs/Subscore" },
+        "institutional_activity": { "$ref": "#/$defs/Subscore" },
+        "momentum_price": { "$ref": "#/$defs/Subscore" },
+        "valuation_fair_value": { "$ref": "#/$defs/Subscore" },
+        "analyst_sentiment": { "$ref": "#/$defs/Subscore" },
+        "news_catalyst": { "$ref": "#/$defs/Subscore" },
+        "quant_factor": { "$ref": "#/$defs/Subscore" },
+        "options_short_interest": { "$ref": "#/$defs/Subscore" },
+        "social_community_sentiment": { "$ref": "#/$defs/Subscore" },
+        "sector_macro": { "$ref": "#/$defs/Subscore" }
+      }
+    },
+
+    "thesis": {
+      "type": "object",
+      "required": ["bull_case", "bear_case", "summary"],
+      "properties": {
+        "summary": { "type": "string", "description": "1-2 sentence definitive thesis with quantitative evidence." },
+        "bull_case": { "type": "array", "items": { "type": "string" } },
+        "bear_case": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "fundamentals": {
+      "type": "object",
+      "description": "Snapshot from Loop 1; numeric values may be null if unavailable.",
+      "properties": {
+        "market_cap": { "type": ["number", "null"] },
+        "enterprise_value": { "type": ["number", "null"] },
+        "pe_trailing": { "type": ["number", "null"] },
+        "pe_forward": { "type": ["number", "null"] },
+        "peg": { "type": ["number", "null"] },
+        "ev_ebitda": { "type": ["number", "null"] },
+        "ev_revenue": { "type": ["number", "null"] },
+        "revenue_ttm": { "type": ["number", "null"] },
+        "revenue_growth_yoy": { "type": ["number", "null"] },
+        "gross_margin": { "type": ["number", "null"] },
+        "operating_margin": { "type": ["number", "null"] },
+        "net_margin": { "type": ["number", "null"] },
+        "fcf_ttm": { "type": ["number", "null"] },
+        "fcf_yield": { "type": ["number", "null"] },
+        "roe": { "type": ["number", "null"] },
+        "roic": { "type": ["number", "null"] },
+        "debt_to_equity": { "type": ["number", "null"] },
+        "dividend_yield": { "type": ["number", "null"] },
+        "piotroski_f": { "type": ["integer", "null"] },
+        "altman_z": { "type": ["number", "null"] }
+      }
+    },
+
+    "earnings": {
+      "type": "object",
+      "properties": {
+        "next_date": { "type": ["string", "null"], "format": "date" },
+        "current_q_eps_estimate": { "type": ["number", "null"] },
+        "current_q_revenue_estimate": { "type": ["number", "null"] },
+        "fy_eps_estimate": { "type": ["number", "null"] },
+        "fy_revenue_estimate": { "type": ["number", "null"] },
+        "revision_trend_30d": { "type": ["string", "null"], "enum": ["UP", "DOWN", "FLAT", null] },
+        "history": {
+          "type": "array",
+          "description": "Last 4 quarters",
+          "items": {
+            "type": "object",
+            "properties": {
+              "quarter": { "type": "string", "description": "e.g. 'Q1 2026'" },
+              "eps_actual": { "type": ["number", "null"] },
+              "eps_estimate": { "type": ["number", "null"] },
+              "eps_surprise_pct": { "type": ["number", "null"] },
+              "revenue_actual": { "type": ["number", "null"] },
+              "revenue_estimate": { "type": ["number", "null"] },
+              "revenue_surprise_pct": { "type": ["number", "null"] },
+              "post_earnings_5d_pct": { "type": ["number", "null"] }
+            }
+          }
+        },
+        "management_guidance": { "type": "string" },
+        "key_call_quotes": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "analyst": {
+      "type": "object",
+      "properties": {
+        "n_analysts": { "type": "integer" },
+        "ratings": {
+          "type": "object",
+          "properties": {
+            "strong_buy": { "type": "integer" },
+            "buy": { "type": "integer" },
+            "hold": { "type": "integer" },
+            "sell": { "type": "integer" },
+            "strong_sell": { "type": "integer" }
+          }
+        },
+        "consensus": { "type": "string", "enum": ["STRONG_BUY", "BUY", "HOLD", "SELL", "STRONG_SELL"] },
+        "target_avg": { "type": ["number", "null"] },
+        "target_high": { "type": ["number", "null"] },
+        "target_low": { "type": ["number", "null"] },
+        "target_high_firm": { "type": "string" },
+        "target_low_firm": { "type": "string" },
+        "upside_pct": { "type": ["number", "null"], "description": "(target_avg - current) / current * 100" },
+        "recent_changes": {
+          "type": "array",
+          "description": "Last 90 days of analyst rating/target changes.",
+          "items": {
+            "type": "object",
+            "required": ["date", "firm", "action"],
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "firm": { "type": "string" },
+              "action": { "type": "string", "enum": ["UPGRADE", "DOWNGRADE", "INITIATE", "REITERATE", "TARGET_RAISE", "TARGET_CUT", "DROP_COVERAGE"] },
+              "old_rating": { "type": "string" },
+              "new_rating": { "type": "string" },
+              "old_target": { "type": ["number", "null"] },
+              "new_target": { "type": ["number", "null"] }
+            }
+          }
+        }
+      }
+    },
+
+    "institutional": {
+      "type": "object",
+      "properties": {
+        "ownership_pct": { "type": ["number", "null"] },
+        "n_funds_holding": { "type": ["integer", "null"] },
+        "top_holders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "shares": { "type": "number" },
+              "pct": { "type": "number" },
+              "delta_qoq_pct": { "type": "number" },
+              "delta_qoq_action": { "type": "string", "enum": ["BOUGHT", "SOLD", "ADDED", "TRIMMED", "NEW_POSITION", "EXITED", "UNCHANGED"] }
+            }
+          }
+        },
+        "dark_pool_signal": { "type": "string", "enum": ["ACCUMULATION", "DISTRIBUTION", "NEUTRAL", "UNKNOWN"] },
+        "insider": {
+          "type": "object",
+          "properties": {
+            "ownership_pct": { "type": ["number", "null"] },
+            "buys_6m_count": { "type": "integer" },
+            "buys_6m_value_usd": { "type": "number" },
+            "sells_6m_count": { "type": "integer" },
+            "sells_6m_value_usd": { "type": "number" },
+            "cluster_buy": { "type": "boolean" },
+            "notable_transactions": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+
+    "options_short": {
+      "type": "object",
+      "properties": {
+        "iv_rank": { "type": ["number", "null"] },
+        "iv_percentile": { "type": ["number", "null"] },
+        "iv_hv_ratio": { "type": ["number", "null"] },
+        "put_call_ratio": { "type": ["number", "null"] },
+        "unusual_activity": { "type": "array", "items": { "type": "string" } },
+        "max_pain": { "type": ["number", "null"] },
+        "gamma_exposure": { "type": "string" },
+        "short_interest_pct_float": { "type": ["number", "null"] },
+        "short_interest_trend": { "type": "string", "enum": ["RISING", "FALLING", "FLAT", "UNKNOWN"] },
+        "days_to_cover": { "type": ["number", "null"] },
+        "borrow_cost_pct": { "type": ["number", "null"] },
+        "squeeze_potential": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW", "NONE"] }
+      }
+    },
+
+    "news": {
+      "type": "object",
+      "properties": {
+        "headlines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["date", "title", "source"],
+            "properties": {
+              "date": { "type": "string", "format": "date-time" },
+              "title": { "type": "string" },
+              "url": { "type": "string", "format": "uri" },
+              "source": { "type": "string" },
+              "sentiment": { "type": "string", "enum": ["POSITIVE", "NEUTRAL", "NEGATIVE"] },
+              "category": { "type": "string", "description": "earnings|guidance|m_and_a|product|regulatory|macro|other" },
+              "summary": { "type": "string" }
+            }
+          }
+        },
+        "catalyst_calendar": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "event": { "type": "string" },
+              "impact": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] }
+            }
+          }
+        },
+        "sentiment_score_news": { "type": ["number", "null"], "minimum": -1, "maximum": 1 }
+      }
+    },
+
+    "sentiment": {
+      "type": "object",
+      "properties": {
+        "reddit_mentions_24h": { "type": ["integer", "null"] },
+        "reddit_mentions_7d": { "type": ["integer", "null"] },
+        "reddit_sentiment": { "type": ["number", "null"], "minimum": -1, "maximum": 1 },
+        "reddit_top_threads": { "type": "array", "items": { "type": "object", "properties": { "title": { "type": "string" }, "url": { "type": "string", "format": "uri" }, "subreddit": { "type": "string" }, "score": { "type": "integer" } } } },
+        "twitter_cashtag_volume_24h": { "type": ["integer", "null"] },
+        "twitter_sentiment": { "type": ["number", "null"], "minimum": -1, "maximum": 1 },
+        "stocktwits_sentiment": { "type": ["number", "null"], "minimum": -1, "maximum": 1 },
+        "retail_vs_inst_divergence": { "type": "string", "enum": ["RETAIL_LEADING", "INST_LEADING", "ALIGNED", "UNKNOWN"] }
+      }
+    },
+
+    "macro_policy": {
+      "type": "object",
+      "properties": {
+        "regime": { "type": "string", "enum": ["BULLISH", "NEUTRAL", "BEARISH", "STAGFLATION"] },
+        "fed_rate_pct": { "type": ["number", "null"] },
+        "core_pce_pct": { "type": ["number", "null"] },
+        "cpi_pct": { "type": ["number", "null"] },
+        "unemployment_pct": { "type": ["number", "null"] },
+        "ten_year_yield": { "type": ["number", "null"] },
+        "dxy": { "type": ["number", "null"] },
+        "headwinds": { "type": "array", "items": { "type": "string" } },
+        "tailwinds": { "type": "array", "items": { "type": "string" } },
+        "policy_watchlist": { "type": "array", "items": { "type": "object", "properties": { "policy": { "type": "string" }, "expected_date": { "type": "string", "format": "date" }, "expected_impact": { "type": "string" } } } }
+      }
+    },
+
+    "fair_value": {
+      "type": "object",
+      "required": ["estimate", "methods_used", "classification"],
+      "properties": {
+        "estimate": { "type": "number" },
+        "low_range": { "type": "number" },
+        "high_range": { "type": "number" },
+        "methods_used": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["method", "value", "weight"],
+            "properties": {
+              "method": { "type": "string", "enum": ["DCF", "RELATIVE_PE", "RELATIVE_EV_EBITDA", "RELATIVE_PS", "ANALYST_CONSENSUS", "MORNINGSTAR_FV", "SUM_OF_PARTS", "GORDON_GROWTH", "ON_CHAIN_MVRV", "REPLACEMENT_COST"] },
+              "value": { "type": "number" },
+              "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+              "key_assumptions": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "upside_pct": { "type": "number", "description": "(estimate - current_price) / current_price * 100" },
+        "classification": { "type": "string", "enum": ["SIGNIFICANTLY_UNDERVALUED", "MODERATELY_UNDERVALUED", "FAIRLY_VALUED", "MODERATELY_OVERVALUED", "SIGNIFICANTLY_OVERVALUED"] }
+      }
+    },
+
+    "quant_factors": {
+      "type": "object",
+      "properties": {
+        "momentum_12_1": { "type": ["number", "null"], "description": "Jegadeesh-Titman 12-month minus most recent month, as percentile vs universe." },
+        "value_hml": { "type": ["number", "null"], "description": "Fama-French HML loading." },
+        "quality_qmj": { "type": ["number", "null"], "description": "Asness QMJ loading." },
+        "low_beta": { "type": ["number", "null"], "description": "Frazzini-Pedersen BAB loading." },
+        "pead_applicable": { "type": "boolean" },
+        "short_anomaly": { "type": ["number", "null"], "description": "Desai et al. short interest anomaly score." },
+        "factor_alignment": { "type": "string", "enum": ["STRONG_BULL", "BULL", "MIXED", "BEAR", "STRONG_BEAR"] }
+      }
+    },
+
+    "on_chain": {
+      "type": "object",
+      "description": "Populated only when asset_class == 'CRYPTO'.",
+      "properties": {
+        "mvrv": { "type": ["number", "null"] },
+        "nupl": { "type": ["number", "null"] },
+        "exchange_inflow_7d": { "type": ["number", "null"] },
+        "exchange_outflow_7d": { "type": ["number", "null"] },
+        "active_addresses_30d": { "type": ["integer", "null"] },
+        "stablecoin_supply_change_7d_pct": { "type": ["number", "null"] },
+        "etf_flows_30d_usd": { "type": ["number", "null"] },
+        "funding_rate_pct": { "type": ["number", "null"] },
+        "dominance_pct": { "type": ["number", "null"] }
+      }
+    },
+
+    "near_term_outlook": {
+      "type": "object",
+      "required": ["classification", "scenarios"],
+      "properties": {
+        "horizon": { "type": "string", "default": "1-4w" },
+        "classification": { "type": "string", "enum": ["STRONGLY_BULLISH", "BULLISH", "NEUTRAL", "BEARISH", "STRONGLY_BEARISH"] },
+        "summary": { "type": "string" },
+        "expected_range_low": { "type": "number" },
+        "expected_range_high": { "type": "number" },
+        "key_levels_to_watch": { "type": "array", "items": { "type": "number" } },
+        "scenarios": { "$ref": "#/$defs/Scenarios" }
+      }
+    },
+    "mid_term_outlook": {
+      "type": "object",
+      "description": "Optional. Populated by Loop 16 only when catalyst conditions in policies/horizons.json:horizons.mid_term.trigger_conditions are met (e.g. earnings/FOMC/regulatory decision within window). Absent otherwise.",
+      "required": ["classification", "scenarios"],
+      "properties": {
+        "horizon": { "type": "string", "default": "1-3m" },
+        "classification": { "type": "string", "enum": ["STRONGLY_BULLISH", "BULLISH", "NEUTRAL", "BEARISH", "STRONGLY_BEARISH"] },
+        "summary": { "type": "string" },
+        "expected_range_low": { "type": "number" },
+        "expected_range_high": { "type": "number" },
+        "key_assumptions": { "type": "array", "items": { "type": "string" } },
+        "scenarios": { "$ref": "#/$defs/Scenarios" }
+      }
+    },
+    "long_term_outlook": {
+      "type": "object",
+      "required": ["classification", "scenarios"],
+      "properties": {
+        "horizon": { "type": "string", "default": "3-12m" },
+        "classification": { "type": "string", "enum": ["STRONGLY_BULLISH", "BULLISH", "NEUTRAL", "BEARISH", "STRONGLY_BEARISH"] },
+        "summary": { "type": "string" },
+        "target_3m": { "type": ["number", "null"] },
+        "target_6m": { "type": ["number", "null"] },
+        "target_12m": { "type": ["number", "null"] },
+        "key_assumptions": { "type": "array", "items": { "type": "string" } },
+        "scenarios": { "$ref": "#/$defs/Scenarios" }
+      }
+    },
+
+    "correlated_tickers": {
+      "type": "array",
+      "minItems": 0,
+      "description": "Min 10 in cold/warm runs (per spec). See correlated_ticker.schema.json for the per-item schema.",
+      "items": { "$ref": "correlated_ticker.schema.json" }
+    },
+
+    "evidence_summary": {
+      "type": "object",
+      "description": "Per-dimension counts (full records live in evidence/<dim>.jsonl).",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "evidence_count": { "type": "integer" },
+          "independent_source_count": { "type": "integer" },
+          "newest_fetch_date": { "type": "string", "format": "date-time" },
+          "tier1_2_count": { "type": "integer" },
+          "data_unavailable": { "type": "boolean" }
+        }
+      }
+    },
+
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "severity"],
+        "properties": {
+          "text": { "type": "string" },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+          "evidence_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "invalidation_triggers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["text", "trigger_type"],
+        "properties": {
+          "text": { "type": "string", "description": "e.g. 'Close below $X for 3 consecutive sessions on volume.'" },
+          "trigger_type": { "type": "string", "enum": ["PRICE", "EARNINGS", "VOLUME", "FUNDAMENTAL", "MACRO", "REGULATORY", "INSIDER", "INSTITUTIONAL", "CATALYST_FAILURE"] },
+          "watch_value": { "type": ["number", "string", "null"] }
+        }
+      }
+    },
+
+    "experimental_signals": {
+      "type": "array",
+      "description": "Per-ticker sandbox/promoted experimental signals. See ticker_research.md for the lifecycle. Capped at 5 active per ticker.",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "stage", "weight"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "stage": { "type": "string", "enum": ["DETECTED", "HYPOTHESIZED", "VALIDATING", "SANDBOX", "PROMOTED", "EXPIRED"] },
+          "weight": { "type": "number", "minimum": 0, "maximum": 0.05 },
+          "contribution": { "type": "number" },
+          "hypothesis": { "type": "string" },
+          "causal_mechanism": { "type": "string" },
+          "cycles_active": { "type": "integer" },
+          "accuracy_rate": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+
+    "iteration_log_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of refinement passes captured in iteration_log.jsonl this cycle. Min 5 for cold/warm."
+    },
+
+    "convergence": {
+      "type": "object",
+      "properties": {
+        "converged": { "type": "boolean" },
+        "passes_run": { "type": "integer" },
+        "stopped_reason": { "type": "string", "enum": ["converged", "max_passes_reached", "budget_exhausted", "fatal_error"] },
+        "final_conviction_delta": { "type": "number" }
+      }
+    }
+  },
+
+  "$defs": {
+    "Subscore": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "direction": { "type": "string", "enum": ["BULLISH", "NEUTRAL", "BEARISH"], "description": "Sign of this dimension's contribution toward the composite." },
+        "rationale": { "type": "string", "description": "1-2 sentence justification, with quantitative evidence." },
+        "evidence_ids": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "Scenarios": {
+      "type": "object",
+      "required": ["bull", "base", "bear"],
+      "properties": {
+        "bull": { "$ref": "#/$defs/Scenario" },
+        "base": { "$ref": "#/$defs/Scenario" },
+        "bear": { "$ref": "#/$defs/Scenario" }
+      }
+    },
+    "Scenario": {
+      "type": "object",
+      "required": ["probability", "narrative"],
+      "properties": {
+        "probability": { "type": "number", "minimum": 0, "maximum": 1 },
+        "narrative": { "type": "string" },
+        "price_target": { "type": ["number", "null"] },
+        "key_drivers": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

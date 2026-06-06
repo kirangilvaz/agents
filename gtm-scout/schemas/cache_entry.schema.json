@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cache_entry.schema.json",
+  "title": "Cache Entry",
+  "description": "One cached fetch response. Stored at gtm_scout_memory/sources_cache/<sha256(url)>.json (global across briefs). A cache hit (now < expires_at and fetch_status ok) skips the fetch and consumes 0 search budget. Loops 1, 2, 3, 5, 6, and 9 read/write these.",
+  "type": "object",
+  "required": ["url", "url_hash", "source_domain", "fetched_at", "expires_at", "fetch_status"],
+  "properties": {
+    "url": { "type": "string", "format": "uri" },
+    "url_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "source_domain": { "type": "string" },
+    "source_tier": { "type": "integer", "enum": [1, 2, 3, 4, 5, 6] },
+    "fetched_at": { "type": "string", "format": "date-time" },
+    "expires_at": { "type": "string", "format": "date-time", "description": "fetched_at + ttl_hours from policies/source_ttl.json." },
+    "fetch_status": {
+      "type": "string",
+      "enum": ["ok", "paywalled", "via_archive", "via_reader", "403", "404", "429", "timeout", "robots_disallowed", "login_required", "error"]
+    },
+    "http_status": { "type": ["integer", "null"] },
+    "content_excerpt": { "type": "string", "description": "Trimmed body / snippet used for extraction. Do NOT store full copyrighted articles or scraped private data." },
+    "retrieved_via": { "type": "string", "enum": ["direct", "reader_proxy", "archive", "search_snippet", "api"] },
+    "retry_after_cycle": { "type": ["integer", "null"], "description": "If a transient failure, the cycle to retry on." }
+  }
+}

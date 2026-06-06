@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coverage_matrix.schema.json",
+  "title": "Coverage Matrix",
+  "description": "Persisted at interview_questions_knowledge/coverage_matrix.json. Companies × Categories heatmap built by Loop 5. Cells below threshold queue a targeted Loop-1 mini-sweep on the next pass instead of accepting another over-represented company.",
+  "type": "object",
+  "required": ["schema_version", "updated_at", "cycle", "companies", "categories", "cells", "gaps"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "cycle": { "type": "integer", "minimum": 1 },
+    "companies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tracked companies. Default set from AGENT.md Tier 5 list."
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "swe-coding",
+          "swe-system-design",
+          "swe-behavioral",
+          "aiml-coding",
+          "aiml-system-design",
+          "aiml-conceptual"
+        ]
+      }
+    },
+    "min_threshold_per_cell": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 2,
+      "description": "Minimum question count per (company, category) cell before it counts as 'covered'."
+    },
+    "cells": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["company", "category", "question_count", "evidence_count", "is_gap"],
+        "properties": {
+          "company": { "type": "string" },
+          "category": { "type": "string" },
+          "question_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Distinct questions in the final list for this (company, category)."
+          },
+          "evidence_count": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Total evidence records spanning these questions."
+          },
+          "top_questions": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "question_id of the top 3 questions covering this cell."
+          },
+          "is_gap": { "type": "boolean" },
+          "last_swept_cycle": {
+            "type": ["integer", "null"],
+            "description": "Cycle when a targeted mini-sweep was last issued for this cell."
+          }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "description": "Subset of cells where is_gap=true. Loop 5 hands this list to the next cycle's Loop 1 as a targeted sweep queue.",
+      "items": {
+        "type": "object",
+        "required": ["company", "category", "deficit"],
+        "properties": {
+          "company": { "type": "string" },
+          "category": { "type": "string" },
+          "deficit": {
+            "type": "integer",
+            "description": "min_threshold_per_cell - question_count."
+          },
+          "search_queries": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Pre-built Loop-5-suggested queries (e.g. 'Stripe system design interview questions [Y]')."
+          }
+        }
+      }
+    }
+  }
+}

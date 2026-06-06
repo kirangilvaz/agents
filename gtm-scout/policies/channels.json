@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "description": "Opportunity-type registry (the report tabs) plus per-type discovery hints and dynamic-discovery rules. Loop 4 assigns each opportunity exactly one type. Loop 6 may PROPOSE a new product-specific channel type (gated). The report builds its filter tabs from the live registry persisted in gtm_plan.json:channel_types, so discovered types render automatically.",
+
+  "channel_types": [
+    { "id": "INFLUENCER",   "icon": "📣", "label": "Influencers",   "section": "Influencer List",      "phase": 3, "platforms": ["youtube", "tiktok", "instagram", "x", "linkedin"], "discovery_hint": "creator/review/explainer channels in the niche; check sponsor history + engagement" },
+    { "id": "COMMUNITY",    "icon": "👥", "label": "Communities",   "section": "Community List",       "phase": 4, "platforms": ["reddit", "discord", "slack", "facebook", "telegram", "forum"], "discovery_hint": "active groups where the ICP gathers; check member count, activity, self-promo rules" },
+    { "id": "AGENCY",       "icon": "🏢", "label": "Agencies",      "section": "Agency List",          "phase": 5, "platforms": ["clutch", "designrush", "agencyspotter"], "discovery_hint": "SEO/paid/influencer/PR/content/demand-gen/affiliate specialists; pricing band + client logos" },
+    { "id": "PARTNERSHIP",  "icon": "🤝", "label": "Partnerships",  "section": "Partnership Targets",  "phase": 6, "platforms": ["integration_marketplace", "association", "company"], "discovery_hint": "complementary products, integrations, associations, strategic alliances" },
+    { "id": "AFFILIATE",    "icon": "💰", "label": "Affiliates",    "section": "Partnership Targets",  "phase": 6, "platforms": ["impact", "partnerstack", "shareasale", "company"], "discovery_hint": "affiliate/referral programs to join or a program to launch" },
+    { "id": "NEWSLETTER",   "icon": "📰", "label": "Newsletters",   "section": "Newsletter List",      "phase": 7, "platforms": ["beehiiv", "substack", "mailchimp"], "discovery_hint": "sponsorship-friendly newsletters; subscriber count + ad rates if published" },
+    { "id": "PODCAST",      "icon": "🎙️", "label": "Podcasts",      "section": "Podcast List",         "phase": 7, "platforms": ["apple_podcasts", "spotify", "listennotes"], "discovery_hint": "guest-appearance or sponsorship podcasts; downloads/ranking + guest model" },
+    { "id": "EVENT",        "icon": "🎟️", "label": "Events",        "section": "Event List",           "phase": 7, "platforms": ["conference", "meetup", "virtual"], "discovery_hint": "conferences/meetups; attendee count + sponsorship tiers + audience fit" },
+    { "id": "LEAD",         "icon": "🎯", "label": "Leads",         "section": "Lead Database",        "phase": 7, "platforms": ["company"], "discovery_hint": "potential customer companies (B2B); fit + buying signal" },
+    { "id": "PAID_CHANNEL", "icon": "📈", "label": "Paid Channels", "section": "Channel List",         "phase": 2, "platforms": ["meta", "google", "tiktok", "linkedin", "reddit_ads"], "discovery_hint": "ad platforms/placements a competitor demonstrably runs; CPM band" },
+    { "id": "CONTENT_SEO",  "icon": "🔍", "label": "Content / SEO", "section": "Channel List",         "phase": 1, "platforms": ["search", "blog", "youtube_seo"], "discovery_hint": "keyword/SEO/content acquisition plays; volume + difficulty" }
+  ],
+
+  "competitor_intel_dimensions": {
+    "_doc": "Loop 2 attempts to fill each of these per competitor. Missing dimensions are logged, never fabricated.",
+    "fields": ["traffic_sources", "influencers_promoting", "affiliate_program", "communities_discussing", "podcasts_featuring", "youtube_reviews", "conferences_attended", "advertising_channels", "sponsorship_opportunities", "partnership_opportunities"]
+  },
+
+  "influencer_tiers": {
+    "_doc": "Mission's Phase 3 tiers. Assigned in Loop 5 from VERIFIED follower count only. If size is Unverified, tier is 'unknown' and reach cannot be scored above neutral.",
+    "MICRO":  { "min": 10000,   "max": 99999,   "label": "Micro (10k-100k)" },
+    "TIER_1": { "min": 100000,  "max": 499999,  "label": "Tier 1 (100k-500k)" },
+    "TIER_2": { "min": 500000,  "max": 1999999, "label": "Tier 2 (500k-2M)" },
+    "TIER_3": { "min": 2000000, "max": null,    "label": "Tier 3 (2M+)" }
+  },
+
+  "dynamic_discovery": {
+    "_doc": "Loop 6 may PROPOSE a new product-specific channel type rather than force-fit a coherent cluster into an existing one (e.g. APP_STORE_ASO for a mobile app, BROKER_INTEGRATION for an investing product). Gated to prevent tab churn.",
+    "max_new_types_per_cycle": 1,
+    "min_cluster_size": 3,
+    "require_adversarial_survival": true,
+    "require_independent_sources": 2,
+    "naming": "UPPER_SNAKE id, human label, single emoji icon, a report section name"
+  }
+}

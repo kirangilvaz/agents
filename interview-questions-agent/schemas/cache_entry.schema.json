@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cache_entry.schema.json",
+  "title": "Source Response Cache Entry",
+  "description": "One file per cached URL at interview_questions_knowledge/sources_cache/<sha256(url)>.json. Loop 1 and Loop 6 check this cache before issuing a new fetch. TTL per domain is defined in policies/source_ttl.json.",
+  "type": "object",
+  "required": [
+    "url",
+    "url_hash",
+    "source_domain",
+    "fetched_at",
+    "fetch_status",
+    "content_excerpts",
+    "cached_in_cycle"
+  ],
+  "properties": {
+    "url": { "type": "string", "format": "uri" },
+    "url_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "sha256(url). Also the filename."
+    },
+    "source_domain": { "type": "string" },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601. TTL is computed against this."
+    },
+    "ttl_days": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Effective TTL applied at fetch time (copied from source_ttl.json)."
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "fetched_at + ttl_days. Cache hit only if now < expires_at."
+    },
+    "fetch_status": {
+      "type": "string",
+      "enum": ["ok", "404", "403_paywall", "rate_limited", "timeout", "robots_disallowed", "translation_required"],
+      "description": "Result classification. Non-ok statuses still cache to avoid retry storms; FAILURE HANDLING in AGENT.md applies."
+    },
+    "http_status": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 599
+    },
+    "content_excerpts": {
+      "type": "array",
+      "description": "Extracted question-relevant excerpts. Full HTML is NOT stored. Each excerpt is the raw evidence Loop 4 can re-validate against.",
+      "items": {
+        "type": "object",
+        "required": ["text", "context"],
+        "properties": {
+          "text": { "type": "string" },
+          "context": { "type": "string", "description": "Surrounding text (~200 chars) for disambiguation." },
+          "selector": { "type": "string", "description": "CSS/XPath selector or section header to locate this excerpt on re-fetch." },
+          "language": { "type": "string", "default": "en" }
+        }
+      }
+    },
+    "outbound_links": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "description": "Links found on the page that the source 'cites'. Used to populate Evidence.cites for the citation-cycle dedup."
+    },
+    "title": { "type": "string" },
+    "extracted_company_tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "rate_limit_remaining": {
+      "type": "integer",
+      "description": "Domain-level rate limit budget remaining at fetch time."
+    },
+    "cached_in_cycle": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "rescraped_in_cycles": {
+      "type": "array",
+      "items": { "type": "integer" }
+    },
+    "etag": { "type": "string" },
+    "last_modified": { "type": "string" }
+  }
+}

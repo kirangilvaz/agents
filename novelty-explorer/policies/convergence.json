@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "description": "Iteration / convergence rules, run-mode thresholds, and search-budget caps. Loop 7 (iterative-refinement) reads this between every refinement pass and stops when criteria are met OR max_passes is hit. Loop 0 reads cold_after_days / delta_after_days to decide run mode.",
+  "cold_after_days": 14,
+  "delta_after_days": 3,
+  "min_passes": 3,
+  "max_passes": 8,
+  "conviction_floor": 60,
+  "convergence": {
+    "max_swap_pct": 0.10,
+    "max_conviction_delta": 2,
+    "require_adversarial_passes": 2,
+    "min_sources": 3,
+    "max_single_signal_share": 0.40
+  },
+  "delta_mode": {
+    "loops_to_run": [0, 1, 4, 6, 8, 9],
+    "discovery_scope": "refresh_existing_plus_new_entrant_scan",
+    "always_refresh_signals": ["momentum", "capital", "news"],
+    "conditional_loops": {
+      "5": "Run Loop 5 (adversarial) ONLY if a Loop 4 rescore crosses a conviction-tier boundary or flips an opportunity's lifecycle state vs its prior canonical. Otherwise skipped to keep delta runs fast."
+    },
+    "preserve_thesis_unless_invalidated": true
+  },
+  "search_budget": {
+    "_note_loop_7": "loop_7 is the iteration controller; it issues 0 searches of its own. The budget attributed to it in metrics.json is the SUM of re-dispatched Loops 4-6 across passes 2..N. per_cycle_total_cap bounds the whole cycle including all iteration passes.",
+    "per_loop": {
+      "loop_0": 0,
+      "loop_1": 400,
+      "loop_2": 0,
+      "loop_3": 250,
+      "loop_4": 0,
+      "loop_5": 200,
+      "loop_6": 0,
+      "loop_7": 0,
+      "loop_8": 0,
+      "loop_9": 0
+    },
+    "per_cycle_total_cap": 1500,
+    "delta_total_cap": 300,
+    "warn_at_pct": 80,
+    "abort_at_pct": 100
+  },
+  "stopping_rules": {
+    "stop_if_conviction_delta_below": 2,
+    "stop_if_consecutive_no_change_passes": 2,
+    "stop_if_search_budget_exhausted": true,
+    "stop_if_fatal_error": true
+  }
+}

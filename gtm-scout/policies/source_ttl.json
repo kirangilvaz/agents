@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "description": "Per-domain cache TTL, rate limits, source tier, and Terms-of-Service notes. Loops 1, 2, 3, 5, 6, and 9 consult this before every fetch. A cache hit (now < expires_at and fetch_status ok) skips the fetch and consumes 0 search budget. TTLs are tuned to signal volatility: social/community activity short, directories/associations long.",
+  "default": {
+    "ttl_hours": 48,
+    "rate_limit_rps": 0.5,
+    "min_delay_ms": 2000,
+    "respect_robots_txt": true,
+    "max_retries": 2,
+    "user_agent": "gtm-scout/1.0 (+research; contact-via-readme)"
+  },
+  "domains": {
+    "youtube.com":            { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.5, "notes": "Use public channel/about pages for subscriber counts. Use YouTube Data API where available. Never scrape behind login." },
+    "tiktok.com":             { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.3, "notes": "Profile follower counts are public; engagement often estimated. Cross-check with Social Blade. Mark estimates Unverified." },
+    "instagram.com":          { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.3, "notes": "Login-gated for most data; use public profile counts + search snippets. Mark estimates Unverified." },
+    "x.com":                  { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.3, "notes": "Follower counts public on profile; engagement via snippets. Formerly twitter.com." },
+    "twitter.com":            { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.3 },
+    "linkedin.com":           { "tier": 2, "ttl_hours": 48,  "rate_limit_rps": 0.3, "notes": "Heavily login-gated. Use public company/creator pages + search snippets only. Respect robots." },
+    "socialblade.com":        { "tier": 2, "ttl_hours": 48,  "rate_limit_rps": 0.5, "notes": "Third-party estimator for cross-checking follower/subscriber growth. Estimates, not authoritative." },
+
+    "reddit.com":             { "tier": 3, "ttl_hours": 12,  "rate_limit_rps": 1.0, "notes": "Use the public JSON API (.json suffix). Respect Reddit's 60 rpm. Read each subreddit's rules for self-promo policy." },
+    "disboard.org":           { "tier": 3, "ttl_hours": 48,  "rate_limit_rps": 0.5, "notes": "Discord server directory with member counts + tags." },
+    "facebook.com":           { "tier": 3, "ttl_hours": 48,  "rate_limit_rps": 0.3, "notes": "Groups largely login-gated; use public about pages + search snippets. Mark member counts Unverified if not public." },
+    "indiehackers.com":       { "tier": 3, "ttl_hours": 24,  "rate_limit_rps": 0.5, "notes": "Founder/operator community; good for B2B SaaS ICP." },
+
+    "clutch.co":              { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "Agency directory with verified reviews, pricing band, and client logos." },
+    "designrush.com":         { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "Agency directory. Some listings are pay-to-play; cross-check before trusting ranking." },
+    "agencyspotter.com":      { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 0.5 },
+    "g2.com":                 { "tier": 4, "ttl_hours": 72,  "rate_limit_rps": 0.5, "notes": "Software reviews; great for ICP language + competitor set." },
+    "capterra.com":           { "tier": 4, "ttl_hours": 72,  "rate_limit_rps": 0.5 },
+    "trustradius.com":        { "tier": 4, "ttl_hours": 72,  "rate_limit_rps": 0.5 },
+    "impact.com":             { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "Affiliate/partnership network." },
+    "partnerstack.com":       { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "B2B SaaS partner/affiliate network." },
+    "shareasale.com":         { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 0.5 },
+    "zapier.com":             { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "Integration marketplace = complementary-product partnership map." },
+
+    "passionfroot.me":        { "tier": 5, "ttl_hours": 72,  "rate_limit_rps": 0.5, "notes": "Creator/newsletter sponsorship marketplace with REAL priced inventory + availability." },
+    "paved.com":              { "tier": 5, "ttl_hours": 72,  "rate_limit_rps": 0.5, "notes": "Newsletter sponsorship marketplace with subscriber counts + CPMs." },
+    "beehiiv.com":            { "tier": 5, "ttl_hours": 48,  "rate_limit_rps": 0.5, "notes": "Newsletter platform; many publish subscriber counts + sponsor pages." },
+    "substack.com":           { "tier": 5, "ttl_hours": 48,  "rate_limit_rps": 0.5, "notes": "Newsletter platform; subscriber counts sometimes public." },
+    "listennotes.com":        { "tier": 5, "ttl_hours": 72,  "rate_limit_rps": 0.5, "notes": "Podcast database with listen-score ranking + contact." },
+    "podcasts.apple.com":     { "tier": 5, "ttl_hours": 72,  "rate_limit_rps": 0.5, "notes": "Apple Podcasts charts/ranking." },
+    "open.spotify.com":       { "tier": 5, "ttl_hours": 72,  "rate_limit_rps": 0.5 },
+    "meetup.com":             { "tier": 5, "ttl_hours": 48,  "rate_limit_rps": 0.5, "notes": "Local + virtual events with attendee/RSVP counts." },
+    "eventbrite.com":         { "tier": 5, "ttl_hours": 48,  "rate_limit_rps": 0.5 },
+    "producthunt.com":        { "tier": 5, "ttl_hours": 24,  "rate_limit_rps": 0.5, "notes": "Launch momentum + complementary products." },
+
+    "techcrunch.com":         { "tier": 6, "ttl_hours": 12,  "rate_limit_rps": 0.5, "notes": "Funding/launch buying signals." },
+    "crunchbase.com":         { "tier": 6, "ttl_hours": 72,  "rate_limit_rps": 0.3, "notes": "Most data behind login. Use only free-tier fields + search snippets for funding signals." },
+    "similarweb.com":         { "tier": 6, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Traffic-source estimates for competitors. Estimates, not authoritative — mark as such." }
+  },
+  "global_rules": {
+    "honor_robots_txt": true,
+    "honor_x_robots_tag": true,
+    "skip_if_disallowed": true,
+    "never_scrape_behind_login": true,
+    "stop_on_429_for": "60s",
+    "circuit_breaker": { "errors_to_trip": 5, "cool_down_seconds": 600 },
+    "paywall_fallback_chain": [
+      "reader proxy: https://r.jina.ai/<url>",
+      "archive: https://web.archive.org/web/2*/<url>",
+      "search the headline / handle for a syndicated / open mirror",
+      "use headline + public snippet only, flag [unverified — public snippet only]; never fabricate counts, contacts, or rates"
+    ],
+    "paywall_fallback_tier_demotion": 1,
+    "anti_hallucination": "If a follower/subscriber/member count, contact, price, or availability cannot be retrieved from a verifiable source, mark it Unverified. NEVER estimate or invent it."
+  }
+}

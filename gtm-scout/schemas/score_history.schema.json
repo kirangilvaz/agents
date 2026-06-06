@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "score_history.schema.json",
+  "title": "Score History Entry",
+  "description": "One JSONL line per cycle per opportunity. Stored at gtm_scout_memory/briefs_data/<brief_id>/score_history/<opportunity_id>.jsonl. Append-only — never overwrite past entries. Loop 10 appends; Loop 0 loads to build the score sparkline and derive lifecycle state.",
+  "type": "object",
+  "required": ["cycle", "as_of", "opportunity_score", "tier"],
+  "properties": {
+    "cycle": { "type": "integer", "minimum": 1 },
+    "as_of": { "type": "string", "format": "date-time" },
+    "relevance": { "type": "number", "minimum": 0, "maximum": 100 },
+    "audience_match": { "type": "number", "minimum": 0, "maximum": 100 },
+    "reach": { "type": "number", "minimum": 0, "maximum": 100 },
+    "growth_signals": { "type": "number", "minimum": 0, "maximum": 100 },
+    "ease_of_access": { "type": "number", "minimum": 0, "maximum": 100 },
+    "cost_efficiency": { "type": "number", "minimum": 0, "maximum": 100 },
+    "core_score": { "type": "number", "minimum": 0, "maximum": 100 },
+    "opportunity_score": { "type": "number", "minimum": 0, "maximum": 100, "description": "After amplifiers/suppressors." },
+    "tier": { "type": "string", "enum": ["PRIORITY", "STRONG", "QUALIFIED", "BELOW_FLOOR"] },
+    "conviction": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+    "convergence_count": { "type": "integer", "minimum": 0, "maximum": 8 },
+    "expected_roi": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+    "effort": { "type": "string", "enum": ["EFFORT_LOW", "EFFORT_MED", "EFFORT_HIGH"] },
+    "lifecycle_state": { "type": "string" },
+    "outreach_status": { "type": "string" },
+    "delta_vs_prior": { "type": "number", "description": "opportunity_score this cycle minus prior cycle." }
+  }
+}

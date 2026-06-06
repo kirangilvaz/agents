@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "description": "Horizon definitions and per-horizon driver weights. Loop 16 (outlook generation) reads this to weight which subscores drive each forecast and to define classification thresholds.",
+  "horizons": {
+    "near_term": {
+      "label": "Near-Term",
+      "window": "1-4 weeks",
+      "driver_weights": {
+        "momentum_price":             0.25,
+        "options_short_interest":     0.20,
+        "news_catalyst":              0.20,
+        "social_community_sentiment": 0.10,
+        "analyst_sentiment":          0.10,
+        "earnings_fundamentals":      0.05,
+        "institutional_activity":     0.05,
+        "sector_macro":               0.05
+      },
+      "use_pead_if_recent_earnings_within_days": 30,
+      "expected_range_method": "atr_band",
+      "atr_band_multiplier_low": 1.5,
+      "atr_band_multiplier_high": 2.5
+    },
+    "mid_term": {
+      "label": "Mid-Term",
+      "window": "1-3 months",
+      "trigger_conditions": [
+        "Earnings within 60d",
+        "Major regulatory decision within 60d",
+        "FOMC decision within 30d",
+        "Major catalyst on calendar within 90d"
+      ],
+      "driver_weights": {
+        "earnings_fundamentals":      0.20,
+        "analyst_sentiment":          0.18,
+        "institutional_activity":     0.15,
+        "valuation_fair_value":       0.12,
+        "momentum_price":             0.10,
+        "news_catalyst":              0.10,
+        "sector_macro":               0.10,
+        "quant_factor":               0.05
+      }
+    },
+    "long_term": {
+      "label": "Long-Term",
+      "window": "3-12 months",
+      "driver_weights": {
+        "earnings_fundamentals":      0.25,
+        "valuation_fair_value":       0.20,
+        "institutional_activity":     0.15,
+        "sector_macro":               0.12,
+        "analyst_sentiment":          0.10,
+        "quant_factor":               0.08,
+        "momentum_price":             0.05,
+        "news_catalyst":              0.05
+      },
+      "target_horizons_months": [3, 6, 12]
+    }
+  },
+  "classification_thresholds": {
+    "STRONGLY_BULLISH": { "min_horizon_score": 85, "all_top_drivers_aligned": true },
+    "BULLISH":          { "min_horizon_score": 70, "majority_top_drivers_aligned": true },
+    "NEUTRAL":          { "min_horizon_score": 50, "any_alignment": "mixed" },
+    "BEARISH":          { "max_horizon_score": 49, "majority_top_drivers_bearish": true },
+    "STRONGLY_BEARISH": { "max_horizon_score": 30, "all_top_drivers_bearish": true }
+  },
+  "scenario_probability_floors": {
+    "min_per_scenario": 0.05,
+    "max_per_scenario": 0.85,
+    "must_sum_to": 1.0
+  }
+}

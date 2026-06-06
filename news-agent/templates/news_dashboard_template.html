@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Intelligence Briefing</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0d1117;--surface:#161b22;--surface2:#21262d;--border:#30363d;
+--text:#e6edf3;--text2:#8b949e;--accent:#58a6ff;--accent2:#3fb950;
+--critical:#f85149;--major:#ff6a33;--notable:#d29922;--noteworthy:#8b949e;
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.5}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.header{background:linear-gradient(135deg,#0d1117 0%,#161b22 50%,#1a1e2e 100%);border-bottom:1px solid var(--border);padding:24px 32px}
+.header-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.header h1{font-size:24px;font-weight:700;display:flex;align-items:center;gap:12px}
+.header h1 span{font-size:28px}
+.header-sub{font-size:13px;color:var(--text2);margin-top:4px}
+.header-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.5px}
+.badge-pass{background:rgba(63,185,80,.15);color:#3fb950;border:1px solid rgba(63,185,80,.3)}
+.badge-progress{background:rgba(210,153,34,.15);color:#d29922;border:1px solid rgba(210,153,34,.3)}
+.badge-updated{color:var(--text2);font-size:13px}
+
+.stat-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 32px}
+.stat-bar-inner{max-width:1400px;margin:0 auto;display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+.stat{text-align:center;min-width:100px}
+.stat-value{font-size:22px;font-weight:700;color:var(--accent)}
+.stat-label{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.stat-critical .stat-value{color:var(--critical)}
+.stat-major .stat-value{color:var(--major)}
+.stat-accent2 .stat-value{color:var(--accent2)}
+
+.search-bar{max-width:1400px;margin:0 auto;padding:16px 32px 0}
+.search-input{width:100%;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text2)}
+
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.filter-btn{padding:4px 12px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.filter-btn:hover,.filter-btn.active{background:rgba(88,166,255,.1);border-color:var(--accent);color:var(--accent)}
+
+.content{max-width:1400px;margin:0 auto;padding:24px 32px 64px}
+
+.tier-section{margin-bottom:32px}
+.tier-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.tier-dot{width:10px;height:10px;border-radius:50%}
+.tier-dot.critical{background:var(--critical)}
+.tier-dot.major{background:var(--major)}
+.tier-dot.notable{background:var(--notable)}
+.tier-dot.noteworthy{background:var(--noteworthy)}
+.tier-label{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.tier-label.critical{color:var(--critical)}
+.tier-label.major{color:var(--major)}
+.tier-label.notable{color:var(--notable)}
+.tier-label.noteworthy{color:var(--noteworthy)}
+.tier-count{color:var(--text2);font-size:13px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--noteworthy)}
+.card.critical::before{background:var(--critical)}
+.card.major::before{background:var(--major)}
+.card.notable::before{background:var(--notable)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.card-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+
+.score-ring{position:relative;width:52px;height:52px;flex-shrink:0}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring circle{fill:none;stroke-width:4}
+.score-ring .bg{stroke:var(--surface2)}
+.score-ring .fg{stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.score-ring .value{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:700}
+
+.card-info{flex:1;min-width:0}
+.card-rank{font-size:11px;color:var(--text2);margin-bottom:2px;display:flex;align-items:center;gap:8px}
+.cat-tag{display:inline-flex;align-items:center;gap:4px;font-weight:600;letter-spacing:.5px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:4px;line-height:1.35}
+.card-sub{font-size:12px;color:var(--text2);margin-bottom:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.conviction{font-size:13px;color:#d29922}
+.tier-badge{padding:1px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.tier-badge.critical{background:rgba(248,81,73,.12);color:var(--critical)}
+.tier-badge.major{background:rgba(255,106,51,.12);color:var(--major)}
+.tier-badge.notable{background:rgba(210,153,34,.12);color:var(--notable)}
+.tier-badge.noteworthy{background:rgba(139,148,158,.15);color:var(--noteworthy)}
+.card-summary{color:var(--text2);font-size:13px;margin-top:4px;line-height:1.45}
+.card-sources{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.src-badge{background:rgba(88,166,255,.08);color:var(--accent);padding:2px 8px;border-radius:4px;font-size:11px}
+
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:1000;justify-content:center;align-items:center;padding:24px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;max-width:760px;width:100%;max-height:85vh;overflow-y:auto;padding:32px;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--surface2);border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .2s}
+.modal-close:hover{background:var(--border);color:white}
+.modal h2{font-size:20px;margin-bottom:4px;padding-right:40px;line-height:1.3}
+.modal-meta{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0 16px;align-items:center}
+.modal-section{margin-bottom:20px}
+.modal-section h3{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.modal-section p{color:var(--text);font-size:14px;line-height:1.6}
+.modal-details li{color:var(--text);font-size:13px;margin-bottom:6px;list-style:disc;margin-left:20px;line-height:1.5}
+.modal-sources{display:flex;flex-direction:column;gap:6px}
+.modal-source{background:rgba(88,166,255,.06);border:1px solid rgba(88,166,255,.2);border-radius:6px;padding:6px 12px;font-size:13px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.modal-source .src-name{color:var(--text);font-weight:600}
+.modal-source .src-flag{color:var(--text2);font-size:11px}
+.score-breakdown{display:grid;grid-template-columns:1fr;gap:8px}
+.score-row{display:flex;align-items:center;gap:10px;font-size:13px}
+.score-row .sr-label{width:150px;color:var(--text2);flex-shrink:0}
+.score-row .sr-bar{flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden}
+.score-row .sr-fill{height:100%;background:var(--accent);border-radius:4px}
+.score-row .sr-val{width:40px;text-align:right;color:var(--text)}
+.adv-note{background:rgba(63,185,80,.06);border:1px solid rgba(63,185,80,.2);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--text);line-height:1.55}
+.why-panel{background:linear-gradient(135deg,rgba(88,166,255,.06),rgba(63,185,80,.05));border:1px solid rgba(88,166,255,.25);border-radius:12px;padding:16px 18px;margin-bottom:20px}
+.why-panel h3{font-size:13px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;border:none;padding:0}
+.watch-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(210,153,34,.1);color:var(--notable);border-radius:6px;padding:6px 12px;font-size:13px;margin-top:4px}
+
+.empty{text-align:center;padding:48px;color:var(--text2)}
+
+@media(max-width:768px){
+.header-inner{flex-direction:column;align-items:flex-start}
+.stat-bar-inner{gap:16px}
+.cards{grid-template-columns:1fr}
+.score-row .sr-label{width:110px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="header-inner">
+<div>
+<h1><span>🗞️</span> Daily Intelligence Briefing</h1>
+<div class="header-sub">__BRIEFING_DATE__ · <span id="newsWindow">__NEWS_WINDOW__</span></div>
+</div>
+<div class="header-meta">
+<span class="badge __PASS_BADGE_CLASS__">PASS __PASS_NUMBER__ · __CONVERGED__</span>
+<span class="badge-updated">Last updated: __LAST_UPDATED__</span>
+</div>
+</div>
+</div>
+
+<div class="stat-bar">
+<div class="stat-bar-inner">
+<div class="stat"><div class="stat-value" id="statStories">—</div><div class="stat-label">Stories</div></div>
+<div class="stat"><div class="stat-value" id="statSources">—</div><div class="stat-label">Sources Consulted</div></div>
+<div class="stat"><div class="stat-value" id="statConviction">—</div><div class="stat-label">Avg Conviction</div></div>
+<div class="stat stat-critical"><div class="stat-value" id="statCritical">—</div><div class="stat-label">Critical</div></div>
+<div class="stat stat-major"><div class="stat-value" id="statMajor">—</div><div class="stat-label">Major</div></div>
+<div class="stat stat-accent2"><div class="stat-value" id="statPasses">—</div><div class="stat-label">Passes</div></div>
+</div>
+</div>
+
+<div class="search-bar">
+<input type="text" class="search-input" id="searchInput" placeholder="Search stories, sources, topics...">
+<div class="filter-bar" id="filterBar"></div>
+</div>
+
+<div class="content" id="content"></div>
+
+<div class="modal-overlay" id="modalOverlay">
+<div class="modal" id="modal"></div>
+</div>
+
+<script>
+const DATA = __NEWS_DATA__;
+
+const TIER_ORDER = ['CRITICAL','MAJOR','NOTABLE','NOTEWORTHY'];
+const DEFAULT_CATEGORY_META = [
+{id:'WORLD',icon:'🌍',label:'World'},
+{id:'US POLITICS',icon:'🏛️',label:'US Politics'},
+{id:'ECONOMY',icon:'📉',label:'Economy'},
+{id:'MARKETS',icon:'📊',label:'Markets'},
+{id:'TECH',icon:'💻',label:'Tech'},
+{id:'AI',icon:'🤖',label:'AI'},
+{id:'SCIENCE',icon:'🔬',label:'Science'},
+{id:'BUSINESS',icon:'🏢',label:'Business'},
+{id:'CULTURE',icon:'🎭',label:'Culture'},
+{id:'BREAKING',icon:'🔴',label:'Breaking'}
+];
+
+let searchTerm = '';
+let categoryFilter = 'all';
+
+function stories(){ return Array.isArray(DATA.stories) ? DATA.stories : []; }
+
+function catMeta(){
+const meta = Array.isArray(DATA.category_meta) && DATA.category_meta.length ? DATA.category_meta : DEFAULT_CATEGORY_META;
+const map = {};
+meta.forEach(m=>{ if(m&&m.id) map[m.id]={icon:m.icon||'📰',label:m.label||m.id}; });
+return map;
+}
+const CAT = catMeta();
+function catIcon(id){ return (CAT[id]&&CAT[id].icon) || '📰'; }
+function catLabel(id){ return (CAT[id]&&CAT[id].label) || id; }
+
+function tierClass(tier){ return String(tier||'NOTEWORTHY').toLowerCase(); }
+function getScoreColor(score){
+if(score>=90) return 'var(--critical)';
+if(score>=75) return 'var(--major)';
+if(score>=60) return 'var(--notable)';
+return 'var(--noteworthy)';
+}
+
+function renderScoreRing(score){
+const s = typeof score==='number' ? score : 0;
+const r=22, c=2*Math.PI*r, offset=c-(s/100)*c;
+return `<div class="score-ring"><svg width="52" height="52" viewBox="0 0 52 52"><circle class="bg" cx="26" cy="26" r="${r}"/><circle class="fg" cx="26" cy="26" r="${r}" stroke="${getScoreColor(s)}" stroke-dasharray="${c}" stroke-dashoffset="${offset}"/></svg><div class="value" style="color:${getScoreColor(s)}">${s}</div></div>`;
+}
+
+function renderStatBar(){
+const all = stories();
+const meta = DATA.metadata || {};
+document.getElementById('statStories').textContent = (meta.total_stories!=null?meta.total_stories:all.length);
+document.getElementById('statSources').textContent = (meta.sources_consulted!=null?meta.sources_consulted:'—');
+document.getElementById('statConviction').textContent = (meta.avg_conviction||'—');
+document.getElementById('statPasses').textContent = (meta.passes_completed!=null?meta.passes_completed:'—');
+document.getElementById('statCritical').textContent = all.filter(s=>s.tier==='CRITICAL').length;
+document.getElementById('statMajor').textContent = all.filter(s=>s.tier==='MAJOR').length;
+}
+
+function renderFilters(){
+const bar = document.getElementById('filterBar');
+const present = {};
+stories().forEach(s=>{ if(s.category) present[s.category]=(present[s.category]||0)+1; });
+const meta = Array.isArray(DATA.category_meta)&&DATA.category_meta.length?DATA.category_meta:DEFAULT_CATEGORY_META;
+let html = `<button class="filter-btn active" data-filter="all">All (${stories().length})</button>`;
+meta.forEach(m=>{
+if(!m||!m.id||!present[m.id]) return;
+html += `<button class="filter-btn" data-filter="${m.id}">${m.icon||'📰'} ${m.label||m.id} (${present[m.id]})</button>`;
+});
+bar.innerHTML = html;
+}
+
+function filterStories(list){
+let out = list.slice();
+if(categoryFilter!=='all') out = out.filter(s=>s.category===categoryFilter);
+if(searchTerm){
+const q = searchTerm.toLowerCase();
+out = out.filter(s=>
+(s.headline||'').toLowerCase().includes(q) ||
+(s.summary||'').toLowerCase().includes(q) ||
+(s.category||'').toLowerCase().includes(q) ||
+(Array.isArray(s.sources)&&s.sources.some(src=>(src.name||'').toLowerCase().includes(q)))
+);
+}
+return out.sort((a,b)=>(b.score||0)-(a.score||0));
+}
+
+function renderCard(s){
+const tc = tierClass(s.tier);
+const srcs = (Array.isArray(s.sources)?s.sources:[]).slice(0,3)
+.map(src=>`<span class="src-badge">${src.name||'source'}</span>`).join('');
+const extra = (Array.isArray(s.sources)&&s.sources.length>3)?`<span class="src-badge">+${s.sources.length-3}</span>`:'';
+return `<div class="card ${tc}" onclick="openModal(${s.rank})">
+<div class="card-top">
+${renderScoreRing(s.score)}
+<div class="card-info">
+<div class="card-rank">#${s.rank} <span class="cat-tag">${catIcon(s.category)} ${catLabel(s.category)}</span></div>
+<div class="card-title">${s.headline||''}</div>
+<div class="card-sub"><span class="tier-badge ${tc}">${s.tier||''}</span><span class="conviction">${s.conviction||''}</span></div>
+</div>
+</div>
+<div class="card-summary">${s.summary||''}</div>
+<div class="card-sources">${srcs}${extra}</div>
+</div>`;
+}
+
+function renderContent(){
+const el = document.getElementById('content');
+const filtered = filterStories(stories());
+if(!filtered.length){ el.innerHTML = '<div class="empty">No stories match your filters.</div>'; return; }
+const byTier = {}; TIER_ORDER.forEach(t=>byTier[t]=[]);
+filtered.forEach(s=>{ const t = TIER_ORDER.includes(s.tier)?s.tier:'NOTEWORTHY'; byTier[t].push(s); });
+let html='';
+TIER_ORDER.forEach(tier=>{
+const list = byTier[tier];
+if(!list.length) return;
+const tc = tierClass(tier);
+html += `<div class="tier-section">
+<div class="tier-header"><div class="tier-dot ${tc}"></div><span class="tier-label ${tc}">${tier}</span><span class="tier-count">${list.length} ${list.length===1?'story':'stories'}</span></div>
+<div class="cards">${list.map(renderCard).join('')}</div>
+</div>`;
+});
+el.innerHTML = html;
+}
+
+function renderScoreBreakdown(b){
+if(!b) return '';
+const rows = [
+['Coverage breadth', b.coverage, 30],
+['Editorial prominence', b.prominence, 25],
+['Social engagement', b.social, 20],
+['Consequentiality', b.consequentiality, 15],
+['Novelty', b.novelty, 10]
+];
+return `<div class="score-breakdown">${rows.map(([label,val,max])=>{
+if(val==null) return '';
+const pct = Math.max(0,Math.min(100,(val/max)*100));
+return `<div class="score-row"><span class="sr-label">${label}</span><span class="sr-bar"><span class="sr-fill" style="width:${pct}%"></span></span><span class="sr-val">${val}/${max}</span></div>`;
+}).join('')}</div>`;
+}
+
+function openModal(rank){
+const s = stories().find(x=>x.rank===rank);
+if(!s) return;
+const tc = tierClass(s.tier);
+const details = (Array.isArray(s.details)?s.details:[]).map(d=>`<li>${d}</li>`).join('');
+const sources = (Array.isArray(s.sources)?s.sources:[]).map(src=>{
+const flag = src.flag?`<span class="src-flag">${src.flag}</span>`:'';
+const name = src.url?`<a class="src-name" href="${src.url}" target="_blank" rel="noopener">${src.name||src.url}</a>`:`<span class="src-name">${src.name||''}</span>`;
+return `<div class="modal-source">${name}${flag}</div>`;
+}).join('');
+const modal = document.getElementById('modal');
+modal.innerHTML = `<button class="modal-close" onclick="closeModal()">✕</button>
+<h2>${s.headline||''}</h2>
+<div class="modal-meta">
+<span class="cat-tag">${catIcon(s.category)} ${catLabel(s.category)}</span>
+<span class="tier-badge ${tc}">${s.tier||''}</span>
+<span class="conviction" style="font-size:15px">${s.conviction||''}</span>
+${renderScoreRing(s.score)}
+</div>
+${s.why?`<div class="why-panel"><h3>Why it matters</h3><p>${s.why}</p></div>`:''}
+<div class="modal-section"><h3>What happened</h3><p>${s.summary||''}</p></div>
+${details?`<div class="modal-section"><h3>Key details</h3><ul class="modal-details">${details}</ul></div>`:''}
+${s.score_breakdown?`<div class="modal-section"><h3>Popularity score breakdown (${s.score||0}/100)</h3>${renderScoreBreakdown(s.score_breakdown)}</div>`:''}
+${s.adversarial?`<div class="modal-section"><h3>Adversarial review</h3><div class="adv-note">${s.adversarial}</div></div>`:''}
+${sources?`<div class="modal-section"><h3>Sources (${(s.sources||[]).length})</h3><div class="modal-sources">${sources}</div></div>`:''}
+${s.watch?`<div class="modal-section"><h3>What to watch</h3><span class="watch-chip">👀 ${s.watch}</span></div>`:''}
+${s.updated?`<div class="modal-section" style="margin-bottom:0"><p style="color:var(--text2);font-size:12px">Updated ${s.updated}</p></div>`:''}`;
+document.getElementById('modalOverlay').classList.add('active');
+document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+document.getElementById('modalOverlay').classList.remove('active');
+document.body.style.overflow='';
+}
+
+document.getElementById('modalOverlay').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeModal(); });
+document.getElementById('searchInput').addEventListener('input',function(e){ searchTerm=e.target.value; renderContent(); });
+document.getElementById('filterBar').addEventListener('click',function(e){
+const btn=e.target.closest('.filter-btn'); if(!btn) return;
+categoryFilter=btn.dataset.filter;
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+renderContent();
+});
+
+renderStatBar();
+renderFilters();
+renderContent();
+</script>
+</body>
+</html>

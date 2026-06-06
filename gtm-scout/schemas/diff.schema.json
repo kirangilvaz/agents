@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "diff.schema.json",
+  "title": "Cross-Cycle Diff",
+  "description": "Structured changelog comparing the current cycle's leaderboard to the prior cycle for one brief. Written by Loop 10 to gtm_scout_memory/runs/<brief_id>/<ts>/diff.json. Drives the report's 'What changed' panel.",
+  "type": "object",
+  "required": ["cycle", "brief_id", "generated_at", "summary", "entries"],
+  "properties": {
+    "cycle": { "type": "integer" },
+    "brief_id": { "type": "string" },
+    "prior_cycle": { "type": ["integer", "null"] },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "opportunities_added": { "type": "integer" },
+        "opportunities_removed": { "type": "integer" },
+        "tier_upgrades": { "type": "integer" },
+        "tier_downgrades": { "type": "integer" },
+        "new_buying_signals": { "type": "integer" },
+        "channel_types_added": { "type": "integer" },
+        "avg_score_delta": { "type": "number" },
+        "leaderboard_size": { "type": "integer" }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["change_type", "opportunity_id"],
+        "properties": {
+          "change_type": {
+            "type": "string",
+            "enum": [
+              "ADDED", "REMOVED", "TIER_UPGRADE", "TIER_DOWNGRADE",
+              "SCORE_MOVED", "LIFECYCLE_CHANGE", "ROI_CHANGE", "EFFORT_CHANGE",
+              "NEW_BUYING_SIGNAL", "ADVERSARIAL_INVALIDATED", "CONVICTION_CHANGE",
+              "CHANNEL_TYPE_ADDED", "PROMOTED_FROM_WATCHLIST", "DEMOTED_TO_WATCHLIST",
+              "OUTREACH_STATUS_CHANGE"
+            ]
+          },
+          "opportunity_id": { "type": "string" },
+          "name": { "type": "string" },
+          "field": { "type": "string" },
+          "from": { "type": ["number", "string", "null"] },
+          "to": { "type": ["number", "string", "null"] },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  }
+}

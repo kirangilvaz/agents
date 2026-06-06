@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "diff.schema.json",
+  "title": "Run Diff (Structured Changelog)",
+  "description": "Per-cycle artifact at interview_questions_knowledge/runs/<ISO_TIMESTAMP>/diff.json. Captures every change between this cycle and the previous one. Replaces the free-form changelog from the original spec.",
+  "type": "object",
+  "required": ["schema_version", "cycle", "started_at", "completed_at", "previous_cycle", "summary", "entries"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0" },
+    "cycle": { "type": "integer", "minimum": 1 },
+    "previous_cycle": {
+      "type": ["integer", "null"],
+      "description": "null on the very first run (cold start)."
+    },
+    "started_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "run_mode": {
+      "type": "string",
+      "enum": ["cold", "warm", "delta"]
+    },
+    "summary": {
+      "type": "object",
+      "required": ["added", "removed", "upgraded", "downgraded", "confirmed"],
+      "properties": {
+        "added": { "type": "integer", "minimum": 0 },
+        "removed": { "type": "integer", "minimum": 0 },
+        "upgraded": { "type": "integer", "minimum": 0 },
+        "downgraded": { "type": "integer", "minimum": 0 },
+        "confirmed": { "type": "integer", "minimum": 0 },
+        "swap_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "(added + removed) / total_questions × 100. Used by convergence check."
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ts", "type", "category", "question_id"],
+        "properties": {
+          "ts": { "type": "string", "format": "date-time" },
+          "type": {
+            "type": "string",
+            "enum": ["INIT", "ADDED", "REMOVED", "UPGRADE", "DOWNGRADE", "CONFIRMED", "RENAMED", "MERGED", "FLAGGED", "CATEGORY_ADDED", "CATEGORY_REMOVED"]
+          },
+          "category": { "type": "string" },
+          "question_id": {
+            "type": ["string", "null"],
+            "description": "Canonical question_id. null for category-level entries (CATEGORY_ADDED / CATEGORY_REMOVED)."
+          },
+          "loop": {
+            "type": "integer",
+            "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+            "description": "Which loop produced the change."
+          },
+          "lane": {
+            "type": "string",
+            "enum": ["A_integrity", "B_competitive", "gap_fill", "n/a"],
+            "description": "For removals/replacements, which lane from STABILITY RULE applied."
+          },
+          "before": {
+            "type": ["object", "null"],
+            "description": "Subset of question fields prior to change (freq, tier, conviction, rank, source_count, etc.)."
+          },
+          "after": {
+            "type": ["object", "null"]
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Evidence records that triggered this change."
+          },
+          "rationale": { "type": "string" }
+        }
+      }
+    },
+    "coverage_gaps_filled": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "company": { "type": "string" },
+          "category": { "type": "string" },
+          "questions_added": { "type": "integer" }
+        }
+      }
+    },
+    "convergence": {
+      "type": "object",
+      "properties": {
+        "converged": { "type": "boolean" },
+        "swap_pct": { "type": "number" },
+        "avg_conviction": { "type": "number" },
+        "all_questions_adversarially_challenged": { "type": "boolean" },
+        "stopped_reason": {
+          "type": "string",
+          "enum": ["converged", "max_passes_reached", "delta_mode_complete", "fatal_error"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "question.schema.json",
+  "title": "Canonical Interview Question",
+  "description": "One canonical record per question. One file per question lives at interview_questions_knowledge/questions/<category>/<question_id>.json. The Card Data Schema rendered by the dashboard is derived from this record at HTML build time (Loop 8).",
+  "type": "object",
+  "required": [
+    "question_id",
+    "category",
+    "title",
+    "subcategory",
+    "freq",
+    "tier",
+    "conviction",
+    "companies",
+    "concepts",
+    "description",
+    "thesis",
+    "sources",
+    "risks",
+    "evidence_count",
+    "first_seen_cycle",
+    "last_confirmed_cycle"
+  ],
+  "properties": {
+    "question_id": {
+      "type": "string",
+      "description": "Stable canonical slug (e.g. 'two-sum', 'design-url-shortener'). Used as the filename and as the join key in evidence/, aliases.json, and runs/<ts>/diff.json.",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "category": {
+      "type": "string",
+      "description": "Category slug. The six seed categories below are always valid. Additional categories may be discovered by Loop 5 (see 05-replacement.md, 'Dynamic category discovery') and registered in interview_questions_knowledge/categories.json. Any registered category slug matching the pattern is valid.",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "examples": [
+        "swe-coding",
+        "swe-system-design",
+        "swe-behavioral",
+        "aiml-coding",
+        "aiml-system-design",
+        "aiml-conceptual"
+      ]
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "DSA pattern (Arrays & Hashing, Graphs, DP) or system-design domain (Caching, Messaging) or behavioral theme (Conflict, Ownership)."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable question title."
+    },
+    "rank": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Rank within category (1-based). Set by Loop 8 sort, not stored permanently."
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["Easy", "Medium", "Hard", "N/A"]
+    },
+    "leetcode": {
+      "type": "string",
+      "description": "LeetCode reference like '#1' if applicable."
+    },
+    "freq": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Frequency Score from Loop 3."
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["CRITICAL", "HIGH", "MODERATE", "EMERGING"]
+    },
+    "conviction": {
+      "type": "string",
+      "description": "Star rating 2-5 stars, e.g. '★★★★★'.",
+      "pattern": "^★{2,5}½?$"
+    },
+    "companies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "count"],
+        "properties": {
+          "name": { "type": "string" },
+          "count": { "type": "integer", "minimum": 1, "description": "Times the company is reported asking this question across confirmed evidence." },
+          "level_tags": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Levels this question is reported at for this company (e.g. 'L4','L5','SDE2'). See policies/company_level_tags.json for taxonomy."
+          },
+          "last_seen_year": { "type": "integer", "minimum": 2015, "maximum": 2100 }
+        }
+      }
+    },
+    "concepts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Key concepts/techniques (e.g. 'Hash map', 'Two pointers')."
+    },
+    "description": {
+      "type": "string",
+      "description": "One-line description of the question."
+    },
+    "thesis": {
+      "type": "string",
+      "description": "Evidence summary explaining why this question is ranked here."
+    },
+    "sources": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "De-duplicated list of source domains that confirm this question. Provenance details live in evidence/<question_id>.jsonl."
+    },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Counterarguments and weaknesses surfaced by Loop 4 adversarial pass."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "trend": {
+      "type": "string",
+      "enum": ["", "▲ RISING", "▼ DECLINING"],
+      "default": ""
+    },
+    "in_blind75": { "type": "boolean", "default": false },
+    "in_neetcode150": { "type": "boolean", "default": false },
+    "evidence_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of evidence records in evidence/<question_id>.jsonl. Recomputed by Loop 2."
+    },
+    "independent_source_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "After provenance/citation-cycle dedup. This is the value Loop 2 uses for the '2+ independent Tier 1/2 sources' rule."
+    },
+    "newest_recent_year": {
+      "type": ["integer", "null"],
+      "description": "Newest report year from a Tier 1/2 source within the rolling Y / Y-1 / Y-2 recency window. null if no recent confirmation."
+    },
+    "first_seen_cycle": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Cycle number when this question first entered the candidate set."
+    },
+    "last_confirmed_cycle": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Most recent cycle in which Loop 2 re-confirmed this question."
+    },
+    "score_history": {
+      "type": "array",
+      "description": "Append one entry per cycle to track trajectory.",
+      "items": {
+        "type": "object",
+        "required": ["cycle", "freq", "tier", "conviction"],
+        "properties": {
+          "cycle": { "type": "integer" },
+          "freq": { "type": "integer" },
+          "tier": { "type": "string" },
+          "conviction": { "type": "string" },
+          "delta": { "type": "integer", "description": "freq[N] - freq[N-1]" }
+        }
+      }
+    },
+    "adversarial_passes": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of Loop 4 passes this question has survived. Required >= 2 for convergence."
+    },
+    "prep": {
+      "type": "object",
+      "description": "Concise 'how to answer' study layer generated by Loop 9 (09-answer-synthesis.md). NOT a full solution — just the scaffolding needed to recognize and produce a strong answer. Grounded in the evidence quotes already gathered, so it stays factual rather than hallucinated.",
+      "properties": {
+        "key_points": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 0,
+          "maxItems": 6,
+          "description": "3-6 bullet talking points capturing the crux of a strong answer. Coding: the optimal idea + why. System design: the must-mention components. Behavioral: the STAR beats to hit. Conceptual: the core claims."
+        },
+        "approach": {
+          "type": "string",
+          "description": "One short paragraph. Coding: optimal technique + time/space complexity (e.g. 'Hash map, one pass, O(n)/O(n)'). System design: components, data flow, key tradeoffs. Behavioral: which STAR angle + which company value/principle it maps to. Conceptual: the model answer in 2-4 sentences."
+        },
+        "common_mistakes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 4,
+          "description": "1-4 traps interviewees commonly fall into on this question."
+        },
+        "followups": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 5,
+          "description": "Typical interviewer follow-ups, so the user can prepare a layer deeper."
+        },
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Loop 9's confidence that these points are well-grounded in the evidence. Low values are surfaced as a caveat in the dashboard."
+        },
+        "generated_in_cycle": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Cycle in which this prep content was last (re)generated."
+        }
+      }
+    },
+    "behavioral_signals": {
+      "type": "object",
+      "description": "Populated only for swe-behavioral category. See 03-scoring.md for the alternate matrix.",
+      "properties": {
+        "framework_alignment": {
+          "type": "object",
+          "additionalProperties": { "type": "number", "minimum": 0, "maximum": 1 },
+          "description": "Per-framework alignment score 0-1, e.g. {'amazon-lp':0.95,'meta-values':0.4}."
+        },
+        "answer_archetype": {
+          "type": "string",
+          "description": "STAR archetype (Conflict, Ownership, Failure, Ambiguity, etc.)."
+        },
+        "company_specific_phrasing": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["company", "phrasing"],
+            "properties": {
+              "company": { "type": "string" },
+              "phrasing": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

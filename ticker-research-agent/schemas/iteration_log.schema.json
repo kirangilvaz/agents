@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "iteration_log.schema.json",
+  "title": "Iteration Log Entry",
+  "description": "One JSONL line per refinement pass. Stored at ticker_research_knowledge/tickers/<TICKER>/iteration_log.jsonl. Append-only. Loop 17 reads all entries for the current cycle to populate the report's transparency panel.",
+  "type": "object",
+  "required": [
+    "iteration_id",
+    "ticker",
+    "cycle",
+    "pass",
+    "phase",
+    "completed_at",
+    "composite_score_before",
+    "composite_score_after"
+  ],
+  "properties": {
+    "iteration_id": { "type": "string" },
+    "ticker": { "type": "string" },
+    "cycle": { "type": "integer" },
+    "pass": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "1-indexed refinement pass within the cycle. Pass 1 = initial thesis from Loop 11; Pass 2 = post-adversarial; Pass 3 = correlated validation; Pass 4 = historical pattern; Pass 5+ = re-runs of 11→12→13→14 until convergence."
+    },
+    "phase": {
+      "type": "string",
+      "enum": ["INITIAL_THESIS", "ADVERSARIAL", "CORRELATED_VALIDATION", "HISTORICAL_PATTERN", "RECONCILIATION", "FINAL_LOCK"]
+    },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "composite_score_before": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "composite_score_after": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "conviction_delta": { "type": "number", "description": "after - before" },
+    "subscore_changes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "dimension": { "type": "string" },
+          "before": { "type": "integer" },
+          "after": { "type": "integer" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["CONFIRMED", "WEAKENED", "MULTI_CONFLICT", "INVALIDATED", "STRENGTHENED", "NO_CHANGE"]
+    },
+    "key_findings": { "type": "array", "items": { "type": "string" } },
+    "counter_evidence_added": { "type": "array", "items": { "type": "string" }, "description": "evidence_ids appended this pass with is_counter_evidence=true" },
+    "experimental_signals_updated": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "signal_id": { "type": "string" },
+          "stage_before": { "type": "string" },
+          "stage_after": { "type": "string" },
+          "weight_before": { "type": "number" },
+          "weight_after": { "type": "number" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "searches_used_in_pass": { "type": "integer" }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brief.schema.json",
+  "title": "Product Brief",
+  "description": "Normalized product brief for one GTM research target. Loop 0 writes it from the user's free-form input to gtm_scout_memory/briefs/<brief_id>.json (one file per product). All downstream loops read it for ICP relevance, channel mix, and budget allocation.",
+  "type": "object",
+  "required": ["brief_id", "product_name", "product_description", "created_at"],
+  "properties": {
+    "brief_id": { "type": "string", "pattern": "^[a-z0-9-]{3,}$", "description": "Stable slug of the product name (e.g. 'ai-stock-signals')." },
+    "product_name": { "type": "string" },
+    "product_description": { "type": "string", "minLength": 10 },
+    "website": { "type": ["string", "null"], "format": "uri" },
+    "product_kind": { "type": "string", "enum": ["saas", "mobile_app", "service", "investment_product", "ecommerce", "marketplace", "hardware", "other"], "description": "Coarse kind; biases channel mix (e.g. mobile_app -> ASO, investment_product -> compliance-aware channels)." },
+
+    "icp": {
+      "type": "object",
+      "description": "What the USER provided up front; Loop 1 enriches and writes the full ICP to icp.json.",
+      "properties": {
+        "target_customer": { "type": "string", "description": "Free-text target customer profile as provided." },
+        "b2b_or_b2c": { "type": "string", "enum": ["b2b", "b2c", "both", "unknown"] }
+      }
+    },
+
+    "industry": { "type": ["string", "null"], "description": "Industry / category as provided." },
+    "geo_focus": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Geographic focus (e.g. ['US'], ['global'], ['US','CA','UK']). Empty => unknown/global."
+    },
+
+    "budget": {
+      "type": "object",
+      "properties": {
+        "amount_usd": { "type": ["number", "null"], "description": "Numeric budget; null if not provided." },
+        "period": { "type": "string", "enum": ["one_time", "monthly", "quarterly", "annual", "unknown"], "default": "monthly" },
+        "raw": { "type": "string", "description": "Verbatim budget string from the brief (e.g. '$2,000/month')." }
+      }
+    },
+
+    "objective": {
+      "type": "object",
+      "properties": {
+        "raw": { "type": "string", "description": "Verbatim objective (e.g. 'acquire first 100 paying customers')." },
+        "kind": { "type": "string", "enum": ["first_customers", "scale_acquisition", "brand_awareness", "lead_gen", "retention", "other"], "description": "Coarse objective kind; drives default budget split in policies/scoring.json." },
+        "target_metric": { "type": ["string", "null"], "description": "e.g. '100 paying customers'." }
+      }
+    },
+
+    "constraints": { "type": "array", "items": { "type": "string" }, "description": "Any explicit constraints (e.g. 'no paid ads', 'compliance-sensitive', 'US-only')." },
+    "competitors_seed": { "type": "array", "items": { "type": "string" }, "description": "User-named competitors, if any. Loop 2 expands this." },
+
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}

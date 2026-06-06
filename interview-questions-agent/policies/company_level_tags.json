@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "description": "Role/level taxonomy per company. Loop 6 normalizes raw level strings (from evidence) into these canonical tags so the dashboard can filter by seniority.",
+  "default_levels": ["intern", "new-grad", "junior", "mid", "senior", "staff+"],
+  "companies": {
+    "google": {
+      "raw_to_canonical": {
+        "L3": "new-grad",
+        "L4": "mid",
+        "L5": "senior",
+        "L6": "staff+",
+        "L7": "staff+",
+        "SWE II": "mid",
+        "SWE III": "senior"
+      }
+    },
+    "amazon": {
+      "raw_to_canonical": {
+        "SDE I": "junior",
+        "SDE II": "mid",
+        "SDE III": "senior",
+        "Principal SDE": "staff+",
+        "L4": "junior",
+        "L5": "mid",
+        "L6": "senior",
+        "L7": "staff+"
+      }
+    },
+    "meta": {
+      "raw_to_canonical": {
+        "E3": "new-grad",
+        "E4": "mid",
+        "E5": "senior",
+        "E6": "staff+",
+        "E7": "staff+"
+      }
+    },
+    "microsoft": {
+      "raw_to_canonical": {
+        "59": "new-grad",
+        "60": "junior",
+        "61": "mid",
+        "62": "mid",
+        "63": "senior",
+        "64": "senior",
+        "65": "staff+",
+        "66": "staff+",
+        "67": "staff+"
+      }
+    },
+    "apple": {
+      "raw_to_canonical": {
+        "ICT2": "junior",
+        "ICT3": "mid",
+        "ICT4": "senior",
+        "ICT5": "staff+",
+        "ICT6": "staff+"
+      }
+    },
+    "netflix": {
+      "raw_to_canonical": {
+        "Senior": "senior",
+        "Staff": "staff+"
+      }
+    },
+    "stripe": {
+      "raw_to_canonical": {
+        "L1": "new-grad",
+        "L2": "junior",
+        "L3": "mid",
+        "L4": "senior",
+        "L5": "staff+"
+      }
+    },
+    "openai": {
+      "raw_to_canonical": {
+        "MTS": "mid",
+        "Senior MTS": "senior",
+        "Staff MTS": "staff+"
+      }
+    },
+    "anthropic": {
+      "raw_to_canonical": {
+        "L4": "mid",
+        "L5": "senior",
+        "L6": "staff+"
+      }
+    },
+    "databricks": {
+      "raw_to_canonical": {
+        "IC2": "junior",
+        "IC3": "mid",
+        "IC4": "senior",
+        "IC5": "staff+",
+        "IC6": "staff+"
+      }
+    }
+  },
+  "fallback_normalization_rules": [
+    "Strings containing 'intern' → 'intern'",
+    "Strings containing 'new grad' or 'new-grad' or 'NG' → 'new-grad'",
+    "Strings containing 'junior' or 'jr' → 'junior'",
+    "Strings containing 'senior' or 'sr' → 'senior'",
+    "Strings containing 'staff', 'principal', 'distinguished' → 'staff+'",
+    "Otherwise → 'mid' (with low confidence flag in evidence record)"
+  ]
+}

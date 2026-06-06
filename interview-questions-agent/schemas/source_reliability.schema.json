@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source_reliability.schema.json",
+  "title": "Source Reliability Index",
+  "description": "Persisted at interview_questions_knowledge/source_reliability.json. Tracks per-source precision over time so Loop 3 can downweight noisy sources. Updated by Loop 8 at the end of every cycle.",
+  "type": "object",
+  "required": ["schema_version", "updated_at", "sources"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sources": {
+      "type": "object",
+      "description": "Keyed by source_domain (e.g. 'leetcode.com').",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "source_domain",
+          "tier",
+          "candidates_proposed",
+          "candidates_confirmed",
+          "precision",
+          "weight_multiplier",
+          "first_seen_cycle",
+          "last_updated_cycle"
+        ],
+        "properties": {
+          "source_domain": { "type": "string" },
+          "tier": { "type": "integer", "enum": [1, 2, 3, 4, 5] },
+          "candidates_proposed": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Total candidate questions this source has surfaced across all cycles."
+          },
+          "candidates_confirmed": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "How many of those candidates were independently corroborated by ≥1 other Tier 1/2 source within the same cycle."
+          },
+          "precision": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "candidates_confirmed / candidates_proposed. NaN-protect by treating <10 proposals as precision = 0.7 (neutral prior)."
+          },
+          "weight_multiplier": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 1.5,
+            "description": "Loop 3 multiplies the source's contribution by this value. Computed as clamp(0.5 + precision, 0.5, 1.5)."
+          },
+          "noise_flags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["paywalled", "frequent_404", "ai_generated_content", "stale", "translation_low_confidence"]
+            }
+          },
+          "first_seen_cycle": { "type": "integer", "minimum": 1 },
+          "last_updated_cycle": { "type": "integer", "minimum": 1 },
+          "history": {
+            "type": "array",
+            "description": "Per-cycle snapshot for trend analysis.",
+            "items": {
+              "type": "object",
+              "required": ["cycle", "precision", "weight_multiplier"],
+              "properties": {
+                "cycle": { "type": "integer" },
+                "precision": { "type": "number" },
+                "weight_multiplier": { "type": "number" },
+                "candidates_proposed": { "type": "integer" },
+                "candidates_confirmed": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "description": "Iteration / convergence rules, run-mode thresholds, and search-budget caps. The orchestrator re-runs Loops 7->8->9 between passes and stops when criteria are met OR max_passes is hit. Loop 0 reads cold_after_days / delta_after_days to decide run mode.",
+  "cold_after_days": 14,
+  "delta_after_days": 3,
+  "min_passes": 3,
+  "max_passes": 8,
+  "opportunity_floor": 70,
+  "convergence": {
+    "max_swap_pct": 0.10,
+    "max_score_delta": 2,
+    "require_adversarial_passes": 2,
+    "min_sources": 2,
+    "max_single_signal_share": 0.40
+  },
+  "delta_mode": {
+    "loops_to_run": [0, 3, 7, 8, 10, 11],
+    "discovery_scope": "refresh_growth_and_buying_signals_plus_new_entrant_scan",
+    "always_refresh_signals": ["growth_signals", "reach", "sponsorship_availability"],
+    "conditional_loops": {
+      "9": "Run Loop 9 (adversarial) ONLY if a Loop 7 rescore crosses a tier boundary or flips an opportunity's lifecycle/conviction vs its prior canonical. Otherwise skipped to keep delta runs fast."
+    },
+    "preserve_outreach_status": true
+  },
+  "search_budget": {
+    "_note_iteration": "Loops 7 and 8 issue 0 searches; Loop 9 issues counter-evidence searches that re-run across passes 2..N. per_cycle_total_cap bounds the whole cycle including all iteration passes.",
+    "per_loop": {
+      "loop_0": 0,
+      "loop_1": 120,
+      "loop_2": 180,
+      "loop_3": 450,
+      "loop_4": 0,
+      "loop_5": 300,
+      "loop_6": 120,
+      "loop_7": 0,
+      "loop_8": 0,
+      "loop_9": 180,
+      "loop_10": 0,
+      "loop_11": 0
+    },
+    "per_cycle_total_cap": 1600,
+    "delta_total_cap": 350,
+    "warn_at_pct": 80,
+    "abort_at_pct": 100
+  },
+  "stopping_rules": {
+    "stop_if_score_delta_below": 2,
+    "stop_if_consecutive_no_change_passes": 2,
+    "stop_if_search_budget_exhausted": true,
+    "stop_if_fatal_error": true
+  }
+}

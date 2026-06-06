@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.0",
+  "description": "Composite-conviction weights, per-dimension component weights, TTM discounts, investor-quality tiers, and amplifier/suppressor caps. Loop 4 (scoring) and Loop 6 (amplify/suppress) read this. Tuning these adjusts scoring without touching subagent code.",
+
+  "composite_weights": {
+    "_doc": "Composite = sum(dimension_score * weight). Must sum to 1.0. Matches the mission spec: 25% Novelty, 20% Capital, 20% Momentum, 20% Feasibility, 15% Market.",
+    "novelty": 0.25,
+    "capital": 0.20,
+    "momentum": 0.20,
+    "feasibility": 0.20,
+    "market": 0.15
+  },
+
+  "conviction_tiers": {
+    "EXCEPTIONAL":      { "min": 90, "max": 100 },
+    "HIGH_CONVICTION":  { "min": 80, "max": 89  },
+    "WORTH_MONITORING": { "min": 70, "max": 79  },
+    "EMERGING_SIGNAL":  { "min": 60, "max": 69  },
+    "NOISE":            { "min": 0,  "max": 59  }
+  },
+
+  "ttm_discount": {
+    "_doc": "Time-Adjusted Conviction = Conviction * ttm_discount[band]. Lets near-term monetizers and long-horizon moonshots be compared. Sortable both ways in the report.",
+    "TTM_0_2":     1.00,
+    "TTM_2_5":     0.92,
+    "TTM_5_10":    0.82,
+    "TTM_10_PLUS": 0.70
+  },
+
+  "dimension_components": {
+    "_doc": "Each dimension score = clamp(sum(component_value * weight) * source_reliability_multiplier, 0, 100). Component weights per dimension sum to 1.0. Components marked inverse:true mean a HIGH raw observation LOWERS the score (e.g. high competitive density => low novelty).",
+    "novelty": [
+      { "name": "research_originality",            "weight": 0.25 },
+      { "name": "patent_uniqueness",               "weight": 0.20 },
+      { "name": "competitive_density",             "weight": 0.20, "inverse": true },
+      { "name": "technical_breakthrough_potential","weight": 0.20 },
+      { "name": "degree_of_innovation",            "weight": 0.15 }
+    ],
+    "momentum": [
+      { "name": "search_growth",                   "weight": 0.15 },
+      { "name": "citation_growth",                 "weight": 0.20 },
+      { "name": "github_activity_growth",          "weight": 0.20 },
+      { "name": "hiring_growth",                    "weight": 0.20 },
+      { "name": "conference_mentions",             "weight": 0.10 },
+      { "name": "industry_discussion_frequency",   "weight": 0.15 }
+    ],
+    "capital": [
+      { "name": "funding_volume",                  "weight": 0.18 },
+      { "name": "funding_growth_rate",             "weight": 0.17 },
+      { "name": "num_participating_investors",     "weight": 0.12 },
+      { "name": "investor_quality",                "weight": 0.25 },
+      { "name": "repeat_participation",            "weight": 0.10 },
+      { "name": "insider_buying",                  "weight": 0.08 },
+      { "name": "strategic_corporate_investment",  "weight": 0.10 }
+    ],
+    "feasibility": [
+      { "name": "demonstrated_results",            "weight": 0.25 },
+      { "name": "scientific_validation",           "weight": 0.25 },
+      { "name": "prototype_availability",          "weight": 0.20 },
+      { "name": "independent_verification",        "weight": 0.20 },
+      { "name": "engineering_complexity",          "weight": 0.10, "inverse": true }
+    ],
+    "market": [
+      { "name": "total_addressable_market",        "weight": 0.30 },
+      { "name": "existing_pain_points",            "weight": 0.20 },
+      { "name": "adoption_barriers",               "weight": 0.20, "inverse": true },
+      { "name": "competitive_moat",                "weight": 0.15 },
+      { "name": "scalability",                     "weight": 0.15 }
+    ]
+  },
+
+  "investor_quality_tiers": {
+    "_doc": "Capital.investor_quality component = max tier among participating investors, blended with count. A $5M round from tier_1 investors scores far higher than $5M from unknown. Names are illustrative; match case-insensitively on substrings.",
+    "tier_1": {
+      "score": 100,
+      "investors": ["sequoia", "andreessen horowitz", "a16z", "founders fund", "benchmark", "greylock", "accel", "khosla", "lightspeed", "kleiner perkins", "index ventures", "thrive capital", "general catalyst", "nea"]
+    },
+    "tier_2": {
+      "score": 78,
+      "investors": ["bessemer", "gv", "google ventures", "insight partners", "ggv", "tiger global", "coatue", "dst", "iconiq", "battery ventures", "redpoint", "menlo ventures", "spark capital", "data collective", "dcvc", "lux capital", "8vc"]
+    },
+    "tier_3_strategic": {
+      "score": 85,
+      "_doc": "Strategic / corporate VC carries extra information for commercialization even if not a tier_1 financial VC.",
+      "investors": ["nvidia", "google", "alphabet", "microsoft", "amazon", "samsung", "intel capital", "qualcomm ventures", "in-q-tel", "bp ventures", "shell ventures", "bosch", "siemens", "toyota ventures", "openai"]
+    },
+    "tier_4_grant": {
+      "score": 72,
+      "_doc": "Non-dilutive government validation (often strong technical due-diligence signal).",
+      "investors": ["darpa", "arpa-e", "nsf", "sbir", "nih", "doe", "esa", "in-q-tel"]
+    },
+    "tier_5_unknown": { "score": 35, "investors": [] }
+  },
+
+  "amplifiers": {
+    "_doc": "Loop 6 awards +per_signal for each INDEPENDENT signal type firing, capped at max_amplifier. convergence_count = number of distinct signal types fired (0-8).",
+    "per_signal": 1.5,
+    "max_amplifier": 8,
+    "signal_types": [
+      "major_funding_round",
+      "rising_patent_filings",
+      "growing_github_activity",
+      "growing_hiring",
+      "accelerating_citations",
+      "fortune500_pilot",
+      "regulatory_progress",
+      "industry_partnership"
+    ]
+  },
+
+  "suppressors": {
+    "_doc": "Loop 6 subtracts per_flag for each hype/no-substance flag, capped at max_suppressor (a negative number).",
+    "per_flag": -2.5,
+    "max_suppressor": -12,
+    "flags": [
+      "hype_exceeds_evidence",
+      "marketing_exceeds_progress",
+      "funding_stagnant",
+      "no_customer_adoption",
+      "no_prototype",
+      "not_reproducible",
+      "attention_spike_no_substance"
+    ]
+  },
+
+  "crowding": {
+    "_doc": "0 = totally under-recognized (max alpha), 100 = fully crowded/mainstream (low alpha). Independent of conviction. Surfaced as the UNDER-RECOGNIZED <-> CROWDED meter.",
+    "components": [
+      { "name": "mainstream_press_volume",  "weight": 0.35 },
+      { "name": "megacap_incumbent_entry",  "weight": 0.30 },
+      { "name": "hot_take_density",         "weight": 0.20 },
+      { "name": "search_saturation",        "weight": 0.15 }
+    ],
+    "under_recognized_below": 35,
+    "crowded_above": 70
+  },
+
+  "lifecycle": {
+    "_doc": "Derived in Loop 8 from the conviction trend in score_history. delta = composite(this cycle) - composite(prior cycle).",
+    "states": ["emerging", "rising", "high_conviction", "peaked", "mainstreamed", "faded"],
+    "rules": {
+      "emerging": "first appearance OR composite 60-69",
+      "rising": "delta >= +3 over last cycle AND composite >= 70",
+      "high_conviction": "composite >= 80 AND |delta| < 3",
+      "peaked": "composite >= 80 AND delta <= -3",
+      "mainstreamed": "crowding > crowded_above AND ttm == TTM_0_2",
+      "faded": "composite dropped below conviction_floor for 2 consecutive cycles"
+    }
+  }
+}

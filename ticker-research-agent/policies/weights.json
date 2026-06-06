@@ -1,0 +1,153 @@
+{
+  "schema_version": "1.0",
+  "description": "Per-dimension weights for the composite conviction score and per-asset-class subscore variants. Loop 11 reads this; tuning these adjusts overall scoring without touching subagent code.",
+  "weights": {
+    "STOCK": {
+      "earnings_fundamentals":      0.20,
+      "institutional_activity":     0.15,
+      "momentum_price":             0.12,
+      "valuation_fair_value":       0.12,
+      "analyst_sentiment":          0.10,
+      "news_catalyst":              0.10,
+      "quant_factor":               0.08,
+      "options_short_interest":     0.05,
+      "social_community_sentiment": 0.04,
+      "sector_macro":               0.04
+    },
+    "ETF": {
+      "earnings_fundamentals":      0.10,
+      "institutional_activity":     0.18,
+      "momentum_price":             0.18,
+      "valuation_fair_value":       0.10,
+      "analyst_sentiment":          0.05,
+      "news_catalyst":              0.10,
+      "quant_factor":               0.10,
+      "options_short_interest":     0.05,
+      "social_community_sentiment": 0.04,
+      "sector_macro":               0.10,
+      "_note": "ETF replaces earnings_fundamentals with holdings/NAV health; institutional_activity captures fund flows."
+    },
+    "CRYPTO": {
+      "earnings_fundamentals":      0.18,
+      "institutional_activity":     0.15,
+      "momentum_price":             0.15,
+      "valuation_fair_value":       0.10,
+      "analyst_sentiment":          0.04,
+      "news_catalyst":              0.10,
+      "quant_factor":               0.05,
+      "options_short_interest":     0.08,
+      "social_community_sentiment": 0.07,
+      "sector_macro":               0.08,
+      "_note": "earnings_fundamentals = on-chain health (MVRV, holders, fees, NUPL). institutional_activity = ETF flows + treasuries. options_short_interest = perp funding + futures basis + skew."
+    }
+  },
+  "sign_conventions": {
+    "description": "Per-dimension rules for whether a high subscore means BULLISH or BEARISH. The composite formula is sum(score * weight); a dimension's `direction` field flips the sign before contribution.",
+    "always_bullish_when_high": [
+      "earnings_fundamentals", "institutional_activity", "momentum_price",
+      "valuation_fair_value", "analyst_sentiment", "quant_factor"
+    ],
+    "context_dependent": {
+      "news_catalyst": "Direction depends on catalyst type (positive vs negative news). Loop 5 must set the direction field per evidence cluster.",
+      "options_short_interest": "High SI + falling price = bearish; high SI + rising price + low days-to-cover = squeeze setup (bullish).",
+      "social_community_sentiment": "High retail sentiment can be contrarian (frothy top) — Loop 6 evaluates retail-vs-institutional divergence to set direction.",
+      "sector_macro": "Direction depends on macro regime classification (BULLISH/NEUTRAL/BEARISH/STAGFLATION) and the ticker's beta to that regime."
+    }
+  },
+  "subscore_inputs": {
+    "earnings_fundamentals": {
+      "components": [
+        { "name": "earnings_beat_streak", "weight": 0.20 },
+        { "name": "revenue_growth_yoy", "weight": 0.20 },
+        { "name": "margin_trend", "weight": 0.15 },
+        { "name": "fcf_yield", "weight": 0.15 },
+        { "name": "balance_sheet_health", "weight": 0.15 },
+        { "name": "guidance_vs_consensus", "weight": 0.15 }
+      ]
+    },
+    "institutional_activity": {
+      "components": [
+        { "name": "13f_position_change_qoq", "weight": 0.30 },
+        { "name": "insider_net_buying_6m", "weight": 0.25 },
+        { "name": "dark_pool_signal", "weight": 0.15 },
+        { "name": "ownership_pct_change", "weight": 0.15 },
+        { "name": "ftd_trend", "weight": 0.15 }
+      ]
+    },
+    "momentum_price": {
+      "components": [
+        { "name": "12_1_momentum_percentile", "weight": 0.30 },
+        { "name": "200d_sma_position", "weight": 0.20 },
+        { "name": "rs_vs_sector", "weight": 0.20 },
+        { "name": "rsi_macd_alignment", "weight": 0.15 },
+        { "name": "volume_confirmation", "weight": 0.15 }
+      ]
+    },
+    "valuation_fair_value": {
+      "components": [
+        { "name": "fair_value_upside_pct", "weight": 0.40 },
+        { "name": "pe_vs_sector", "weight": 0.20 },
+        { "name": "ev_ebitda_vs_sector", "weight": 0.20 },
+        { "name": "peg_ratio", "weight": 0.20 }
+      ]
+    },
+    "analyst_sentiment": {
+      "components": [
+        { "name": "consensus_rating", "weight": 0.25 },
+        { "name": "upgrade_minus_downgrade_90d", "weight": 0.30 },
+        { "name": "target_revision_30d", "weight": 0.25 },
+        { "name": "estimate_revision_30d", "weight": 0.20 }
+      ]
+    },
+    "news_catalyst": {
+      "components": [
+        { "name": "news_sentiment_72h", "weight": 0.30 },
+        { "name": "catalyst_calendar_skew", "weight": 0.30 },
+        { "name": "regulatory_risk_flag", "weight": 0.20 },
+        { "name": "narrative_strength", "weight": 0.20 }
+      ]
+    },
+    "quant_factor": {
+      "components": [
+        { "name": "fama_french_alignment", "weight": 0.30 },
+        { "name": "qmj_loading", "weight": 0.20 },
+        { "name": "low_beta_anomaly", "weight": 0.20 },
+        { "name": "pead_setup", "weight": 0.15 },
+        { "name": "short_interest_anomaly", "weight": 0.15 }
+      ]
+    },
+    "options_short_interest": {
+      "components": [
+        { "name": "iv_rank", "weight": 0.20 },
+        { "name": "put_call_ratio_skew", "weight": 0.20 },
+        { "name": "unusual_activity_signal", "weight": 0.20 },
+        { "name": "short_interest_pct_float", "weight": 0.20 },
+        { "name": "days_to_cover_squeeze", "weight": 0.20 }
+      ]
+    },
+    "social_community_sentiment": {
+      "components": [
+        { "name": "reddit_sentiment_7d", "weight": 0.25 },
+        { "name": "stocktwits_sentiment", "weight": 0.20 },
+        { "name": "twitter_cashtag_velocity", "weight": 0.20 },
+        { "name": "retail_inst_divergence", "weight": 0.20 },
+        { "name": "narrative_recurrence", "weight": 0.15 }
+      ]
+    },
+    "sector_macro": {
+      "components": [
+        { "name": "regime_alignment", "weight": 0.30 },
+        { "name": "sector_rotation_signal", "weight": 0.25 },
+        { "name": "rate_sensitivity_match", "weight": 0.20 },
+        { "name": "policy_tailwind", "weight": 0.15 },
+        { "name": "geopolitical_exposure", "weight": 0.10 }
+      ]
+    }
+  },
+  "experimental_signal_cap": {
+    "max_active_per_ticker": 5,
+    "max_total_weight": 0.05,
+    "max_per_signal_weight": 0.05,
+    "cannot_flip_direction": true
+  }
+}

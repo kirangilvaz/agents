@@ -1,0 +1,158 @@
+{
+  "schema_version": "1.0",
+  "description": "Per-domain cache TTL, rate limits, and Terms-of-Service notes. Loop 1 and Loop 6 consult this before every fetch. A cache hit (now < expires_at) skips the fetch entirely and consumes 0 search budget.",
+  "default": {
+    "ttl_days": 14,
+    "rate_limit_rps": 0.5,
+    "min_delay_ms": 2000,
+    "respect_robots_txt": true,
+    "max_retries": 2,
+    "user_agent": "interview-questions-agent/2.0 (+research; contact-via-readme)"
+  },
+  "domains": {
+    "leetcode.com": {
+      "tier": 1,
+      "ttl_days": 14,
+      "rate_limit_rps": 0.3,
+      "notes": "Company-tagged problems and frequency counts are gated behind LeetCode Premium. Free pages still expose problem text and difficulty. Do NOT scrape Premium pages without a logged-in session the user explicitly provides.",
+      "tos": "Personal/non-commercial research only. No bulk scraping. Honor robots.txt."
+    },
+    "1point3acres.com": {
+      "tier": 1,
+      "ttl_days": 14,
+      "rate_limit_rps": 0.2,
+      "language": "zh",
+      "notes": "Most content requires login. Translate Chinese excerpts to English and store both original_quote and translated_quote in evidence records.",
+      "tos": "Forum content; do not republish."
+    },
+    "glassdoor.com": {
+      "tier": 1,
+      "ttl_days": 7,
+      "rate_limit_rps": 0.2,
+      "notes": "Login wall on most interview review pages. Extract via cached snapshots when possible. Mark fetch_status='403_paywall' if blocked and downgrade to Tier 4 weight for that cycle.",
+      "tos": "User-generated reviews. Quote attributions required."
+    },
+    "teamblind.com": {
+      "tier": 1,
+      "ttl_days": 7,
+      "rate_limit_rps": 0.2,
+      "notes": "Anonymous verified-employee posts. Login wall. Same paywall fallback as Glassdoor."
+    },
+    "dsaprep.dev": {
+      "tier": 1,
+      "ttl_days": 30,
+      "rate_limit_rps": 1.0,
+      "notes": "Open frequency database. High signal."
+    },
+    "crackr.dev": {
+      "tier": 1,
+      "ttl_days": 30,
+      "rate_limit_rps": 1.0
+    },
+    "interviewpilot.dev": {
+      "tier": 2,
+      "ttl_days": 30,
+      "rate_limit_rps": 1.0
+    },
+    "tryexponent.com": {
+      "tier": 2,
+      "ttl_days": 30,
+      "rate_limit_rps": 0.5
+    },
+    "systemdesignhandbook.com": {
+      "tier": 2,
+      "ttl_days": 60,
+      "rate_limit_rps": 1.0
+    },
+    "github.com": {
+      "tier": 2,
+      "ttl_days": 30,
+      "rate_limit_rps": 1.0,
+      "notes": "Use the GitHub API where possible. Honor X-RateLimit-* headers."
+    },
+    "neetcode.io": {
+      "tier": 2,
+      "ttl_days": 60,
+      "rate_limit_rps": 1.0
+    },
+    "grind75.com": {
+      "tier": 2,
+      "ttl_days": 60,
+      "rate_limit_rps": 1.0
+    },
+    "techinterviewhandbook.org": {
+      "tier": 2,
+      "ttl_days": 60,
+      "rate_limit_rps": 1.0
+    },
+    "prachub.com": {
+      "tier": 2,
+      "ttl_days": 30,
+      "rate_limit_rps": 0.5
+    },
+    "interviewnode.com": {
+      "tier": 3,
+      "ttl_days": 30,
+      "rate_limit_rps": 0.5
+    },
+    "datacamp.com": {
+      "tier": 3,
+      "ttl_days": 60,
+      "rate_limit_rps": 0.5
+    },
+    "interviewbit.com": {
+      "tier": 3,
+      "ttl_days": 30,
+      "rate_limit_rps": 0.5
+    },
+    "analyticsvidhya.com": {
+      "tier": 3,
+      "ttl_days": 30,
+      "rate_limit_rps": 0.5
+    },
+    "medium.com": {
+      "tier": 3,
+      "ttl_days": 30,
+      "rate_limit_rps": 0.5,
+      "noise_flags": ["ai_generated_content"],
+      "notes": "Paywall on member-only stories. Many AI-generated low-quality posts; downweight via source_reliability."
+    },
+    "dsprep.com": {
+      "tier": 3,
+      "ttl_days": 30,
+      "rate_limit_rps": 0.5
+    },
+    "reddit.com": {
+      "tier": 4,
+      "ttl_days": 1,
+      "rate_limit_rps": 1.0,
+      "notes": "Use the public JSON API (.json suffix). Respect User-Agent and Reddit's API rate limit (60 rpm)."
+    },
+    "news.ycombinator.com": {
+      "tier": 4,
+      "ttl_days": 1,
+      "rate_limit_rps": 1.0,
+      "notes": "Use the Algolia HN API."
+    },
+    "interviewdb.io": {
+      "tier": 4,
+      "ttl_days": 14,
+      "rate_limit_rps": 0.5
+    },
+    "onsites.fyi": {
+      "tier": 4,
+      "ttl_days": 14,
+      "rate_limit_rps": 0.5
+    }
+  },
+  "global_rules": {
+    "honor_robots_txt": true,
+    "honor_x_robots_tag": true,
+    "skip_if_disallowed": true,
+    "stop_on_429_for": "60s",
+    "circuit_breaker": {
+      "errors_to_trip": 5,
+      "cool_down_seconds": 600
+    }
+  }
+}

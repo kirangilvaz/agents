@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source_reliability.schema.json",
+  "title": "Source Reliability Map",
+  "description": "Cross-ticker learned source quality. Lives at ticker_research_knowledge/source_reliability.json. Loop 12 (adversarial) feeds deltas; Loop 17 applies them. Loop 11 weighs evidence by these multipliers.",
+  "type": "object",
+  "required": ["schema_version", "updated_at", "sources"],
+  "properties": {
+    "schema_version": { "type": "string", "default": "1.0" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "sources": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["domain", "tier", "precision", "weight_multiplier"],
+        "properties": {
+          "domain": { "type": "string" },
+          "tier": { "type": "integer", "enum": [1, 2, 3, 4, 5, 6] },
+          "precision": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "candidates_confirmed / max(candidates_proposed, 1) — higher = more reliable."
+          },
+          "weight_multiplier": {
+            "type": "number",
+            "minimum": 0.5,
+            "maximum": 1.5,
+            "description": "Multiplier applied to this source's contribution in scoring. clamp(0.5 + precision, 0.5, 1.5)."
+          },
+          "candidates_proposed": { "type": "integer" },
+          "candidates_confirmed": { "type": "integer" },
+          "candidates_invalidated": { "type": "integer" },
+          "noise_flags": { "type": "array", "items": { "type": "string", "enum": ["paywall_heavy", "ai_generated_content", "low_signal", "click_bait", "auto_generated"] } },
+          "history": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cycle_completed_at": { "type": "string", "format": "date-time" },
+                "delta_proposed": { "type": "integer" },
+                "delta_confirmed": { "type": "integer" },
+                "delta_invalidated": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

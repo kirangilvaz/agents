@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "description": "Seed domain/theme registry plus dynamic-discovery rules. Loop 0 seeds novelty_explorer_memory/domains.json from here on a cold start. Loop 5 may propose new domains (gated). The report builds its filter tabs from the live registry, so discovered domains render automatically.",
+
+  "seed_domains": [
+    { "id": "AI_INFRA",    "icon": "🧠",   "label": "AI & Infra",      "keywords": ["llm", "inference", "training", "agents", "ai chip", "accelerator", "vector db", "rag", "world model"] },
+    { "id": "BIOTECH",     "icon": "🧬",   "label": "Biotech",         "keywords": ["drug discovery", "synthetic biology", "gene therapy", "cell therapy", "longevity", "crispr", "diagnostics", "protein"] },
+    { "id": "ENERGY",      "icon": "⚡",   "label": "Energy",          "keywords": ["fusion", "fission", "smr", "grid storage", "battery", "solar", "geothermal", "hydrogen"] },
+    { "id": "QUANTUM",     "icon": "⚛️",   "label": "Quantum",         "keywords": ["quantum computing", "qubit", "quantum sensing", "quantum networking", "post-quantum", "error correction"] },
+    { "id": "ROBOTICS",    "icon": "🤖",   "label": "Robotics",        "keywords": ["humanoid", "autonomy", "industrial robot", "drone", "actuator", "manipulation", "embodied"] },
+    { "id": "SPACE",       "icon": "🛰️",  "label": "Space",           "keywords": ["launch", "satellite", "in-space manufacturing", "propulsion", "earth observation", "constellation"] },
+    { "id": "MATERIALS",   "icon": "🔬",   "label": "Materials",       "keywords": ["novel material", "semiconductor", "photonics", "advanced manufacturing", "superconductor", "metamaterial"] },
+    { "id": "CLIMATE",     "icon": "🌍",   "label": "Climate",         "keywords": ["carbon capture", "dac", "climate adaptation", "ag-tech", "water", "sustainable material"] },
+    { "id": "NEUROTECH",   "icon": "🧠⚡", "label": "Neurotech",       "keywords": ["brain-computer interface", "bci", "neuromodulation", "neural implant", "neuro-diagnostic"] },
+    { "id": "SECURITY",    "icon": "🔐",   "label": "Security",        "keywords": ["cybersecurity", "cryptography", "privacy", "defense tech", "resilience", "confidential compute"] },
+    { "id": "CRYPTO_WEB3", "icon": "⛓️",  "label": "Crypto / Web3",   "keywords": ["zero knowledge", "zk", "decentralized", "on-chain", "rollup", "cryptographic primitive"] },
+    { "id": "HEALTHTECH",  "icon": "🩺",   "label": "Healthtech",      "keywords": ["medical device", "digital health", "surgical robot", "care delivery", "wearable diagnostic"] },
+    { "id": "FRONTIER",    "icon": "🚀",   "label": "Frontier",        "keywords": [] }
+  ],
+
+  "dynamic_discovery": {
+    "_doc": "Loop 5 may PROPOSE a new domain rather than force-fit a coherent cluster into FRONTIER. Promotion is gated to prevent taxonomy churn.",
+    "max_new_domains_per_cycle": 1,
+    "min_cluster_size": 3,
+    "require_adversarial_survival": true,
+    "require_independent_sources": 3,
+    "promote_from": "FRONTIER",
+    "naming": "UPPER_SNAKE id, human label, single emoji icon"
+  }
+}

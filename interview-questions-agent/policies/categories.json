@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "description": "Category registry. The six 'seed' categories below are always present. Loop 5 (05-replacement.md, 'Dynamic category discovery') may PROPOSE new categories when a coherent cluster of evidence-backed, adversarially-survived questions does not fit any existing category. Loop 8 persists the live registry to interview_questions_knowledge/categories.json; this file is the seed/default the agent falls back to on a cold start. The dashboard builds its tabs from the live registry, so new categories render automatically with no template edit.",
+
+  "seed_categories": [
+    {
+      "id": "swe-coding",
+      "label": "SWE Coding",
+      "icon": "\ud83d\udcbb",
+      "domain": "swe",
+      "kind": "coding",
+      "default_quota": 40,
+      "scoring": "standard",
+      "rationale": "Largest pool; covers 16+ DSA subcategories."
+    },
+    {
+      "id": "swe-system-design",
+      "label": "SWE System Design",
+      "icon": "\ud83c\udfd7\ufe0f",
+      "domain": "swe",
+      "kind": "system-design",
+      "default_quota": 20,
+      "scoring": "standard",
+      "rationale": "Top 20 by frequency from ~30 canonical topics."
+    },
+    {
+      "id": "swe-behavioral",
+      "label": "SWE Behavioral",
+      "icon": "\ud83e\udd1d",
+      "domain": "swe",
+      "kind": "behavioral",
+      "default_quota": 20,
+      "scoring": "behavioral",
+      "rationale": "Top 20 themes scored on framework alignment, not raw frequency."
+    },
+    {
+      "id": "aiml-coding",
+      "label": "AI/ML Coding",
+      "icon": "\ud83e\udde0",
+      "domain": "aiml",
+      "kind": "coding",
+      "default_quota": 20,
+      "scoring": "standard",
+      "rationale": "20 implementation topics with growing LLM coverage."
+    },
+    {
+      "id": "aiml-system-design",
+      "label": "AI/ML System Design",
+      "icon": "\u2699\ufe0f",
+      "domain": "aiml",
+      "kind": "system-design",
+      "default_quota": 15,
+      "scoring": "standard",
+      "rationale": "Smaller but rapidly evolving."
+    },
+    {
+      "id": "aiml-conceptual",
+      "label": "AI/ML Conceptual",
+      "icon": "\ud83d\udcca",
+      "domain": "aiml",
+      "kind": "conceptual",
+      "default_quota": 20,
+      "scoring": "standard",
+      "rationale": "20 theory topics with heavy emerging-tech overlap."
+    }
+  ],
+
+  "dynamic_discovery": {
+    "enabled": true,
+    "description": "Rules under which Loop 5 may add a NEW category beyond the seeds. Designed to extend coverage only when evidence demands it, never to churn the taxonomy.",
+    "promote_when": {
+      "min_clustered_questions": 8,
+      "all_must_have_independent_source_count_gte": 2,
+      "all_must_have_adversarial_passes_gte": 1,
+      "must_not_fit_existing_category": true,
+      "must_have_recent_confirmation": true,
+      "note": "A 'cluster' is a set of canonical questions sharing a coherent theme (e.g. an OS/concurrency cluster, a SQL/data cluster, a frontend cluster) that does not map to any seed category's subcategory vocabulary."
+    },
+    "default_quota_for_new_category": 15,
+    "default_scoring_for_new_category": "standard",
+    "stability": {
+      "must_persist_cycles_before_locking": 1,
+      "demote_after_consecutive_cycles_below_min": 2,
+      "max_new_categories_per_cycle": 1,
+      "note": "At most one new category per cycle. A discovered category that falls below min_clustered_questions for 2 consecutive cycles is demoted and its questions reassigned to the nearest seed category (or emerging.json)."
+    }
+  },
+
+  "scoring_modes": {
+    "standard": "Use the Frequency Score formula in 03-scoring.md.",
+    "behavioral": "Use the behavioral scoring matrix in 03-scoring.md.",
+    "note": "A newly discovered category inherits the 'scoring' mode chosen by Loop 5 at promotion time (default 'standard'). Coding-like clusters should use 'standard'; soft-skill clusters should use 'behavioral'."
+  }
+}

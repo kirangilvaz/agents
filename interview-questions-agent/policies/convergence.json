@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "description": "Replaces the original 'minimum 20 passes' with a convergence-driven loop. AGENT.md orchestrator reads this between every full Loop 1-7 pass and stops when criteria are met OR max_passes is hit.",
+  "min_passes": 3,
+  "max_passes": 25,
+  "convergence": {
+    "max_swap_pct": 1.0,
+    "min_avg_conviction": 4.5,
+    "require_all_questions_adversarially_challenged_at_least": 2,
+    "min_independent_source_count_per_question": 2,
+    "max_questions_with_no_recent_confirmation_pct": 5
+  },
+  "delta_mode": {
+    "max_passes": 1,
+    "loops_to_run": [6, 7, 9],
+    "always_revalidate_questions_where": {
+      "any_of": [
+        "tier == 'EMERGING'",
+        "trend == '▼ DECLINING'",
+        "last_confirmed_cycle < current_cycle - 4",
+        "newest_recent_year < (Y - 2)"
+      ]
+    }
+  },
+  "search_budget": {
+    "per_loop": {
+      "loop_1": 600,
+      "loop_1b": 0,
+      "loop_2": 0,
+      "loop_3": 0,
+      "loop_4": 200,
+      "loop_5": 100,
+      "loop_6": 300,
+      "loop_7": 100,
+      "loop_9": 0,
+      "loop_8": 0
+    },
+    "per_cycle_total_cap": 1500,
+    "warn_at_pct": 80,
+    "abort_at_pct": 100
+  },
+  "stopping_rules": {
+    "stop_if_swap_pct_below": 1.0,
+    "stop_if_consecutive_no_change_passes": 2,
+    "stop_if_search_budget_exhausted": true,
+    "stop_if_fatal_error": true
+  }
+}

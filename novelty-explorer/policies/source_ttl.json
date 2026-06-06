@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "description": "Per-domain cache TTL, rate limits, source tier, and Terms-of-Service notes. Loops 1 and 3 consult this before every fetch. A cache hit (now < expires_at) skips the fetch and consumes 0 search budget. TTLs are tuned to signal volatility: momentum/community short, papers/patents long.",
+  "default": {
+    "ttl_hours": 48,
+    "rate_limit_rps": 0.5,
+    "min_delay_ms": 2000,
+    "respect_robots_txt": true,
+    "max_retries": 2,
+    "user_agent": "novelty-explorer/1.0 (+research; contact-via-readme)"
+  },
+  "domains": {
+    "arxiv.org":              { "tier": 1, "ttl_hours": 72,  "rate_limit_rps": 0.3, "notes": "Use the arXiv API where possible. Honor the 3s min delay the API requests." },
+    "biorxiv.org":            { "tier": 1, "ttl_hours": 72,  "rate_limit_rps": 0.3 },
+    "medrxiv.org":            { "tier": 1, "ttl_hours": 72,  "rate_limit_rps": 0.3 },
+    "ssrn.com":               { "tier": 1, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Often gated; use abstract pages + search snippets." },
+    "nature.com":             { "tier": 1, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Mostly paywalled. Use abstracts + Nature news; mark [paywalled] when only headline retrieved." },
+    "science.org":            { "tier": 1, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Paywalled — same fallback as Nature." },
+    "ieeexplore.ieee.org":    { "tier": 1, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Mostly paywalled; use abstracts + metadata." },
+    "dl.acm.org":             { "tier": 1, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Mostly paywalled; use abstracts + metadata." },
+    "semanticscholar.org":    { "tier": 1, "ttl_hours": 72,  "rate_limit_rps": 1.0, "notes": "Prefer the Semantic Scholar Graph API for citation velocity + influential-citation counts." },
+
+    "crunchbase.com":         { "tier": 2, "ttl_hours": 72,  "rate_limit_rps": 0.3, "notes": "Most data behind login. Use only free-tier fields + search snippets." },
+    "ycombinator.com":        { "tier": 2, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "YC company directory is public." },
+    "producthunt.com":        { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.5 },
+    "wellfound.com":          { "tier": 2, "ttl_hours": 48,  "rate_limit_rps": 0.5, "notes": "Formerly AngelList Talent. Login-gated for full data." },
+
+    "techcrunch.com":         { "tier": 3, "ttl_hours": 12,  "rate_limit_rps": 0.5 },
+    "theinformation.com":     { "tier": 3, "ttl_hours": 24,  "rate_limit_rps": 0.3, "notes": "Paywalled. Use headline + search snippets; mark [paywalled — headline only]." },
+    "axios.com":              { "tier": 3, "ttl_hours": 12,  "rate_limit_rps": 0.5 },
+    "sec.gov":                { "tier": 3, "ttl_hours": 168, "rate_limit_rps": 1.0, "notes": "EDGAR Form D for raises. Honor the SEC's 10-rps cap; User-Agent must include a contact email per SEC policy." },
+    "pitchbook.com":          { "tier": 3, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Paywalled; snippets only." },
+    "cbinsights.com":         { "tier": 3, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Paywalled; snippets only." },
+    "sbir.gov":               { "tier": 3, "ttl_hours": 168, "rate_limit_rps": 1.0, "notes": "SBIR/STTR award search — non-dilutive grant signal." },
+    "arpa-e.energy.gov":      { "tier": 3, "ttl_hours": 168, "rate_limit_rps": 1.0 },
+    "grants.gov":             { "tier": 3, "ttl_hours": 168, "rate_limit_rps": 1.0 },
+
+    "github.com":             { "tier": 4, "ttl_hours": 12,  "rate_limit_rps": 1.0, "notes": "Prefer the GitHub REST/GraphQL search API for stars/forks/contributor growth. Unauthenticated rate limit is low — cache aggressively." },
+    "news.ycombinator.com":   { "tier": 4, "ttl_hours": 6,   "rate_limit_rps": 1.0, "notes": "Use the Algolia HN Search API." },
+    "reddit.com":             { "tier": 4, "ttl_hours": 6,   "rate_limit_rps": 1.0, "notes": "Use the public JSON API (.json suffix). Respect Reddit's 60 rpm." },
+    "huggingface.co":         { "tier": 4, "ttl_hours": 24,  "rate_limit_rps": 0.5, "notes": "Models/datasets trending + download counts." },
+    "pypi.org":               { "tier": 4, "ttl_hours": 48,  "rate_limit_rps": 1.0, "notes": "Download stats via pypistats for adoption velocity." },
+    "npmjs.com":              { "tier": 4, "ttl_hours": 48,  "rate_limit_rps": 1.0 },
+
+    "patents.google.com":     { "tier": 5, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "Filing volume + assignee + forward-citation graph." },
+    "patents.uspto.gov":      { "tier": 5, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "USPTO PatentsView API is the structured source-of-truth." },
+    "lens.org":               { "tier": 5, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "Bridges patents <-> scholarly works (commercialization signal)." },
+    "worldwide.espacenet.com":{ "tier": 5, "ttl_hours": 168, "rate_limit_rps": 0.5, "notes": "EPO global filing coverage." }
+  },
+  "global_rules": {
+    "honor_robots_txt": true,
+    "honor_x_robots_tag": true,
+    "skip_if_disallowed": true,
+    "stop_on_429_for": "60s",
+    "circuit_breaker": { "errors_to_trip": 5, "cool_down_seconds": 600 },
+    "paywall_fallback_chain": [
+      "reader proxy: https://r.jina.ai/<url>",
+      "archive: https://web.archive.org/web/2*/<url>",
+      "search the headline for a syndicated / open mirror",
+      "use headline + abstract only, flag [paywalled — headline only]; never fabricate body content"
+    ],
+    "paywall_fallback_tier_demotion": 1
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "diff.schema.json",
+  "title": "Cross-Cycle Diff",
+  "description": "Structured changelog comparing the current cycle's leaderboard to the prior cycle. Written by Loop 8 to novelty_explorer_memory/runs/<ts>/diff.json. Drives the report's 'What changed' panel.",
+  "type": "object",
+  "required": ["cycle", "generated_at", "summary", "entries"],
+  "properties": {
+    "cycle": { "type": "integer" },
+    "prior_cycle": { "type": ["integer", "null"] },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "opportunities_added": { "type": "integer" },
+        "opportunities_removed": { "type": "integer" },
+        "tier_upgrades": { "type": "integer" },
+        "tier_downgrades": { "type": "integer" },
+        "domains_added": { "type": "integer" },
+        "avg_conviction_delta": { "type": "number" },
+        "leaderboard_size": { "type": "integer" }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["change_type", "opportunity_id"],
+        "properties": {
+          "change_type": {
+            "type": "string",
+            "enum": [
+              "ADDED", "REMOVED", "TIER_UPGRADE", "TIER_DOWNGRADE",
+              "SCORE_MOVED", "LIFECYCLE_CHANGE", "TTM_CHANGE",
+              "NEW_CAPITAL_SIGNAL", "ADVERSARIAL_INVALIDATED",
+              "CROWDING_CHANGE", "DOMAIN_ADDED", "PROMOTED_FROM_WATCHLIST", "DEMOTED_TO_WATCHLIST"
+            ]
+          },
+          "opportunity_id": { "type": "string" },
+          "name": { "type": "string" },
+          "field": { "type": "string" },
+          "from": { "type": ["number", "string", "null"] },
+          "to": { "type": ["number", "string", "null"] },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  }
+}

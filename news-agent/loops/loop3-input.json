@@ -1,0 +1,805 @@
+{
+  "loop": 2,
+  "phase": "dedup_cluster",
+  "completed_at": "2026-05-31T11:50:00-07:00",
+  "briefing_date": "2026-05-31",
+  "clusters": [
+    {
+      "cluster_id": "iran-us-deal-talks-2026",
+      "headline": "US-Iran ceasefire talks advance as Trump signals patience, final deal pending",
+      "category": "US_POLITICS",
+      "independent_count": 4,
+      "republished_by": ["ABC News", "CBS News"],
+      "primary_source": "Fox News",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Fox News", "url": "https://www.foxnews.com/politics/trump-says-iran-deal-largely-negotiated-84-day-war-nears-possible-end"},
+        {"name": "CNBC", "url": "https://www.cnbc.com/2026/05/31/still-no-deal-to-end-us-iran-war-trump-says-hes-not-in-a-hurry.html"},
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/5/31/trump-tightens-terms-on-iran-war-deal-us-media-say"},
+        {"name": "The Economist", "url": "https://www.economist.com/middle-east-and-africa/2026/05/28/america-and-iran-are-getting-close-to-a-deal-or-not"},
+        {"name": "ABC News", "url": "https://abcnews.com/International/wireStory/iran-us-close-understanding-aimed-ending-war-officials-133250509"},
+        {"name": "CBS News", "url": "https://www.cbsnews.com/texas/live-updates/iran-war-us-strikes-trump-oman-strait-of-hormuz-deal/"}
+      ]
+    },
+    {
+      "cluster_id": "israel-lebanon-ground-offensive-2026",
+      "headline": "Israel expands Lebanon ground invasion, seizes strategic crossing",
+      "category": "WORLD",
+      "independent_count": 3,
+      "republished_by": ["ABC News"],
+      "primary_source": "NBC News",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "NBC News", "url": "https://www.nbcnews.com/world/lebanon/israel-captures-key-lebanon-site-crossing-litani-river-rcna347732"},
+        {"name": "BBC", "url": "https://www.bbc.com/news/articles/cdep04kzz5wo"},
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/5/31/israel-issues-more-displacement-orders-in-lebanon-seizes-strategic-castle"},
+        {"name": "ABC News", "url": "https://abcnews.com/International/wireStory/israeli-forces-historic-push-inside-lebanon-complicates-iran-133465054"}
+      ]
+    },
+    {
+      "cluster_id": "paris-psg-champions-league-riots-2026",
+      "headline": "Paris descends into riots after PSG Champions League victory — 780+ arrested",
+      "category": "WORLD",
+      "independent_count": 3,
+      "republished_by": ["Fox News"],
+      "primary_source": "BBC",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "BBC", "url": "https://www.bbc.com/news/articles/c0r2ejg1w9xo"},
+        {"name": "NBC News", "url": "https://www.nbcnews.com/world/europe/france-detains-hundreds-violent-clashes-paris-saint-german-win-rcna347736"},
+        {"name": "SCMP", "url": "https://www.scmp.com/news/world/europe/article/3355479/french-police-arrest-780-after-violent-paris-saint-germain-celebrations"},
+        {"name": "Fox News", "url": "https://www.foxnews.com/sports/psg-champions-league-victory-causes-chaos-paris-45-arrested-fires-set-across-city"}
+      ]
+    },
+    {
+      "cluster_id": "colombia-presidential-election-2026",
+      "headline": "Colombia votes in pivotal presidential election testing US relations",
+      "category": "WORLD",
+      "independent_count": 2,
+      "republished_by": [],
+      "primary_source": "BBC",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "BBC", "url": "https://www.bbc.com/news/articles/c2027g423glo"},
+        {"name": "ABC News", "url": "https://abcnews.com/International/wireStory/colombias-presidential-election-pits-outgoing-leaders-ally-pro-133459793"}
+      ]
+    },
+    {
+      "cluster_id": "ukraine-drone-strikes-russia-2026",
+      "headline": "Ukraine launches massive drone strikes across multiple Russian regions",
+      "category": "WORLD",
+      "independent_count": 3,
+      "republished_by": [],
+      "primary_source": "NBC News",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "NBC News", "url": "https://www.nbcnews.com/world/ukraine/ukraine-hits-russian-energy-targets-denies-striking-kremlin-occupied-n-rcna347739"},
+        {"name": "Ground News", "url": "https://ground.news/article/ukrainian-drones-hit-targets-across-several-russian-regions_2f2e1c"},
+        {"name": "Fox News", "url": "https://www.foxnews.com/world/us-embassy-ukraine-warns-potentially-significant-air-attack-next-24-hours"}
+      ]
+    },
+    {
+      "cluster_id": "trump-approval-record-low-2026",
+      "headline": "Trump approval drops to record 34% in YouGov/Economist poll",
+      "category": "US_POLITICS",
+      "independent_count": 3,
+      "republished_by": [],
+      "primary_source": "Memeorandum",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Memeorandum", "url": "https://thehill.com/homenews/administration/5901371-trump-job-approval-record-low/"},
+        {"name": "Ground News", "url": "https://ground.news/article/trump-enters-perilous-polling-territory_2f2e1c"},
+        {"name": "AllSides", "url": "https://www.allsides.com/news/2026-05-31/politics-donald-trump-approval-rating-34-percent-record-low"}
+      ]
+    },
+    {
+      "cluster_id": "softbank-france-ai-investment-2026",
+      "headline": "SoftBank announces up to €75B AI data center investment in France",
+      "category": "TECH",
+      "independent_count": 2,
+      "republished_by": [],
+      "primary_source": "CNBC",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "CNBC", "url": "https://www.cnbc.com/2026/05/31/softbank-to-build-up-ai-data-centers-in-france-with-major-investment.html"},
+        {"name": "TechCrunch", "url": "https://techcrunch.com/2026/05/30/softbank-says-it-will-invest-up-to-e75-billion-to-build-french-data-centers/"}
+      ]
+    },
+    {
+      "cluster_id": "pancreatic-cancer-drug-2026",
+      "headline": "Experimental pill shows unprecedented results in deadly pancreatic cancer",
+      "category": "SCIENCE",
+      "independent_count": 2,
+      "republished_by": [],
+      "primary_source": "NBC News",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "NBC News", "url": "https://www.nbcnews.com/health/health-news/new-drugs-unprecedented-results-pancreatic-cancer-doctors-look-uses-rcna346818"},
+        {"name": "CNBC", "url": "https://www.cnbc.com/2026/05/31/experimental-pill-promises-new-hope-for-deadly-pancreatic-cancer.html"}
+      ]
+    },
+    {
+      "cluster_id": "ferrari-electric-car-luce-2026",
+      "headline": "Ferrari's electric car: divisiveness is the point",
+      "category": "BUSINESS",
+      "independent_count": 2,
+      "republished_by": [],
+      "primary_source": "The Economist",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "The Economist", "url": "https://www.economist.com/business/2026/05/27/ferraris-electric-car-divisiveness-is-the-point"},
+        {"name": "TechCrunch", "url": "https://techcrunch.com/2026/05/31/techcrunch-mobility-it-doesnt-matter-that-people-hate-the-ferrari-luce/"}
+      ]
+    },
+    {
+      "cluster_id": "myanmar-explosives-depot-blast-2026",
+      "headline": "Dozens killed in explosives depot blast in northeast Myanmar",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Al Jazeera",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/5/31/dozens-killed-in-blast-at-explosives-depot-in-northeastern-myanmar"}
+      ]
+    },
+    {
+      "cluster_id": "china-factory-activity-economy-2026",
+      "headline": "China factory activity worsens in fresh warning sign for economy",
+      "category": "ECONOMY",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Bloomberg",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-05-31/china-factory-activity-worsens-in-warning-sign-for-economy"}
+      ]
+    },
+    {
+      "cluster_id": "eu-russia-oil-price-cap-iran-2026",
+      "headline": "EU weighs temporary freeze on Russia oil price cap over Iran war",
+      "category": "ECONOMY",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Bloomberg",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-05-31/eu-weighs-temporary-freeze-on-russia-oil-price-cap-over-iran-war"}
+      ]
+    },
+    {
+      "cluster_id": "congo-lithium-royalty-2026",
+      "headline": "Congo triples royalty rate on lithium with new strategic minerals decree",
+      "category": "ECONOMY",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Bloomberg",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-05-31/congo-adds-lithium-to-strategic-minerals-in-higher-tax-bracket"}
+      ]
+    },
+    {
+      "cluster_id": "student-loan-changes-2026",
+      "headline": "Student loan 'big beautiful bill' changes take effect July 1",
+      "category": "ECONOMY",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "CNBC",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "CNBC", "url": "https://www.cnbc.com/2026/05/31/student-loan-big-beautiful-bill-changes.html"}
+      ]
+    },
+    {
+      "cluster_id": "artemis-ii-moon-launch-2026",
+      "headline": "Artemis II mission launches successfully",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Wired",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Wired", "url": "https://www.wired.com/story/artemis-ii-moon-mission-launches-successfully/"}
+      ]
+    },
+    {
+      "cluster_id": "tesla-robotaxi-remote-human-drivers-2026",
+      "headline": "Tesla admits its robotaxis are sometimes driven by remote humans",
+      "category": "TECH",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Wired",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Wired", "url": "https://www.wired.com/story/tesla-says-its-robotaxis-are-sometimes-driven-by-humans/"}
+      ]
+    },
+    {
+      "cluster_id": "hacker-poisoning-open-source-2026",
+      "headline": "A hacker group is poisoning open source code at an unprecedented scale",
+      "category": "TECH",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Wired",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Wired", "url": "https://www.wired.com/story/teampcp-software-supply-chain-attack-spree-github/"}
+      ]
+    },
+    {
+      "cluster_id": "ai-psychosis-debate-2026",
+      "headline": "Making sense of the debate over AI psychosis",
+      "category": "AI",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "TechCrunch",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "TechCrunch", "url": "https://techcrunch.com/2026/05/31/making-sense-of-the-debate-over-ai-psychosis/"}
+      ]
+    },
+    {
+      "cluster_id": "us-reverse-green-card-rule-2026",
+      "headline": "US reverses new rule on overseas applications for green cards",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "SCMP",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "SCMP", "url": "https://www.scmp.com/news/world/united-states-canada/article/3355436/us-reverses-new-rule-overseas-applications-green-cards"}
+      ]
+    },
+    {
+      "cluster_id": "brazil-voting-system-trust-2026",
+      "headline": "Brazil's high-tech voting system is losing voters' trust",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "The Economist",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "The Economist", "url": "https://www.economist.com/the-americas/2026/05/31/brazils-high-tech-voting-system-is-losing-voters-trust"}
+      ]
+    },
+    {
+      "cluster_id": "jazz-pharma-celator-acquisition-2026",
+      "headline": "Jazz Pharmaceuticals nears deal to buy Celator Pharmaceuticals for about $1.5B",
+      "category": "BUSINESS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Wall Street Journal",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Wall Street Journal", "url": "https://smi.wsj.com/scoops/jazz-pharmaceuticals-nears-deal-to-buy-celator-pharmaceuticals-for-about-1-5-billion/"}
+      ]
+    },
+    {
+      "cluster_id": "virginia-charter-bus-crash-2026",
+      "headline": "5 killed in Virginia charter bus crash identified, driver charged with manslaughter",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Fox News",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "Fox News", "url": "https://www.foxnews.com/us/charter-bus-driver-allegedly-caused-crash-killing-5-virginia-charged-involuntary-manslaughter"}
+      ]
+    },
+    {
+      "cluster_id": "wembanyama-nba-finals-mvp-2026",
+      "headline": "Wembanyama wins West finals MVP, looks ahead to NBA Finals matchup",
+      "category": "CULTURE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "ABC News",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "ABC News", "url": "https://abcnews.com/Sports/wireStory/wembanyama-wins-west-finals-mvp-ahead-nba-finals-133460085"}
+      ]
+    },
+    {
+      "cluster_id": "laos-cave-rescue-2026",
+      "headline": "CNN talks to rescue diver after first survivor rescued from Laos cave",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "CNN",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "CNN", "url": "https://edition.cnn.com/2026/05/29/world/video/rescue-diver-after-first-survivor-rescued-from-laos-cave-digvid-vrtc"}
+      ]
+    },
+    {
+      "cluster_id": "meteor-sonic-boom-boston-2026",
+      "headline": "NASA confirms exploding meteor caused the sonic boom over Boston",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "The Verge",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "The Verge", "url": "https://www.theverge.com/science/940467/meteor-exploded-new-england"}
+      ]
+    },
+    {
+      "cluster_id": "united-flight-bluetooth-speaker-2026",
+      "headline": "United flight forced to turn around because of a Bluetooth speaker name",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "The Verge",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "The Verge", "url": "https://www.theverge.com/transportation/940486/united-flight-236-bluetooth-speaker-name-bomb"}
+      ]
+    },
+    {
+      "cluster_id": "swiftkey-microsoft-account-2026",
+      "headline": "SwiftKey will soon require a Microsoft account to save your typing info",
+      "category": "TECH",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "The Verge",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "The Verge", "url": "https://www.theverge.com/tech/896859/swiftkey-will-soon-require-a-microsoft-account-to-save-your-typing-info"}
+      ]
+    },
+    {
+      "cluster_id": "ebola-outbreak-dr-congo-uganda-2026",
+      "headline": "Over 40 dead in Ebola outbreak in DR Congo and Uganda",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "NBC News",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "NBC News", "url": "https://www.nbcnews.com/world/africa/40-dead-ebola-outbreak-dr-congo-uganda-rcna347745"}
+      ]
+    },
+    {
+      "cluster_id": "blue-origin-new-glenn-explosion-2026",
+      "headline": "Blue Origin's New Glenn rocket explodes during static fire test — catastrophic failure",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Ars Technica",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Ars Technica", "url": "https://arstechnica.com/space/2026/05/blue-origins-new-glenn-rocket-just-exploded-during-a-static-fire-test/"}
+      ]
+    },
+    {
+      "cluster_id": "iss-leaking-again-2026",
+      "headline": "Uh-oh, the International Space Station is leaking again",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Ars Technica",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Ars Technica", "url": "https://arstechnica.com/space/2026/05/uh-oh-the-international-space-station-is-leaking-again/"}
+      ]
+    },
+    {
+      "cluster_id": "costco-tariff-refunds-sued-2026",
+      "headline": "Costco sued for seeking refunds on tariffs customers paid",
+      "category": "ECONOMY",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Ars Technica",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "Ars Technica", "url": "https://arstechnica.com/tech-policy/2026/03/costco-sued-for-seeking-refunds-on-tariffs-customers-paid/"}
+      ]
+    },
+    {
+      "cluster_id": "cloudflare-ai-jobs-obsolete-2026",
+      "headline": "Cloudflare says AI made 1,100 jobs obsolete, even as revenue hit a record high",
+      "category": "TECH",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "TechCrunch",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "TechCrunch", "url": "https://techcrunch.com/2026/05/08/cloudflare-says-ai-made-1100-jobs-obsolete-even-as-revenue-hit-a-record-high/"}
+      ]
+    },
+    {
+      "cluster_id": "cisco-ai-jobs-cuts-2026",
+      "headline": "Cisco cuts nearly 4,000 jobs to spend more on AI, reports 'record quarterly revenue'",
+      "category": "TECH",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "TechCrunch",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "TechCrunch", "url": "https://techcrunch.com/2026/05/14/cisco-cuts-nearly-4000-jobs-to-spend-more-on-ai-reports-record-quarterly-revenue/"}
+      ]
+    },
+    {
+      "cluster_id": "us-journalist-kidnapped-iraq-2026",
+      "headline": "U.S. journalist kidnapped in Iraq",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "NPR",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "NPR", "url": "https://www.npr.org/2026/03/31/nx-s1-5766991/iran-war-lebanon-israel-dubai-trump-oil-europe"}
+      ]
+    },
+    {
+      "cluster_id": "npr-executive-order-court-victory-2026",
+      "headline": "Federal Court delivers victory for press freedom and the First Amendment in NPR's challenge to Executive Order",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "NPR",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "NPR", "url": "https://www.npr.org/2026/03/31/g-s1-115996/federal-court-delivers-victory-for-press-freedom-and-the-first-amendment-in-nprs-challenge-to-executive-order"}
+      ]
+    },
+    {
+      "cluster_id": "ice-children-detention-2026",
+      "headline": "Children 'held like criminals' inside ICE detention center",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "CBS News",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "CBS News", "url": "https://www.cbsnews.com/news/children-held-like-criminals-inside-ice-detention-center/"}
+      ]
+    },
+    {
+      "cluster_id": "washington-mill-disaster-2026",
+      "headline": "Last victims retrieved in Washington mill disaster; cause probed",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Bloomberg",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-05-31/last-victims-retrieved-in-washington-mill-disaster-cause-probed"}
+      ]
+    },
+    {
+      "cluster_id": "white-house-aliens-gov-ice-citizens-2026",
+      "headline": "The White House's Aliens.gov site brags that ICE arrested more than 700 US citizens",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Wired",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "Wired", "url": "https://www.wired.com/news/politics/the-white-house-aliens-gov-site.html"}
+      ]
+    },
+    {
+      "cluster_id": "ai-hunt-insider-trading-polymarket-2026",
+      "headline": "The US is using AI to hunt down insider trading on Polymarket",
+      "category": "AI",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Wired",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "Wired", "url": "https://www.wired.com/story/polymarket-insider-trading-cftc-michael-selig-interview/"}
+      ]
+    },
+    {
+      "cluster_id": "openbrief-local-video-downloader-2026",
+      "headline": "Show HN: OpenBrief — Local-first video downloader/summarizer",
+      "category": "TECH",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Hacker News",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Hacker News", "url": "https://news.ycombinator.com/item?id=48272393"}
+      ]
+    },
+    {
+      "cluster_id": "senate-blue-origin-bailout-2026",
+      "headline": "Senate preparing $10B bailout fund for Jeff Bezos space firm",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "The Intercept",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "The Intercept", "url": "https://static.theintercept.com/amp/jeff-bezos-blue-origin-senate-bailout.html"}
+      ]
+    },
+    {
+      "cluster_id": "epa-carcinogenic-air-pollution-2026",
+      "headline": "Inspector General rebukes EPA for failing to protect communities from carcinogenic air pollution",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "The Intercept",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "The Intercept", "url": "https://static.theintercept.com/amp/epa-ethylene-oxide-chloroprene-inspector-general.html"}
+      ]
+    },
+    {
+      "cluster_id": "nsf-research-grants-hold-2026",
+      "headline": "Exclusive: NSF puts new research grants to top universities on hold",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Nature",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Nature", "url": "https://www.nature.com/articles/d41586-026-01667-6"}
+      ]
+    },
+    {
+      "cluster_id": "thermo-fisher-antibody-catalogue-2026",
+      "headline": "Science sleuths uncover more than 100 suspicious images in Thermo Fisher antibody catalogue",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Nature",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Nature", "url": "https://www.nature.com/articles/d41586-026-01706-2"}
+      ]
+    },
+    {
+      "cluster_id": "nature-ai-poll-2026",
+      "headline": "Do you hate or love AI? Take Nature's poll",
+      "category": "AI",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Nature",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "Nature", "url": "https://www.nature.com/articles/d41586-026-01563-z"}
+      ]
+    },
+    {
+      "cluster_id": "carbon-dioxide-removal-climate-2026",
+      "headline": "Temporary carbon dioxide removal to offset short-lived climate forcers",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Nature",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "Nature", "url": "https://www.nature.com/articles/s41586-026-10607-3"}
+      ]
+    },
+    {
+      "cluster_id": "trump-iran-strikes-wapo-2026",
+      "headline": "U.S. and Iran trade strikes as Trump cites no pressure for a peace deal",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Washington Post",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "Washington Post", "url": "https://www.washingtonpost.com/national-security/2026/05/28/us-iran-trade-strikes-trump-cites-no-pressure-peace-deal/"}
+      ]
+    },
+    {
+      "cluster_id": "iran-long-war-analysis-wapo-2026",
+      "headline": "Why the U.S. is headed for a long war with Iran",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Washington Post",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "Washington Post", "url": "https://www.washingtonpost.com/ripple/2026/05/12/mohsen-rezaei-iran-war-hard-liners-trump-nuclear-negotiations/"}
+      ]
+    },
+    {
+      "cluster_id": "japan-defense-neo-militarism-2026",
+      "headline": "Japan seeks dialog, rejects neo-militarism label: defense minister",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "CNBC",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "CNBC", "url": "https://www.cnbc.com/2026/05/31/japan-seeks-dialog-rejects-neo-militarism-label-defense-minister.html"}
+      ]
+    },
+    {
+      "cluster_id": "ufo-human-shaped-files-china-2026",
+      "headline": "Human-shaped object in US military UFO files intrigues Chinese expert",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "SCMP",
+      "partisan_only": false,
+      "position_best": "buried",
+      "sources": [
+        {"name": "SCMP", "url": "https://www.scmp.com/news/china/science/article/3355450/human-shaped-object-us-military-ufo-files-intrigues-chinese-expert"}
+      ]
+    },
+    {
+      "cluster_id": "trump-dementia-claims-2026",
+      "headline": "Trump 'dementia' claims fly amid 'completely insane' posting spree",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Memeorandum",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Memeorandum", "url": "https://dnyuz.com/2026/05/31/trump-dementia-claims-fly-amid-completely-insane-posting-spree-nonstop-nuttery/"}
+      ]
+    },
+    {
+      "cluster_id": "ivf-gun-abortion-news-you-missed-2026",
+      "headline": "IVF expansions, gun deregulations and abortion complications: Latest news you likely missed",
+      "category": "US_POLITICS",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "AllSides",
+      "partisan_only": false,
+      "position_best": "lead",
+      "sources": [
+        {"name": "AllSides", "url": "https://www.allsides.com/blog/ivf-expansions-gun-deregulations-and-abortion-complications-latest-news-you-likely-missed"}
+      ]
+    },
+    {
+      "cluster_id": "pfizer-braftovi-colorectal-cancer-2026",
+      "headline": "Pfizer's BRAFTOVI regimen nearly doubles median progression-free survival in metastatic colorectal cancer",
+      "category": "SCIENCE",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Financial Times",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Financial Times", "url": "https://markets.ft.com/data/announce/detail?dockey=600-202605310800BIZWIRE_USPRX____20260531_BW990280-1"}
+      ]
+    },
+    {
+      "cluster_id": "us-iran-oil-tanker-hormuz-2026",
+      "headline": "US military fires on Iranian-flagged oil tanker as Trump presses for deal to end war",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "Washington Post",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "Washington Post", "url": "https://www.washingtonpost.com/business/2026/05/06/trump-iran-deal-elections-epstein/5fa4ac1c-4947-11f1-a119-857cd2bf4fd4_story.html"}
+      ]
+    },
+    {
+      "cluster_id": "economist-what-iran-deal-might-look-like-2026",
+      "headline": "What an America-Iran deal might look like",
+      "category": "WORLD",
+      "independent_count": 1,
+      "republished_by": [],
+      "primary_source": "The Economist",
+      "partisan_only": false,
+      "position_best": "featured",
+      "sources": [
+        {"name": "The Economist", "url": "https://www.economist.com/middle-east-and-africa/2026/05/25/donald-trump-says-a-deal-with-iran-is-close-but-he-also-says-he-is-in-no-rush"}
+      ]
+    }
+  ],
+  "monitoring": [],
+  "changelog": [
+    {
+      "event": "iran-us-deal-talks-2026",
+      "action": "clustered",
+      "notes": "Fox News, CNBC, Al Jazeera, Economist original reporting; ABC News and CBS News are wire-copy republishments (wire_credit: true). independent_count=4, republished_by=['ABC News','CBS News']"
+    },
+    {
+      "event": "israel-lebanon-2026",
+      "action": "clustered",
+      "notes": "NBC, BBC, Al Jazeera original; ABC News is wire-copy repub. Ground News URL excluded (pointed to Ukraine story, not Lebanon). independent_count=3"
+    },
+    {
+      "event": "paris-psg-riots-2026",
+      "action": "clustered",
+      "notes": "BBC, NBC, SCMP original; Fox News is wire-copy repub (wire_credit: true). independent_count=3, republished_by=['Fox News']"
+    },
+    {
+      "event": "colombia-election-2026",
+      "action": "clustered",
+      "notes": "Al Jazeera Myanmar article mis-assigned in v1; corrected. BBC and ABC News original. independent_count=2"
+    },
+    {
+      "event": "myanmar-explosives-depot-2026",
+      "action": "extracted",
+      "notes": "Extracted from Colombia cluster mis-assignment. Single source Al Jazeera. independent_count=1"
+    },
+    {
+      "event": "ukraine-drone-strikes-2026",
+      "action": "clustered",
+      "notes": "NBC, Ground News, Fox News all covering Ukraine strikes on Russia. independent_count=3"
+    },
+    {
+      "event": "trump-approval-record-low-2026",
+      "action": "clustered",
+      "notes": "YouGov/Economist 34% poll; Memeorandum (via The Hill), Ground News, AllSides. independent_count=3"
+    },
+    {
+      "event": "blue-origin-new-glenn-2026",
+      "action": "deduplicated",
+      "notes": "Two Ars Technica articles (lead + featured) on same explosion merged; independent_count=1"
+    },
+    {
+      "event": "ferrari-luce-2026",
+      "action": "clustered",
+      "notes": "The Economist and TechCrunch both covering Ferrari electric car controversy. independent_count=2"
+    },
+    {
+      "event": "pancreatic-cancer-pill-2026",
+      "action": "clustered",
+      "notes": "NBC and CNBC covering same pancreatic cancer drug breakthrough. independent_count=2"
+    },
+    {
+      "event": "softbank-france-ai-2026",
+      "action": "clustered",
+      "notes": "CNBC and TechCrunch covering SoftBank €75B France AI investment. independent_count=2"
+    },
+    {
+      "event": "single-source-clusters",
+      "action": "flagged",
+      "notes": "35 clusters with only 1 independent source; kept in main clusters (not monitoring) per spec — they may be confirmed in later passes and are inherently interesting for monitoring purposes"
+    }
+  ]
+}

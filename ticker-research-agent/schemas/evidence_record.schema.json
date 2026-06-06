@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence_record.schema.json",
+  "title": "Evidence Record",
+  "description": "One JSONL line per source confirmation per dimension. Stored at ticker_research_knowledge/tickers/<TICKER>/evidence/<dimension>.jsonl. Append-only. Loop 11 reads these to compute independent_source_count after running citation-cycle dedup against the cites graph.",
+  "type": "object",
+  "required": [
+    "evidence_id",
+    "ticker",
+    "dimension",
+    "source_domain",
+    "source_tier",
+    "url",
+    "url_hash",
+    "fetched_at",
+    "exact_quote",
+    "confirmed_in_cycle"
+  ],
+  "properties": {
+    "evidence_id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{8,}$", "description": "ULID or UUID. Primary key." },
+    "ticker": { "type": "string" },
+    "dimension": {
+      "type": "string",
+      "enum": [
+        "fundamentals", "technical", "earnings", "analyst", "institutional", "insider",
+        "options", "short_interest", "news", "sentiment_social", "sentiment_community",
+        "volatility", "macro_policy", "sector", "correlated", "fair_value",
+        "quant_factors", "on_chain", "regulatory", "geopolitical"
+      ]
+    },
+    "source_domain": { "type": "string", "description": "lowercase, no scheme (e.g. 'finviz.com')" },
+    "source_tier": { "type": "integer", "enum": [1, 2, 3, 4, 5, 6] },
+    "url": { "type": "string", "format": "uri" },
+    "url_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "fetched_at": { "type": "string", "format": "date-time" },
+    "report_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Date the source claims the data point reflects (e.g. earnings call date, 13F as-of date). May differ from fetched_at."
+    },
+    "exact_quote": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Verbatim excerpt. Required so Loop 12 (adversarial) can re-validate the claim."
+    },
+    "data_point": {
+      "type": "object",
+      "description": "Structured extraction. Schema varies by dimension; common fields below.",
+      "additionalProperties": true,
+      "properties": {
+        "metric": { "type": "string", "description": "e.g. 'pe_forward', 'analyst_target_avg', 'short_interest_pct'." },
+        "value": { "type": ["number", "string", "boolean", "null"] },
+        "unit": { "type": "string" },
+        "as_of": { "type": "string", "format": "date" }
+      }
+    },
+    "cites": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "URLs this record cites — used by Loop 11 for citation-cycle dedup." },
+    "cited_by": { "type": "array", "items": { "type": "string", "format": "uri" } },
+    "confirmed_in_cycle": { "type": "integer", "minimum": 1 },
+    "rescraped_in_cycles": { "type": "array", "items": { "type": "integer" } },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1, "description": "Extractor confidence the quote actually corresponds to this dimension. <0.7 excluded by Loop 11." },
+    "data_age_days": { "type": "integer", "minimum": 0, "description": "Days between report_date and fetched_at." },
+    "is_counter_evidence": {
+      "type": "boolean",
+      "default": false,
+      "description": "Loop 12 marks adversarial counter-evidence; these are surfaced in `risks` but NOT counted toward independent_source_count."
+    }
+  }
+}

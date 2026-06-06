@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opportunity.schema.json",
+  "title": "Opportunity Record",
+  "description": "Canonical record for one GTM opportunity (influencer, community, agency, partnership, affiliate, newsletter, podcast, event, lead, or channel). Stored at gtm_scout_memory/briefs_data/<brief_id>/opportunities/<opportunity_id>.json (one file each). Loop 10 writes it; Loop 0 loads it; Loop 11 renders from it.",
+  "type": "object",
+  "required": [
+    "opportunity_id",
+    "brief_id",
+    "name",
+    "type",
+    "description",
+    "scores",
+    "opportunity_score",
+    "tier",
+    "conviction",
+    "first_seen_cycle",
+    "last_updated_cycle",
+    "as_of"
+  ],
+  "properties": {
+    "opportunity_id": { "type": "string", "pattern": "^[a-z0-9-]{3,}$", "description": "Stable slug, namespaced by type (e.g. 'inf-the-plain-bagel', 'comm-r-stocks')." },
+    "brief_id": { "type": "string" },
+    "name": { "type": "string", "description": "Channel / operator / handle name." },
+    "aka": { "type": "array", "items": { "type": "string" }, "description": "Alternate handles / names / URLs." },
+    "type": { "type": "string", "enum": ["INFLUENCER", "COMMUNITY", "AGENCY", "PARTNERSHIP", "AFFILIATE", "NEWSLETTER", "PODCAST", "EVENT", "LEAD", "PAID_CHANNEL", "CONTENT_SEO"], "description": "Plus any dynamically-discovered type from channels.json." },
+    "platform": { "type": ["string", "null"], "description": "e.g. 'youtube', 'reddit', 'beehiiv', 'clutch'." },
+    "url": { "type": ["string", "null"], "format": "uri" },
+    "description": { "type": "string", "minLength": 5 },
+
+    "scores": {
+      "type": "object",
+      "required": ["relevance", "audience_match", "reach", "growth_signals", "ease_of_access", "cost_efficiency"],
+      "properties": {
+        "relevance":       { "$ref": "#/$defs/dimScore" },
+        "audience_match":  { "$ref": "#/$defs/dimScore" },
+        "reach":           { "$ref": "#/$defs/dimScore" },
+        "growth_signals":  { "$ref": "#/$defs/dimScore" },
+        "ease_of_access":  { "$ref": "#/$defs/dimScore" },
+        "cost_efficiency": { "$ref": "#/$defs/dimScore" }
+      }
+    },
+
+    "opportunity_score": { "type": "number", "minimum": 0, "maximum": 100, "description": "Weighted composite after amplifiers/suppressors." },
+    "core_score": { "type": "number", "minimum": 0, "maximum": 100, "description": "Composite before amplifiers/suppressors (audit)." },
+    "tier": { "type": "string", "enum": ["PRIORITY", "STRONG", "QUALIFIED", "BELOW_FLOOR"] },
+
+    "effort": { "type": "string", "enum": ["EFFORT_LOW", "EFFORT_MED", "EFFORT_HIGH"], "description": "Execution difficulty band." },
+    "effort_rationale": { "type": "string" },
+    "expected_roi": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+    "est_cost_usd": { "type": ["number", "string", "null"], "description": "Numeric, a range string (e.g. '500-1500'), or null/'Unverified'." },
+    "est_cost_verified": { "type": "boolean", "default": false },
+
+    "conviction": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"], "description": "How much to trust the score (independent sources + recency + promotion history)." },
+    "convergence_count": { "type": "integer", "minimum": 0, "maximum": 8, "description": "Number of independent amplifier signal types firing (Loop 8)." },
+    "amplifiers_fired": { "type": "array", "items": { "type": "string" } },
+    "suppressors_fired": { "type": "array", "items": { "type": "string" } },
+    "amplifier_adjustment": { "type": "number", "description": "Net +/- applied to score from Loop 8." },
+
+    "audience": {
+      "type": "object",
+      "description": "Verified audience facts. EVERY count must trace to an evidence record or be marked Unverified.",
+      "properties": {
+        "size": { "type": ["number", "null"], "description": "Followers / members / subscribers / downloads / attendees / monthly visits." },
+        "size_unit": { "type": "string", "description": "e.g. 'subscribers', 'members', 'monthly_downloads', 'monthly_visits'." },
+        "size_verified": { "type": "boolean", "default": false },
+        "influencer_tier": { "type": ["string", "null"], "enum": ["MICRO", "TIER_1", "TIER_2", "TIER_3", "unknown", null] },
+        "engagement_note": { "type": "string", "description": "Engagement signal (e.g. 'avg 40k views/video, ~3% comment rate') or 'Unverified'." },
+        "icp_overlap_note": { "type": "string", "description": "How closely the audience matches the ICP." },
+        "geo_note": { "type": "string" }
+      }
+    },
+
+    "access": {
+      "type": "object",
+      "description": "How to reach/activate this opportunity. Contact ONLY populated if verified.",
+      "properties": {
+        "contact": { "type": ["string", "null"], "description": "Verified public contact (email/form/DM). null or 'Unverified' otherwise. NEVER invent." },
+        "contact_verified": { "type": "boolean", "default": false },
+        "accepts_sponsors": { "type": "string", "enum": ["yes", "no", "unknown"], "default": "unknown" },
+        "accepts_guests": { "type": "string", "enum": ["yes", "no", "unknown"], "default": "unknown" },
+        "promotion_allowed": { "type": "string", "enum": ["yes", "no", "with_partnership", "unknown"], "default": "unknown" },
+        "partner_program_url": { "type": ["string", "null"] },
+        "rate_card_note": { "type": "string", "description": "Published rate/CPM if available, else 'Unverified'." }
+      }
+    },
+
+    "why_it_fits": { "type": "string", "description": "Concise ICP/relevance rationale." },
+    "outreach_angle": { "type": "string", "description": "Suggested first-touch hook (Phase 10). Clearly a generated suggestion, not a fact." },
+
+    "evidence": {
+      "type": "array",
+      "description": "Curated highlight links for the report (full provenance is in evidence/<id>.jsonl).",
+      "items": {
+        "type": "object",
+        "required": ["kind", "label", "url"],
+        "properties": {
+          "kind": { "type": "string", "enum": ["profile", "review", "directory", "sponsorship", "rate_card", "promotion_history", "funding", "launch", "community", "traffic", "news", "other"] },
+          "label": { "type": "string" },
+          "url": { "type": "string" },
+          "source_tier": { "type": "integer", "enum": [1, 2, 3, 4, 5, 6] },
+          "date": { "type": ["string", "null"], "format": "date" }
+        }
+      }
+    },
+
+    "risks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["risk"],
+        "properties": {
+          "risk": { "type": "string" },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] },
+          "is_counter_evidence": { "type": "boolean", "default": false }
+        }
+      }
+    },
+
+    "adversarial": {
+      "type": "object",
+      "properties": {
+        "passes": { "type": "integer", "minimum": 0 },
+        "latest_verdict": { "type": "string", "enum": ["CONFIRMED", "WEAKENED", "MULTI_CONFLICT", "INVALIDATED"] },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "lifecycle_state": { "type": "string", "enum": ["new", "contacted_candidate", "rising", "stable", "declining", "stale"] },
+    "outreach_status": { "type": "string", "enum": ["none", "queued", "contacted", "in_progress", "won", "declined"], "default": "none", "description": "User-logged; preserved across runs, never overwritten by discovery." },
+    "score_trend": {
+      "type": "array",
+      "description": "Per-cycle score history for the sparkline. Newest last.",
+      "items": { "type": "object", "properties": { "cycle": { "type": "integer" }, "score": { "type": "number" } } }
+    },
+
+    "independent_source_count": { "type": "integer", "minimum": 0 },
+    "data_availability": { "type": "string", "enum": ["FULL", "PARTIAL", "DEGRADED"] },
+    "first_seen_cycle": { "type": "integer", "minimum": 1 },
+    "last_updated_cycle": { "type": "integer", "minimum": 1 },
+    "as_of": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "dimScore": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "rationale": { "type": "string", "description": "1-2 sentences with the quantitative/verifiable evidence behind the score." },
+        "data_unavailable": { "type": "boolean", "default": false },
+        "components": { "type": "object", "additionalProperties": { "type": ["number", "null"] } }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "correlated_ticker.schema.json",
+  "title": "Correlated / Influencing Ticker",
+  "description": "One entry per related ticker captured in Loop 7. Used by Loop 13 (correlated validation) and the report's Correlated Tickers panel.",
+  "type": "object",
+  "required": [
+    "ticker",
+    "name",
+    "relationship",
+    "correlation_direction",
+    "influence_magnitude",
+    "near_term_outlook",
+    "impact_narrative"
+  ],
+  "properties": {
+    "ticker": { "type": "string", "pattern": "^[A-Z0-9.\\-/=^]{1,15}$" },
+    "name": { "type": "string" },
+    "asset_class": { "type": "string", "enum": ["STOCK", "ETF", "CRYPTO", "INDEX", "COMMODITY", "RATE", "FX"] },
+    "relationship": {
+      "type": "string",
+      "enum": ["DIRECT_COMPETITOR", "SUPPLIER", "CUSTOMER", "SECTOR_PEER", "SECTOR_ETF", "INDEX_MEMBERSHIP", "MACRO_PROXY", "THEMATIC_PEER", "INVERSE_PROXY"]
+    },
+    "correlation_direction": { "type": "string", "enum": ["POSITIVE", "NEGATIVE"] },
+    "correlation_coefficient": { "type": ["number", "null"], "minimum": -1, "maximum": 1 },
+    "influence_magnitude": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+    "current_price": { "type": ["number", "null"] },
+    "perf_1d_pct": { "type": ["number", "null"] },
+    "perf_5d_pct": { "type": ["number", "null"] },
+    "perf_20d_pct": { "type": ["number", "null"] },
+    "near_term_outlook": { "type": "string", "enum": ["STRONGLY_BULLISH", "BULLISH", "NEUTRAL", "BEARISH", "STRONGLY_BEARISH"] },
+    "long_term_outlook": { "type": "string", "enum": ["STRONGLY_BULLISH", "BULLISH", "NEUTRAL", "BEARISH", "STRONGLY_BEARISH"] },
+    "key_catalyst": { "type": "string" },
+    "impact_narrative": { "type": "string", "description": "How this ticker materially impacts the target." },
+    "thesis_alignment": { "type": "string", "enum": ["CONFIRMS", "CONTRADICTS", "NEUTRAL"] }
+  }
+}

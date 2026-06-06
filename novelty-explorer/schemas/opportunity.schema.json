@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opportunity.schema.json",
+  "title": "Opportunity Record",
+  "description": "Canonical record for one discovered opportunity (technology, company, or trend). Stored at novelty_explorer_memory/opportunities/<opportunity_id>.json (one file per opportunity). Loop 8 writes it; Loop 0 loads it; Loop 9 renders from it.",
+  "type": "object",
+  "required": [
+    "opportunity_id",
+    "name",
+    "type",
+    "domain",
+    "description",
+    "scores",
+    "composite_score",
+    "conviction_tier",
+    "ttm",
+    "first_seen_cycle",
+    "last_updated_cycle",
+    "as_of"
+  ],
+  "properties": {
+    "opportunity_id": { "type": "string", "pattern": "^[a-z0-9-]{3,}$", "description": "Stable slug from canonical name (e.g. 'cortical-labs')." },
+    "name": { "type": "string", "description": "Technology or company name." },
+    "aka": { "type": "array", "items": { "type": "string" }, "description": "Alternate names / tickers / repo slugs." },
+    "type": { "type": "string", "enum": ["technology", "company", "trend", "research_program", "open_source_project"] },
+    "domain": { "type": "string", "description": "Primary domain id from domains.json (e.g. 'ENERGY'). Exactly one." },
+    "secondary_domains": { "type": "array", "items": { "type": "string" } },
+    "description": { "type": "string", "minLength": 10, "description": "One-line description." },
+
+    "scores": {
+      "type": "object",
+      "required": ["novelty", "capital", "momentum", "feasibility", "market"],
+      "properties": {
+        "novelty":     { "$ref": "#/$defs/dimScore" },
+        "capital":     { "$ref": "#/$defs/dimScore" },
+        "momentum":    { "$ref": "#/$defs/dimScore" },
+        "feasibility": { "$ref": "#/$defs/dimScore" },
+        "market":      { "$ref": "#/$defs/dimScore" }
+      }
+    },
+
+    "composite_score": { "type": "number", "minimum": 0, "maximum": 100, "description": "Weighted composite after amplifiers/suppressors." },
+    "core_composite": { "type": "number", "minimum": 0, "maximum": 100, "description": "Composite before amplifiers/suppressors (audit)." },
+    "time_adjusted_score": { "type": "number", "minimum": 0, "maximum": 100, "description": "composite_score * ttm_discount[ttm]." },
+    "conviction_tier": { "type": "string", "enum": ["EXCEPTIONAL", "HIGH_CONVICTION", "WORTH_MONITORING", "EMERGING_SIGNAL", "NOISE"] },
+
+    "ttm": { "type": "string", "enum": ["TTM_0_2", "TTM_2_5", "TTM_5_10", "TTM_10_PLUS"], "description": "Time-to-Mainstream band." },
+    "ttm_rationale": { "type": "string" },
+
+    "convergence_count": { "type": "integer", "minimum": 0, "maximum": 8, "description": "Number of independent signal types firing (Loop 6)." },
+    "amplifiers_fired": { "type": "array", "items": { "type": "string" } },
+    "suppressors_fired": { "type": "array", "items": { "type": "string" } },
+    "amplifier_adjustment": { "type": "number", "description": "Net +/- applied to composite from Loop 6." },
+
+    "crowding": { "type": "number", "minimum": 0, "maximum": 100, "description": "0 = under-recognized (high alpha), 100 = crowded/mainstream." },
+    "crowding_label": { "type": "string", "enum": ["UNDER_RECOGNIZED", "BALANCED", "CROWDED"] },
+
+    "lifecycle_state": { "type": "string", "enum": ["emerging", "rising", "high_conviction", "peaked", "mainstreamed", "faded"] },
+    "conviction_trend": {
+      "type": "array",
+      "description": "Per-cycle composite history for the sparkline. Newest last.",
+      "items": { "type": "object", "properties": { "cycle": { "type": "integer" }, "composite": { "type": "number" } } }
+    },
+
+    "why_it_matters": { "type": "string", "description": "Concise explanation of significance." },
+    "investment_thesis": { "type": "string", "description": "One paragraph: why this could become a significant opportunity." },
+
+    "capital_signals": {
+      "type": "object",
+      "properties": {
+        "recent_rounds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "stage": { "type": "string" },
+              "amount_usd_m": { "type": ["number", "null"] },
+              "date": { "type": ["string", "null"], "format": "date" },
+              "lead_investors": { "type": "array", "items": { "type": "string" } },
+              "investor_quality_tier": { "type": "string" },
+              "source_url": { "type": "string" }
+            }
+          }
+        },
+        "strategic_partnerships": { "type": "array", "items": { "type": "string" } },
+        "grants": { "type": "array", "items": { "type": "string" } },
+        "total_known_funding_usd_m": { "type": ["number", "null"] }
+      }
+    },
+
+    "evidence": {
+      "type": "array",
+      "description": "Curated highlight links for the report (full provenance is in evidence/<id>.jsonl).",
+      "items": {
+        "type": "object",
+        "required": ["kind", "label", "url"],
+        "properties": {
+          "kind": { "type": "string", "enum": ["paper", "patent", "repo", "funding", "news", "product", "grant", "conference", "other"] },
+          "label": { "type": "string" },
+          "url": { "type": "string" },
+          "source_tier": { "type": "integer", "enum": [1, 2, 3, 4, 5] },
+          "date": { "type": ["string", "null"], "format": "date" }
+        }
+      }
+    },
+
+    "risks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["risk"],
+        "properties": {
+          "risk": { "type": "string" },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH"] },
+          "is_counter_evidence": { "type": "boolean", "default": false }
+        }
+      }
+    },
+
+    "adversarial": {
+      "type": "object",
+      "properties": {
+        "passes": { "type": "integer", "minimum": 0 },
+        "latest_verdict": { "type": "string", "enum": ["CONFIRMED", "WEAKENED", "MULTI_CONFLICT", "INVALIDATED"] },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "independent_source_count": { "type": "integer", "minimum": 0 },
+    "data_availability": { "type": "string", "enum": ["FULL", "PARTIAL", "DEGRADED"] },
+    "first_seen_cycle": { "type": "integer", "minimum": 1 },
+    "last_updated_cycle": { "type": "integer", "minimum": 1 },
+    "as_of": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "dimScore": {
+      "type": "object",
+      "required": ["score"],
+      "properties": {
+        "score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "rationale": { "type": "string", "description": "1-2 sentences with quantitative evidence." },
+        "data_unavailable": { "type": "boolean", "default": false },
+        "components": { "type": "object", "additionalProperties": { "type": ["number", "null"] } }
+      }
+    }
+  }
+}

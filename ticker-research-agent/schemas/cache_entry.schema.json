@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cache_entry.schema.json",
+  "title": "Source Cache Entry",
+  "description": "One JSON file per fetched URL at ticker_research_knowledge/tickers/<TICKER>/sources_cache/<sha256(url)>.json. Loops 1-10 consult this before re-fetching; cache hits consume 0 search budget.",
+  "type": "object",
+  "required": ["url", "url_hash", "source_domain", "fetched_at", "fetch_status"],
+  "properties": {
+    "url": { "type": "string", "format": "uri" },
+    "url_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "source_domain": { "type": "string" },
+    "fetched_at": { "type": "string", "format": "date-time" },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "fetched_at + ttl_days from policies/source_ttl.json. Cache hit if now < expires_at."
+    },
+    "fetch_status": {
+      "type": "string",
+      "enum": [
+        "200_ok", "304_not_modified", "403_paywall", "404_not_found",
+        "429_rate_limited", "500_server_error", "timeout", "robots_disallow",
+        "tos_blocked", "unknown_error"
+      ]
+    },
+    "http_status_code": { "type": ["integer", "null"] },
+    "content_type": { "type": "string" },
+    "content_length_bytes": { "type": "integer" },
+    "title": { "type": "string" },
+    "raw_excerpt": { "type": "string", "description": "Truncated raw text or extracted main content. Used by Loop 12 for re-validation." },
+    "extracted_data_points": {
+      "type": "array",
+      "description": "Structured extractions (price, P/E, target, etc.) from this fetch.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "metric": { "type": "string" },
+          "value": { "type": ["number", "string", "boolean", "null"] },
+          "unit": { "type": "string" },
+          "as_of": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "language": { "type": "string", "default": "en" },
+    "translated_excerpt": { "type": "string" },
+    "fetch_attempts": { "type": "integer", "minimum": 0 },
+    "last_error": { "type": "string" },
+    "robots_txt_allows": { "type": "boolean" }
+  }
+}

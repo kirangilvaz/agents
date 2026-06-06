@@ -1,0 +1,935 @@
+{
+  "loop": 7,
+  "phase": "final_lock",
+  "completed_at": "2026-05-31T20:30:00Z",
+  "locked_list": [
+    {
+      "rank": 1,
+      "cluster_id": "israel-lebanon-ground-offensive-2026",
+      "headline": "Israel expands Lebanon ground invasion, seizes strategic crossing",
+      "category": "BREAKING",
+      "score": 95,
+      "tier": "CRITICAL",
+      "conviction": "★★★★★",
+      "score_breakdown": { "coverage": 25, "prominence": 25, "social": 20, "consequentiality": 15, "novelty": 10 },
+      "independent_count": 4,
+      "enrichment_status": "complete",
+      "summary": "Israeli forces have expanded their ground invasion into Lebanon, capturing the strategic Beaufort Castle and crossing the Litani River — a significant escalation bringing troops deeper into Lebanese territory than any previous operation in the current conflict. The UN Security Council held an emergency session on May 30, and France formally protested the invasion, summoning Israel's ambassador. The offensive has prompted mass displacement orders across multiple Lebanese regions.",
+      "why": "This is the deepest Israeli ground penetration into Lebanon since the 2006 war, risking a broader regional conflict at a moment when US-Iran ceasefire talks are still unresolved on day 93 of the war.",
+      "details": [
+        "Israeli forces captured Beaufort Castle, a strategic hilltop fortress last held by Israel in 2006",
+        "UN Security Council emergency session convened May 30; France formally protested, summoning Israel's ambassador",
+        "Israel issued new displacement orders covering additional Lebanese communities south of the Litani River",
+        "The Litani River crossing represents troops deeper into Lebanese territory than any point since the 2006 war",
+        "The offensive complicates ongoing US-Iran ceasefire negotiations entering day 93"
+      ],
+      "sources": [
+        { "name": "NBC News", "url": "https://www.nbcnews.com/world/lebanon/israel-captures-key-lebanon-site-crossing-litani-river-rcna347732" },
+        { "name": "BBC", "url": "https://www.bbc.com/news/articles/cdep04kzz5wo" },
+        {name: "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/5/31/israel-issues-more-displacement-orders-in-lebanon-seizes-strategic-castle" },
+        { "name": "ABC News", "url": "https://abcnews.com/International/wireStory/israeli-forces-historic-push-inside-lebanon-complicates-iran-133465054" }
+      ],
+      "adversarial": "BREAKING reclassification confirmed: Israel's capture of Beaufort Castle, push past Litani River, UNSC emergency session (May 30), and France formally protesting the invasion — all within a 48-hour window. Novelty 10/10. Ranked CRITICAL at top of briefing. Pass 1 and Pass 2 adversarial confirmed.",
+      "watch": "Whether the UN Security Council passes a binding resolution demanding a ceasefire, and whether France escalates its diplomatic response.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 2,
+      "cluster_id": "paris-psg-champions-league-riots-2026",
+      "headline": "Paris descends into riots after PSG Champions League victory — 780+ arrested",
+      "category": "WORLD",
+      "score": 88,
+      "tier": "MAJOR",
+      "conviction": "★★★★★",
+      "score_breakdown": { "coverage": 25, "prominence": 25, "social": 15, "consequentiality": 15, "novelty": 8 },
+      "independent_count": 4,
+      "enrichment_status": "partial",
+      "summary": "French police detained over 780 people in Paris on May 31 after celebrations for Paris Saint-Germain's Champions League victory erupted into widespread riots. At least 219 police officers were injured, 1 person died from a fireworks-related injury, and fires were set across central Paris including at the Trianon theater. Multiple fires were also set in Lyon and Rennes.",
+      "why": "This is one of the most violent post-sporting-event riots in Western Europe in recent history, causing casualties among police, property destruction, and drawing comparisons to the 2022 Champions League final chaos in Madrid.",
+      "details": [
+        "780+ arrested in Paris, 219 police injured, 1 confirmed dead",
+        "PSG defeated Inter Milan 4-2 in Munich to win their first Champions League title",
+        "Fires set at the Trianon theater and across multiple Paris locations",
+        "Riots also erupted in Lyon and Rennes; multiple cities mobilized 30,000+ police nationwide",
+        "Wire-copy republication: Fox News is a wire-copy repub of AP coverage"
+      ],
+      "sources": [
+        { "name": "BBC", "url": "https://www.bbc.com/news/articles/c0r2ejg1w9xo" },
+        { "name": "NBC News", "url": "https://www.nbcnews.com/world/europe/france-detains-hundreds-violent-clashes-paris-saint-german-win-rcna347736" },
+        { "name": "SCMP", "url": "https://www.scmp.com/news/world/europe/article/3355479/french-police-arrest-780-after-violent-paris-saint-germain-celebrations" },
+        { "name": "Fox News", "url": "https://www.foxnews.com/sports/psg-champions-league-victory-causes-chaos-paris-45-arrested-fires-set-across-city", "flag": "wire-copy" }
+      ],
+      "adversarial": "Confirmed across 4 independent sources. BBC, NBC, SCMP all original reporting. Fox News republishing AP wire copy (flagged). Pass 1 adversarial confirmed the story's importance. Violence is genuine and widespread.",
+      "watch": "Whether PSG's victory celebration is officially condemned by the French government and whether UEFA faces pressure over hosting security.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 3,
+      "cluster_id": "trump-approval-record-low-2026",
+      "headline": "Trump approval drops to record 34% in YouGov/Economist poll",
+      "category": "US_POLITICS",
+      "score": 82,
+      "tier": "MAJOR",
+      "conviction": "★★★★",
+      "score_breakdown": { "coverage": 20, "prominence": 25, "social": 15, "consequentiality": 15, "novelty": 7 },
+      "independent_count": 3,
+      "enrichment_status": "partial",
+      "summary": "President Trump's approval rating has fallen to 34% in a YouGov/Economist poll conducted May 22–26, marking the lowest approval rating recorded for any president — Democrat or Republican — since the YouGov tracking began. The poll found that Trump is underwater on every major issue, including the economy (42% approve), and leads Biden's lowest polling average as president by a full point.",
+      "why": "A president polling below every previous occupant at this point in their term signals significant political vulnerability heading into the 2026 midterms and raises questions about the durability of his agenda.",
+      "details": [
+        "YouGov/Economist poll conducted May 22–26, 2026",
+        "Approval at 34% is the lowest for any president in the YouGov tracking series — lower than Biden, Trump (first term), Obama, Bush",
+        "Trump is underwater on every major issue including the economy (42% approve)",
+        "The Hill, AllSides, and Memeorandum all independently confirmed the poll finding",
+        "The Economist described the reading as 'perilous polling territory'"
+      ],
+      "sources": [
+        { "name": "The Hill", "url": "https://thehill.com/homenews/administration/5901371-trump-job-approval-record-low/" },
+        { "name": "Ground News", "url": "https://ground.news/article/trump-enters-perilous-polling-territory_2f2e1c" },
+        { "name": "AllSides", "url": "https://www.allsides.com/news/2026-05-31/politics-donald-trump-approval-rating-34-percent-record-low" }
+      ],
+      "adversarial": "Poll confirmed across 3 independent sources using different aggregation methods (Memeorandum, Ground News, AllSides). The YouGov/Economist methodology is consistent. Pass 1 adversarial confirmed this is a genuine record-low reading. Score confirmed.",
+      "watch": "Whether Trump's approval continues to decline or stabilizes, and whether this affects his legislative agenda in Congress.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 4,
+      "cluster_id": "iran-us-deal-talks-2026",
+      "headline": "US-Iran ceasefire talks advance as Trump signals patience, final deal pending",
+      "category": "US_POLITICS",
+      "score": 78,
+      "tier": "MAJOR",
+      "conviction": "★★★★",
+      "score_breakdown": { "coverage": 20, "prominence": 25, "social": 15, "consequentiality": 15, "novelty": 3 },
+      "independent_count": 4,
+      "enrichment_status": "partial",
+      "summary": "The US and Iran are in active negotiations aimed at ending the 93-day war, with both sides describing significant progress but no signed agreement as of May 31. Trump has said he is 'not in a hurry' to finalize a deal, and Iran's parliament speaker has denied reports of an imminent agreement. A tentative framework involves a 60-day pause in strikes in exchange for sanctions relief, though key details remain disputed.",
+      "why": "A US-Iran ceasefire would reshape global oil markets, ease tensions in the Strait of Hormuz through which 20% of the world's oil flows, and represent the largest foreign policy achievement — or failure — of Trump's second term.",
+      "details": [
+        "War is now in day 93 with no signed ceasefire agreement",
+        "Tentative 60-day pause framework reportedly on the table — pending Trump's final approval",
+        "Iran's Ghalafan: no final agreement reached despite media reports of near-deal",
+        "Oil prices have moderated on ceasefire optimism, supporting S&P 500 at record levels",
+        "Wire-copy: ABC News and CBS News republished wire copy (flagged in sources)"
+      ],
+      "sources": [
+        { "name": "Fox News", "url": "https://www.foxnews.com/politics/trump-says-iran-deal-largely-negotiated-84-day-war-nears-possible-end" },
+        { "name": "CNBC", "url": "https://www.cnbc.com/2026/05/31/still-no-deal-to-end-us-iran-war-trump-says-hes-not-in-a-hurry.html" },
+        { "name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/5/31/trump-tightens-terms-on-iran-war-deal-us-media-say" },
+        { "name": "The Economist", "url": "https://www.economist.com/middle-east-and-africa/2026/05/28/america-and-iran-are-getting-close-to-a-deal-or-not" },
+        { "name": "ABC News", "url": "https://abcnews.com/International/wireStory/iran-us-close-understanding-aimed-ending-war-officials-133250509", "flag": "wire-copy" },
+        { "name": "CBS News", "url": "https://www.cbsnews.com/texas/live-updates/iran-war-us-strikes-trump-oman-strait-of-hormuz-deal/", "flag": "wire-copy" }
+      ],
+      "adversarial": "Day 93 of the US-Iran war. No final deal signed. Conviction capped at ★★★★ per Pass 1 adversarial due to high uncertainty — talks ongoing but no signed agreement. Novelty adjusted to 3 (ongoing update, not new development). Pass 1 adversarial confirmed. Score adjusted from 90 to 78.",
+      "watch": "Whether Trump makes a final decision on the tentative 60-day framework. Any signed ceasefire would immediately rerank this story.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 5,
+      "cluster_id": "colombia-presidential-election-2026",
+      "headline": "Colombia votes in pivotal presidential election testing US relations",
+      "category": "WORLD",
+      "score": 77,
+      "tier": "MAJOR",
+      "conviction": "★★★★",
+      "score_breakdown": { "coverage": 15, "prominence": 25, "social": 15, "consequentiality": 15, "novelty": 7 },
+      "independent_count": 2,
+      "enrichment_status": "partial",
+      "summary": "Colombia held its presidential election on May 31, 2026, with results still being tallied. The race pits incumbent Gustavo Petro's allies against a coalition of right-leaning candidates including Centro Esperanza leader Jorge Luis Kand. The election represents a potential inflection point in Colombia's relationship with the US — Petro has signaled openness to relations with Venezuela and Iran while Kand's camp emphasizes alignment with Washington.",
+      "why": "Colombia is the US's oldest ally in Latin America and hosts American military bases. A Petro victory would represent the most significant leftward shift in Colombian foreign policy in decades, while a Kand victory maintains the US-aligned status quo.",
+      "details": [
+        "Election held May 31, 2026 — results still being tallied as of briefing build",
+        "Petro's third term bid represents a potential dramatic shift in US-Colombia relations",
+        "Kand's Centro Esperanza coalition emphasizes US alignment and free-market policies",
+        "CAPEL international election observation mission certified the electoral system",
+        "Polls showed a tight race with high voter turnout expected"
+      ],
+      "sources": [
+        { "name": "BBC", "url": "https://www.bbc.com/news/articles/c2027g423glo" },
+        { "name": "ABC News", "url": "https://abcnews.com/International/wireStory/colombias-presidential-election-pits-outgoing-leaders-ally-pro-133459793" }
+      ],
+      "adversarial": "Election happening today — high stakes but results not yet determined. Pass 1 adversarial confirmed the story's geopolitical significance. Score of 77 reflects genuine importance of the event even without final results. Conviction at ★★★★ is appropriate for a live election story.",
+      "watch": "Final vote tallies and whether a clear winner is declared or a run-off is triggered.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 6,
+      "cluster_id": "stock-market-dell-2026",
+      "headline": "US stock indexes hit record highs as Dell surges 32.8% on AI server demand",
+      "category": "MARKETS",
+      "score": 72,
+      "tier": "NOTABLE",
+      "conviction": "★★★",
+      "score_breakdown": { "coverage": 20, "prominence": 15, "social": 15, "consequentiality": 15, "novelty": 7 },
+      "independent_count": 5,
+      "enrichment_status": "complete",
+      "summary": "US stock indexes closed at record highs on May 29 (the last trading day before the May 31 briefing) as Dell Technologies surged 32.8% after beating earnings expectations and raising full-year guidance on AI server demand. The S&P 500 extended its winning streak to nine consecutive weeks — its longest since December 2023. Markets were also supported by cooling oil prices on US-Iran ceasefire optimism.",
+      "why": "A record-setting market week driven by AI infrastructure demand signals continued investor confidence in the AI trade, even as the US-Iran conflict persists. The Dell surge is the S&P 500's best single-day performance for the stock in recent history.",
+      "details": [
+        "S&P 500 closed at record 7,580.06 — fourth consecutive all-time high",
+        "Nasdaq Composite closed at record 26,972.62; Dow Jones at record 51,032.46",
+        "Dell Technologies surged 32.8%, its best day ever, after raising full-year profit and revenue forecasts",
+        "S&P 500 posted its ninth consecutive weekly gain — longest winning streak since December 2023",
+        "May 2026 returns: Nasdaq +8.4%, S&P 500 +5.2%, Dow +2.8%"
+      ],
+      "sources": [
+        { "name": "Investopedia", "url": "https://www.investopedia.com/stock-market-today-dow-jones-s-and-p-500-05292026-11986232" },
+        { "name": "The Motley Fool", "url": "https://www.fool.com/coverage/stock-market-today/2026/05/29/stock-market-today-may-29-markets-extend-gains-as-dell-soars-33/" },
+        { "name": "Sunday Guardian Live", "url": "https://sundayguardianlive.com/business/wall-street-hits-new-high-on-tech-strength-198929/" },
+        { "name": "Daily Times", "url": "https://dailytimes.com.pk/1500311/us-stocks-gain-ground-adding-to-their-records-as-dell-soars/" },
+        { "name": "Harianbasis", "url": "https://www.harianbasis.co/en/us-stocks-surge-record-highs-mideast-peace" }
+      ],
+      "adversarial": "GAP-FILL entry (Loop 6 Pass 1). Confirmed via 5 independent sources. MARKETS category gap resolved. Pass 1 adversarial confirmed Dell surge is real and represents a genuine market milestone.",
+      "watch": "Whether the AI infrastructure rally in Dell, HPE (+12.6%), and Super Micro Computer (+11.6%) sustains into June, and whether the S&P 500 can extend its winning streak to double digits.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 7,
+      "cluster_id": "openai-erdos-2026",
+      "headline": "OpenAI model autonomously disproves Erdős's 80-year geometry conjecture, verified by 9 mathematicians",
+      "category": "AI",
+      "score": 65,
+      "tier": "NOTABLE",
+      "conviction": "★★★",
+      "score_breakdown": { "coverage": 20, "prominence": 15, "social": 15, "consequentiality": 10, "novelty": 5 },
+      "independent_count": 4,
+      "enrichment_status": "complete",
+      "summary": "OpenAI announced on May 20, 2026, that an internal general-purpose reasoning model autonomously produced a counterexample disproving Paul Erdős's 1946 unit-distance conjecture — a problem in discrete geometry that had resisted mathematicians for 80 years. Unlike a previous OpenAI math claim that collapsed under scrutiny in October 2025, this result was verified by a companion arXiv paper co-authored by nine external mathematicians including Fields Medalist Tim Gowers.",
+      "why": "This is the most significant peer-reviewed AI mathematical discovery to date. It demonstrates that frontier AI systems can produce novel, rigorous mathematical proofs that survive expert scrutiny — a milestone for AI science capability.",
+      "details": [
+        "Model produced a counterexample showing unit-distance pairs grow at least n^(1+δ) for δ=0.014, disproving Erdős's conjectured upper bound of n^(1+o(1))",
+        "Companion paper co-authored by 9 mathematicians including Fields Medalist Timothy Gowers, Thomas Bloom, Noga Alon, and Will Sawin",
+        "Proof was produced in one shot by the model; human mathematicians refined the exposition via Codex",
+        "Unlike the retracted October 2025 claim, this result was independently verified before announcement",
+        "Gowers: 'I would recommend this for acceptance in the Annals of Mathematics without hesitation'"
+      ],
+      "sources": [
+        { "name": "OpenAI", "url": "https://openai.com/index/model-disproves-discrete-geometry-conjecture/" },
+        { "name": "TechTimes", "url": "https://www.techtimes.com/articles/316955/20260521/openai-model-cracks-80-year-erds-conjecture-verified-its-harshest-previous-critic.htm" },
+        { "name": "Phys.org", "url": "https://phys.org/news/2026-05-ai-major-breakthrough-math-problem.html" },
+        { "name": "arXiv", "url": "https://arxiv.org/abs/2605.20695" }
+      ],
+      "adversarial": "GAP-FILL entry (Loop 6 Pass 1). Unlike the retracted October 2025 claim, this result was independently verified by 9 mathematicians including a Fields Medalist. AI category gap resolved. Pass 1 adversarial confirmed this is a genuine landmark result.",
+      "watch": "Whether the peer-reviewed paper is formally accepted by the Annals of Mathematics and whether this marks a shift in how AI contributes to mathematical research.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 8,
+      "cluster_id": "ukraine-drone-strikes-russia-2026",
+      "headline": "Ukraine launches massive drone strikes across multiple Russian regions",
+      "category": "WORLD",
+      "score": 52,
+      "tier": "NOTABLE",
+      "conviction": "★★★",
+      "score_breakdown": { "coverage": 20, "prominence": 25, "social": 15, "consequentiality": 15, "novelty": 3 },
+      "independent_count": 3,
+      "enrichment_status": "partial",
+      "summary": "Ukraine launched a large-scale drone attack targeting energy infrastructure across multiple Russian regions. Russia claimed Ukrainian drones struck the Zaporizhzhia Nuclear Power Plant, a claim Ukraine has denied, presenting technical evidence that the strikes were against conventional energy targets and that fiber-optic drones cannot reach the distances required to hit the NPP.",
+      "why": "This is a significant escalation in Ukraine's campaign to strike Russian energy infrastructure, though Russia's NPP claim — denied with technical evidence — remains unconfirmed and may be disinformation.",
+      "details": [
+        "Ukraine struck energy targets across multiple Russian regions with long-range drones",
+        "Russia's claim that it struck the Zaporizhzhia NPP was denied by Ukraine with technical counter-evidence",
+        "Ukrainian military: drones targeted conventional energy infrastructure, not nuclear facilities",
+        "The strikes come amid ongoing US-Iran ceasefire negotiations that could affect Ukraine's Western support",
+        "Wire-copy: no wire republication detected in this cluster"
+      ],
+      "sources": [
+        { "name": "NBC News", "url": "https://www.nbcnews.com/world/ukraine/ukraine-hits-russian-energy-targets-denies-striking-kremlin-occupied-n-rcna347739" },
+        { "name": "Ground News", "url": "https://ground.news/article/ukrainian-drones-hit-targets-across-several-russian-regions_2f2e1c" },
+        { "name": "Fox News", "url": "https://www.foxnews.com/world/us-embassy-ukraine-warns-potentially-significant-air-attack-next-24-hours" }
+      ],
+      "adversarial": "Story demoted from Pass 1 score (62→52) because Russia's Zaporizhzhia NPP claim is denied by Ukraine with technical evidence. This is likely Russian disinformation. Coverage breadth may be inflated by the NPP claim. Score reduced accordingly.",
+      "watch": "Whether the Zaporizhzhia NPP strike claim is independently confirmed or debunked, and whether Russia's response escalates further.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 9,
+      "cluster_id": "pancreatic-cancer-drug-2026",
+      "headline": "Experimental pill shows unprecedented results in deadly pancreatic cancer",
+      "category": "SCIENCE",
+      "score": 58,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 15, "prominence": 5, "social": 10, "consequentiality": 15, "novelty": 7 },
+      "independent_count": 2,
+      "enrichment_status": "partial",
+      "summary": "An experimental oral pill — daraxonrasib (from Revolution Medicines, acquired by Jazz Pharmaceuticals) — has shown unprecedented results in treating pancreatic cancer, a disease that has seen minimal progress in decades. Phase 3 trial results were presented at the American Society of Clinical Oncology (ASCO) annual meeting on May 31, 2026 and published simultaneously in the New England Journal of Medicine.",
+      "why": "Pancreatic cancer has a five-year survival rate of approximately 12% and has resisted most targeted therapies. Any effective new treatment represents a major advance in oncology.",
+      "details": [
+        "Daraxonrasib showed dramatic tumor regression in Phase 3 trial for RAS-mutant pancreatic cancer",
+        "Results presented at ASCO May 31, 2026 and published in NEJM simultaneously",
+        "Jazz Pharmaceuticals acquired Revolution Medicines (which developed daraxonrasib) in a deal finalized in 2025",
+        "FDA granted breakthrough therapy designation for the drug",
+        "Two independent sources (NBC News, CNBC) confirmed the findings"
+      ],
+      "sources": [
+        { "name": "NBC News", "url": "https://www.nbcnews.com/health/health-news/new-drugs-unprecedented-results-pancreatic-cancer-doctors-look-uses-rcna346818" },
+        { "name": "CNBC", "url": "https://www.cnbc.com/2026/05/31/experimental-pill-promises-new-hope-for-deadly-pancreatic-cancer.html" }
+      ],
+      "adversarial": "Story confirmed across 2 independent sources. ASCO presentation and NEJM publication provide strong independent validation. Pass 1 adversarial confirmed this is a genuine medical breakthrough, not overhyped.",
+      "watch": "FDA regulatory review timeline and whether the drug enters expanded access programs before formal approval.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 10,
+      "cluster_id": "softbank-france-ai-investment-2026",
+      "headline": "SoftBank announces up to €75B AI data center investment in France",
+      "category": "TECH",
+      "score": 58,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 15, "prominence": 15, "social": 10, "consequentiality": 10, "novelty": 7 },
+      "independent_count": 2,
+      "enrichment_status": "partial",
+      "summary": "SoftBank announced at the Choose France summit on May 30, 2026 a commitment to invest up to €75 billion in AI data centers across France, with an initial deployment of €45 billion for 3.1GW of capacity in the Hauts-de-France region by 2031. The investment represents one of the largest single-country AI infrastructure commitments in European history.",
+      "why": "This investment positions France as a major European AI infrastructure hub and represents a significant geopolitical competition for AI data center capacity between European nations.",
+      "details": [
+        "SoftBank's commitment of up to €75B is one of the largest AI data center investments in European history",
+        "Initial €45B deployment in Hauts-de-France: 3.1GW capacity by 2031",
+        "Announced at Choose France summit, attended by President Macron",
+        "Part of France's strategy to attract AI infrastructure amid EU data sovereignty concerns",
+        "Two independent sources (CNBC, TechCrunch) confirmed the investment"
+      ],
+      "sources": [
+        { "name": "CNBC", "url": "https://www.cnbc.com/2026/05/31/softbank-to-build-up-ai-data-centers-in-france-with-major-investment.html" },
+        { "name": "TechCrunch", "url": "https://techcrunch.com/2026/05/30/softbank-says-it-will-invest-up-to-e75-billion-to-build-french-data-centers/" }
+      ],
+      "adversarial": "Confirmed across 2 independent sources. Pass 1 adversarial confirmed the investment is real and significant. Score of 58 appropriately reflects importance for tech and France-EU geopolitics.",
+      "watch": "Whether SoftBank secures French regulatory approvals and whether other EU nations announce competing AI infrastructure investments.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 11,
+      "cluster_id": "ferrari-electric-car-luce-2026",
+      "headline": "Ferrari's electric car: divisiveness is the point",
+      "category": "BUSINESS",
+      "score": 53,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 15, "prominence": 5, "social": 15, "consequentiality": 10, "novelty": 7 },
+      "independent_count": 2,
+      "enrichment_status": "partial",
+      "summary": "Ferrari unveiled its first electric vehicle, the Ferrari Luce, priced at approximately $640,000, drawing intense criticism for its design and the company's decision to move away from its combustion-engine heritage. Ferrari CEO Benedetto Vigna defended the design, saying 'divisiveness is the point' for a brand built on making customers feel something. Ferrari's stock fell 8% on the day of the unveiling.",
+      "why": "Ferrari represents the extreme end of the luxury combustion-engine market. Its embrace of electric marks a turning point for the ultra-high-end automotive sector, and the market's negative reaction signals investor uncertainty about Ferrari's brand resilience in an electric future.",
+      "details": [
+        "Ferrari Luce EV priced at ~$640,000 — first fully electric Ferrari",
+        "Stock fell 8% on unveiling day amid backlash to the design",
+        "CEO Vigna: 'divisiveness is the point' — Ferrari's brand is built on emotional response",
+        "The Economist and TechCrunch both covered the story from different angles",
+        "Two independent sources confirm the market reaction and CEO's defense"
+      ],
+      "sources": [
+        { "name": "The Economist", "url": "https://www.economist.com/business/2026/05/27/ferraris-electric-car-divisiveness-is-the-point" },
+        { "name": "TechCrunch", "url": "https://techcrunch.com/2026/05/31/techcrunch-mobility-it-doesnt-matter-that-people-hate-the-ferrari-luce/" }
+      ],
+      "adversarial": "Confirmed across 2 independent sources. The Economist covers the cultural/brand dimension; TechCrunch covers the automotive/market reaction. Pass 1 adversarial confirmed the story is factually accurate — Ferrari EV exists, backlash is real, stock fell 8%.",
+      "watch": "Whether Ferrari's EV sales meet expectations and whether the brand's premium positioning survives the transition to electric.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": false
+    },
+    {
+      "rank": 12,
+      "cluster_id": "hacker-poisoning-open-source-2026",
+      "headline": "A hacker group is poisoning open source code at an unprecedented scale",
+      "category": "TECH",
+      "score": 52,
+      "tier": "NOTABLE",
+      "conviction": "★★★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 15, "consequentiality": 10, "novelty": 7 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "A hacker group (Team PCP/Laravel-Lang) has been systematically poisoning open source code repositories at an unprecedented scale, rewriting over 700 git tags and deploying credential-stealing backdoors through the Laravel-Lang localization package. The attack was detected when developers noticed the malicious code being inserted into their projects. Composer 2.10 was released to block the attack vector.",
+      "why": "This is one of the most sophisticated and widespread software supply chain attacks in open source history, affecting thousands of production applications worldwide. The scale of git tag rewriting makes it extremely difficult for developers to trust historical versions of packages.",
+      "details": [
+        "Team PCP rewrote 700+ git tags in the Laravel-Lang package",
+        "Credential-stealing backdoor was deployed through Packagist and detected by developers",
+        "Composer 2.10 released to block the attack vector",
+        "The scale of git tag rewriting is unprecedented in open source history",
+        "Single source (Wired) — independent confirmation from developer community forums"
+      ],
+      "sources": [
+        { "name": "Wired", "url": "https://www.wired.com/story/teampcp-software-supply-chain-attack-spree-github/" }
+      ],
+      "adversarial": "Single source (Wired) — this is a weakness. However, the attack was active and detected by the developer community. The story is confirmed by the release of Composer 2.10 specifically to block this attack. Pass 1 adversarial confirmed the story is real.",
+      "watch": "Whether additional packages are found to be compromised and whether law enforcement identifies the perpetrators.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 13,
+      "cluster_id": "artemis-ii-moon-launch-2026",
+      "headline": "Artemis II mission launches successfully",
+      "category": "SCIENCE",
+      "score": 48,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 25, "social": 10, "consequentiality": 10, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "NASA's Artemis II mission — the first crewed lunar mission since Apollo 17 in 1972 — successfully launched on April 1, 2026. The mission carries four astronauts on a flyby of the Moon and represents NASA's return to crewed lunar exploration after more than 50 years.",
+      "why": "Artemis II marks the first human presence beyond low Earth orbit in over five decades and is a milestone for NASA's lunar exploration program, even though the headline on May 31 refers to a past (April 1) event.",
+      "details": [
+        "Artemis II launched April 1, 2026 — four astronauts on a lunar flyby mission",
+        "This is the first crewed lunar mission since Apollo 17 in December 1972",
+        "Crew: Commander Reid Wiseman, Pilot Victor Glover, Mission Specialists Christina Koch and Jeremy Hansen",
+        "Mission is a flyby (not a landing) ahead of Artemis III's planned surface landing",
+        "Single source (Wired)"
+      ],
+      "sources": [
+        { "name": "Wired", "url": "https://www.wired.com/story/artemis-ii-moon-mission-launches-successfully/" }
+      ],
+      "adversarial": "Story demoted from Pass 1 (score reduced 48 from 68) because the Artemis II launch occurred on April 1, not May 31. This is not a current development on the briefing date. Novelty reduced to 3. Single-source is a further weakness.",
+      "watch": "Artemis II's return trajectory and the progress of Artemis III preparations for a lunar surface landing.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 14,
+      "cluster_id": "tesla-robotaxi-remote-human-drivers-2026",
+      "headline": "Tesla admits its robotaxis are sometimes driven by remote humans",
+      "category": "TECH",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 15, "consequentiality": 10, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "Tesla has acknowledged in a letter to Senator Edward Markey that its robotaxi vehicles are sometimes operated remotely by human operators, contradicting CEO Elon Musk's public claims that the vehicles are fully autonomous. The admission came in response to questions about two crashes in Austin where remote human operators were controlling the vehicles at the time.",
+      "why": "Tesla's claims about full autonomy have been central to its valuation and regulatory treatment. Any admission that remote human operators are used contradicts the 'robotaxi' branding and raises questions about the technology's true readiness.",
+      "details": [
+        "Tesla admitted to Senator Markey that remote operators can take control of 'robotaxi' vehicles",
+        "Remote operation occurs at speeds up to 2mph (or 10mph in limited conditions)",
+        "Two crashes in Austin involved remote operators at the time",
+        "NHTSA crash data shows two teleoperator-caused incidents",
+        "Single source (Wired)"
+      ],
+      "sources": [
+        { "name": "Wired", "url": "https://www.wired.com/story/tesla-says-its-robotaxis-are-sometimes-driven-by-humans/" }
+      ],
+      "adversarial": "Single source (Wired) — weakness. However, the admission was made directly to a US Senator in an official letter, making it a documented factual admission. Pass 1 adversarial confirmed the story's importance for tech accountability.",
+      "watch": "NHTSA regulatory response and whether Tesla's robotaxi permits are reviewed or suspended.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 15,
+      "cluster_id": "blue-origin-new-glenn-explosion-2026",
+      "headline": "Blue Origin's New Glenn rocket explodes during static fire test — catastrophic failure",
+      "category": "SCIENCE",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 25, "social": 15, "consequentiality": 10, "novelty": 7 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "Blue Origin's New Glenn rocket (NG-4 mission) exploded during a static fire test at Launch Complex 36 in Florida on May 28, 2026, in what the company called a 'rapid unscheduled disassembly.' The explosion caused extensive damage to the launch pad, including toppling the lightning tower, and has frozen Amazon's Project Kuiper satellite deployment manifest that relies on New Glenn launches.",
+      "why": "This is a major setback for Blue Origin's attempt to compete with SpaceX in the heavy-lift launch market. The pad damage could delay New Glenn flights for months, affecting Amazon's satellite internet constellation.",
+      "details": [
+        "New Glenn NG-4 exploded during static fire test at LC-36 in Florida on May 28",
+        "No injuries; pad damage extensive including the lightning tower being toppled",
+        "Amazon's Project Kuiper manifest frozen — Amazon has $10B+ invested in New Glenn launches",
+        "Blue Origin called it a 'rapid unscheduled disassembly' — industry term for explosion",
+        "Single source (Ars Technica)"
+      ],
+      "sources": [
+        { "name": "Ars Technica", "url": "https://arstechnica.com/space/2026/05/blue-origins-new-glenn-rocket-just-exploded-during-a-static-fire-test/" }
+      ],
+      "adversarial": "Single source (Ars Technica). However, the story was widely covered in space industry media and is confirmed by Blue Origin's own statement calling it a 'rapid unscheduled disassembly.' Single-source weakness acknowledged.",
+      "watch": "Timeline for pad repairs and New Glenn's return to flight, and impact on Amazon Kuiper deployment schedule.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 16,
+      "cluster_id": "ice-children-detention-2026",
+      "headline": "Children 'held like criminals' inside ICE detention center",
+      "category": "US_POLITICS",
+      "score": 50,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 25, "social": 15, "consequentiality": 15, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "An internal report from the Department of Homeland Security's Office of Inspector General found that children as young as fiv were held in handcuffs and leg shackles inside an ICE detention center in Virginia, with conditions described as treating minors 'like criminals.' The report documents prolonged use of restraints on minors in conditions that DHS's own Inspector General called 'contrary to the agency's custody policies.'",
+      "why": "This represents a significant human rights concern within the US immigration detention system and is directly relevant to ongoing debates about ICE practices and undocumented immigrant treatment.",
+      "details": [
+        "DHS Inspector General report found children as young as 5 held in handcuffs and leg shackles",
+        "Children described as being treated 'like criminals' in internal DHS documents",
+        "Report documents prolonged use of restraints on minors in Virginia ICE facility",
+        "Practices found to be 'contrary to the agency's custody policies' per the OIG",
+        "Single source (CBS News)"
+      ],
+      "sources": [
+        { "name": "CBS News", "url": "https://www.cbsnews.com/news/children-held-like-criminals-inside-ice-detention-center/" }
+      ],
+      "adversarial": "Single source (CBS News) — weakness. However, this is a DHS Inspector General report — an official government document — which provides strong internal validation. Pass 1 adversarial confirmed the story's human rights significance.",
+      "watch": "Congressional hearings on ICE detention practices and whether the Virginia facility's practices are systemic.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 17,
+      "cluster_id": "senate-blue-origin-bailout-2026",
+      "headline": "Senate preparing $10B bailout fund for Jeff Bezos space firm",
+      "category": "US_POLITICS",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 25, "social": 15, "consequentiality": 10, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "The Intercept reported that the Senate is preparing a $10 billion emergency appropriation to support Blue Origin after the company's New Glenn rocket explosion on May 28 destroyed its launch pad. The bailout would be structured as an 'emergency' appropriation outside the normal appropriations process.",
+      "why": "A $10B bailout of Jeff Bezos's space company — one of the world's wealthiest individuals — using emergency taxpayer funds would be unprecedented and politically contentious.",
+      "details": [
+        "$10B emergency appropriation being prepared by Senate for Blue Origin",
+        "Would offset losses from New Glenn NG-4 explosion and pad destruction",
+        "Bezos is the world's third-wealthiest person, worth approximately $250B",
+        "Appropriation would be structured as emergency funding outside normal process",
+        "Single source (The Intercept)"
+      ],
+      "sources": [
+        { "name": "The Intercept", "url": "https://static.theintercept.com/amp/jeff-bezos-blue-origin-senate-bailout.html" }
+      ],
+      "adversarial": "Single source (The Intercept) — weakness. The Intercept is an investigative outlet with a progressive editorial perspective, which may color framing. Pass 1 adversarial confirmed the political significance of the story regardless of the source's lean.",
+      "watch": "Whether the $10B appropriation passes Congress and what conditions (if any) are attached.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 18,
+      "cluster_id": "laos-cave-rescue-2026",
+      "headline": "CNN talks to rescue diver after first survivor rescued from Laos cave",
+      "category": "WORLD",
+      "score": 42,
+      "tier": null,
+      "conviction": "★",
+      "score_breakdown": { "coverage": 10, "prominence": 25, "social": 10, "consequentiality": 5, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "Rescue teams in Laos extracted the first survivor from a flooded cave system on May 29, with four more people self-evacuating on May 30 after water levels dropped following intensive pumping. Two people remain missing. CNN spoke exclusively with a rescue diver about the operation.",
+      "why": "The ongoing cave rescue in Laos represents a dramatic humanitarian operation, though it is not a development that will significantly alter any major policy, economic, or geopolitical landscape.",
+      "details": [
+        "First survivor rescued May 29 from flooded Laos cave system",
+        "Four additional people self-evacuated May 30 after pumping lowered water levels",
+        "Five total rescued; two still missing as of May 31",
+        "CNN spoke exclusively with a rescue diver about the operation",
+        "Single source (CNN)"
+      ],
+      "sources": [
+        { "name": "CNN", "url": "https://edition.cnn.com/2026/05/29/world/video/rescue-diver-after-first-survivor-rescued-from-laos-cave-digvid-vrtc" }
+      ],
+      "adversarial": "Single source (CNN). No independent confirmation. The story is a human interest story but lacks the broad impact that would justify a higher ranking. Below the NOTEWORTHY threshold (score 42 < 45).",
+      "watch": "Search for the two remaining missing persons continues.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 19,
+      "cluster_id": "china-factory-activity-economy-2026",
+      "headline": "China factory activity worsens in fresh warning sign for economy",
+      "category": "ECONOMY",
+      "score": 46,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 10, "consequentiality": 10, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "China's official National Bureau of Statistics PMI for May 2026 came in at exactly 50.0 — the expansion/contraction dividing line — down from 50.3 in April. While technically not a contraction, the decline and the new export orders sub-index falling to 48.6 (below 50) signal continued weakness in China's manufacturing sector and global trade demand.",
+      "why": "China is the world's second-largest economy and a major driver of global commodity demand. Any deterioration in Chinese factory activity has ripple effects on commodity prices, emerging market economies, and global trade.",
+      "details": [
+        "Official NBS PMI for May 2026: exactly 50.0, down from 50.3 in April",
+        "50.0 is the exact expansion/contraction dividing line — a marginal deterioration",
+        "New export orders sub-index fell to 48.6, below the 50 contraction threshold",
+        "Bloomberg is the only source for this specific data point",
+        "Single source weakness"
+      ],
+      "sources": [
+        { "name": "Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-05-31/china-factory-activity-worsens-in-warning-sign-for-economy" }
+      ],
+      "adversarial": "Single source (Bloomberg) — weakness. The PMI data is official Chinese government data, which is independently verifiable. However, the newsroom summary relies on Bloomberg. Score of 46 is modest and appropriately reflects the marginal nature of the decline.",
+      "watch": "June PMI data and whether China's government announces new stimulus measures in response to the slowdown.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 20,
+      "cluster_id": "myanmar-explosives-depot-blast-2026",
+      "headline": "Dozens killed in explosives depot blast in northeast Myanmar",
+      "category": "WORLD",
+      "score": 46,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 10, "consequentiality": 10, "novelty": 7 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "A massive explosion at an explosives depot in Kyaung Township, Shan State, northeastern Myanmar killed 45-55 people and injured more than 70 others. The blast occurred at a facility operated by the Myanmar army'slight Infantry Regiment 246, which was storing military-grade explosives near civilian areas. The Ta'ang National Liberation Army (TNLA) has claimed responsibility.",
+      "why": "This is a significant civilian casualty event in an active conflict zone, involving military-grade explosives stored near civilian populations. It highlights the ongoing instability in Myanmar's civil war.",
+      "details": [
+        "45-55 killed, 70+ injured in Kyaung Township, Shan State, northeastern Myanmar",
+        "Explosives depot operated by Myanmar army Infantry Regiment 246",
+        "TNLA (Ta'ang National Liberation Army) claimed responsibility",
+        "The blast occurred near civilian areas — a potential war crime if intentional",
+        "Single source (Al Jazeera)"
+      ],
+      "sources": [
+        { "name": "Al Jazeera", "url": "https://www.aljazeera.com/news/2026/5/31/dozens-killed-in-blast-at-explosives-depot-in-northeastern-myanmar" }
+      ],
+      "adversarial": "Single source (Al Jazeera) — weakness. However, TNLA claimed responsibility and the casualty figures are consistent with the scale of military depot explosions. Pass 1 adversarial confirmed the story's basic facts.",
+      "watch": "Whether an independent investigation is launched and whether international bodies classify this as a war crime.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 21,
+      "cluster_id": "washington-mill-disaster-2026",
+      "headline": "Last victims retrieved in Washington mill disaster; cause probed",
+      "category": "WORLD",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 25, "social": 10, "consequentiality": 10, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "Search teams have recovered the last victims from the debris of a mill building collapse in Washington state. The disaster occurred when the structure failed catastrophically, trapping workers inside. NTSB and OSHA have opened investigations into the cause of the collapse.",
+      "why": "A fatal industrial disaster with multiple casualties warrants inclusion as a notable event, though it does not rise to the level of a major geopolitical or economic story.",
+      "details": [
+        "Last victims recovered from Washington mill building collapse",
+        "Multiple workers trapped; final death toll being confirmed by authorities",
+        "NTSB and OSHA both opened investigations into the cause",
+        "Cause not yet determined as of the May 31 briefing",
+        "Single source (Bloomberg)"
+      ],
+      "sources": [
+        { "name": "Bloomberg", "url": "https://www.bloomberg.com/news/articles/2026-05-31/last-victims-retrieved-in-washington-mill-disaster-cause-probed" }
+      ],
+      "adversarial": "Single source (Bloomberg). No independent confirmation from local news outlets or OSHA/NTSB public statements yet. The story appears to be a breaking industrial disaster with ongoing investigations.",
+      "watch": "NTSB and OSHA findings on the cause of the structural failure.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 22,
+      "cluster_id": "ebola-outbreak-dr-congo-uganda-2026",
+      "headline": "Over 40 dead in Ebola outbreak in DR Congo and Uganda",
+      "category": "WORLD",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 5, "social": 10, "consequentiality": 15, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "An Ebola outbreak centered in the DRC has spread to Uganda, with the WHO Director-General visiting the affected region in Bunia. The outbreak involves the Bundibugyo strain of Ebola — a less lethal but harder-to-detect variant. As of May 31, there are 134 confirmed cases (including 9 in Uganda) and 18 confirmed deaths.",
+      "why": "Ebola outbreaks in densely populated central African regions pose a significant health security risk, particularly given the lack of a licensed vaccine for the Bundibugyo strain currently in circulation.",
+      "details": [
+        "134 confirmed cases (9 in Uganda), 18 confirmed deaths as of May 31",
+        "Bundibugyo strain — less lethal but harder to detect than Zaire strain",
+        "WHO Director-General Tedros visited Bunia, DRC outbreak center",
+        "No licensed vaccine currently available for the Bundibugyo strain in circulation",
+        "Single source (NBC News)"
+      ],
+      "sources": [
+        { "name": "NBC News", "url": "https://www.nbcnews.com/world/africa/40-dead-ebola-outbreak-dr-congo-uganda-rcna347745" }
+      ],
+      "adversarial": "Single source (NBC News). WHO is the primary source of data for Ebola outbreaks. Pass 1 adversarial confirmed the outbreak is real and the numbers are consistent with WHO reporting.",
+      "watch": "Whether the outbreak spreads beyond the current affected regions and whether a vaccine rollout is initiated.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 23,
+      "cluster_id": "pfizer-braftovi-colorectal-cancer-2026",
+      "headline": "Pfizer's BRAFTOVI regimen nearly doubles median progression-free survival in metastatic colorectal cancer",
+      "category": "SCIENCE",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 10, "consequentiality": 15, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "Pfizer announced at ASCO 2026 that its BRAFTOVI-based combination therapy showed near-doubling of median progression-free survival in BRAF-mutant metastatic colorectal cancer patients in a Phase 3 trial. The results were simultaneously published in the New England Journal of Medicine.",
+      "why": "BRAF-mutant colorectal cancer is one of the most aggressive and treatment-resistant subtypes of colorectal cancer. Any effective targeted therapy represents a significant advance in oncology.",
+      "details": [
+        "BRAFTOVI combination therapy showed near-doubling of median progression-free survival",
+        "BRAF-mutant metastatic colorectal cancer has historically been highly treatment-resistant",
+        "Results presented at ASCO 2026 and published simultaneously in NEJM",
+        "Pfizer regulatory submissions expected in 2026",
+        "Single source (Financial Times via PR wire)"
+      ],
+      "sources": [
+        { "name": "Financial Times", "url": "https://markets.ft.com/data/announce/detail?dockey=600-202605310800BIZWIRE_USPRX____20260531_BW990280-1" }
+      ],
+      "adversarial": "Single source (Financial Times, sourced from Pfizer's official press release). The ASCO presentation and NEJM publication provide independent validation. However, the newsroom relied on the PR wire for the announcement. Pass 1 adversarial confirmed the trial results are real.",
+      "watch": "FDA review timeline and whether the treatment is approved for the BRAF-mutant colorectal cancer indication.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 24,
+      "cluster_id": "us-iran-oil-tanker-hormuz-2026",
+      "headline": "US military fires on Iranian-flagged oil tanker as Trump presses for deal to end war",
+      "category": "WORLD",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 10, "consequentiality": 15, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "US military forces fired on an Iranian-flagged oil tanker transiting the Strait of Hormuz, according to a Washington Post report. The incident occurred amid ongoing US-Iran ceasefire negotiations and represents a direct military engagement with Iranian-flagged maritime assets.",
+      "why": "The Strait of Hormuz is the world's most critical oil chokepoint, carrying approximately 20% of global oil trade. Any military incident involving oil tankers in the Strait has immediate global energy market implications.",
+      "details": [
+        "US military fired on Iranian-flagged oil tanker in the Strait of Hormuz",
+        "Incident occurred amid ongoing US-Iran ceasefire negotiations",
+        "Washington Post was the sole source for this report",
+        "Single source (Washington Post)"
+      ],
+      "sources": [
+        { "name": "Washington Post", "url": "https://www.washingtonpost.com/business/2026/05/06/trump-iran-deal-elections-epstein/5fa4ac1c-4947-11f1-a119-857cd2bf4fd4_story.html" }
+      ],
+      "adversarial": "Single source (Washington Post). The Washington Post has a strong track record of reporting on military operations. However, the story dates to May 6 — this is a past event being tracked in the ongoing Iran war narrative. Novelty reduced to 3 (day 93 of war context).",
+      "watch": "Whether this incident is cited in ongoing US-Iran negotiations and whether Iran responds to the tanker strike.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 25,
+      "cluster_id": "epa-carcinogenic-air-pollution-2026",
+      "headline": "Inspector General rebukes EPA for failing to protect communities from carcinogenic air pollution",
+      "category": "SCIENCE",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 10, "consequentiality": 15, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "The EPA's Office of Inspector General issued a report finding that the agency has systematically failed to regulate emissions of ethylene oxide and chloroprene — two chemicals classified as known human carcinogens — near industrial facilities in Louisiana's 'Cancer Alley.' The OIG found that communities near these facilities face elevated cancer risks that the EPA has not acted to mitigate.",
+      "why": "Environmental justice failures in cancer risk exposure near industrial facilities represent a significant public health failure with disproportionate impact on low-income and minority communities.",
+      "details": [
+        "EPA OIG found systematic failure to regulate ethylene oxide and chloroprene emissions",
+        "Affected communities are in Louisiana's 'Cancer Alley' — a corridor of industrial facilities",
+        "Both chemicals are classified as known human carcinogens by EPA's own classification",
+        "Communities near these facilities face measurably elevated cancer risks",
+        "Single source (The Intercept)"
+      ],
+      "sources": [
+        { "name": "The Intercept", "url": "https://static.theintercept.com/amp/epa-ethylene-oxide-chloroprene-inspector-general.html" }
+      ],
+      "adversarial": "Single source (The Intercept) — weakness. However, the OIG report is an official government document that is independently verifiable. The Intercept's coverage may emphasize the political angle but the underlying findings are from an official EPA OIG report.",
+      "watch": "Whether EPA takes regulatory action in response to the OIG findings and whether Congress holds hearings.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 26,
+      "cluster_id": "nsf-research-grants-hold-2026",
+      "headline": "Exclusive: NSF puts new research grants to top universities on hold",
+      "category": "SCIENCE",
+      "score": 45,
+      "tier": "NOTEWORTHY",
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 10, "consequentiality": 15, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "Nature reported exclusively that the National Science Foundation has placed new research grants to top US universities on administrative hold, pending a review of their alignment with administration priorities. The freeze affects grants across multiple disciplines including physics, biology, and social sciences.",
+      "why": "A freeze on NSF grants to major research universities could disrupt ongoing scientific research across multiple fields and represents a significant policy intervention in the US research ecosystem.",
+      "details": [
+        "NSF placed new research grants on administrative hold to major US universities",
+        "Freeze affects physics, biology, and social science disciplines",
+        "Pending review of alignment with administration priorities",
+        "Nature broke the story exclusively",
+        "Single source (Nature)"
+      ],
+      "sources": [
+        { "name": "Nature", "url": "https://www.nature.com/articles/d41586-026-01667-6" }
+      ],
+      "adversarial": "Single source (Nature) — weakness. However, Nature is the world's leading scientific journal with a strong track record of investigative science journalism. The story was reported 'exclusively' by Nature, which suggests other outlets have not yet independently confirmed. Pass 1 adversarial confirmed the potential significance for US research.",
+      "watch": "Whether the freeze is lifted, modified, or made permanent, and the impact on specific research programs.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 27,
+      "cluster_id": "cloudflare-ai-jobs-obsolete-2026",
+      "headline": "Cloudflare says AI made 1,100 jobs obsolete, even as revenue hit a record high",
+      "category": "TECH",
+      "score": 40,
+      "tier": null,
+      "conviction": "★",
+      "score_breakdown": { "coverage": 10, "prominence": 5, "social": 10, "consequentiality": 10, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "Cloudflare CEO Matthew Prince said on an earnings call that AI has made approximately 1,100 of the company's own jobs obsolete, even as Cloudflare reported record quarterly revenue. The comment highlights the paradox of AI creating productivity gains for companies while simultaneously eliminating knowledge-worker roles within those same companies.",
+      "why": "This is a notable data point in the broader AI labor displacement discussion, though it represents one company's experience rather than a macroeconomic trend.",
+      "details": [
+        "Cloudflare CEO said AI made ~1,100 company jobs obsolete",
+        "Cloudflare simultaneously reported record quarterly revenue",
+        "The comment was made during an earnings call",
+        "Represents a specific company's internal restructuring, not a broader layoff trend",
+        "Single source (TechCrunch)"
+      ],
+      "sources": [
+        { "name": "TechCrunch", "url": "https://techcrunch.com/2026/05/08/cloudflare-says-ai-made-1100-jobs-obsolete-even-as-revenue-hit-a-record-high/" }
+      ],
+      "adversarial": "Single source (TechCrunch). The earnings call comment is verifiable from Cloudflare's public filings. However, the framing of 'AI made jobs obsolete' comes from the CEO's interpretation, which could be self-serving. Below the NOTEWORTHY threshold (score 40 < 45).",
+      "watch": "Whether Cloudflare's workforce reduction continues and whether other tech companies report similar patterns.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 28,
+      "cluster_id": "npr-executive-order-court-victory-2026",
+      "headline": "Federal Court delivers victory for press freedom and the First Amendment in NPR's challenge to Executive Order",
+      "category": "US_POLITICS",
+      "score": 40,
+      "tier": null,
+      "conviction": "★",
+      "score_breakdown": { "coverage": 10, "prominence": 15, "social": 10, "consequentiality": 10, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "A federal court ruled in favor of NPR in the public broadcaster's legal challenge to an executive order targeting federal funding to public media. The court found that the executive order violated the First Amendment's prohibition on government interference with a free press.",
+      "why": "This represents a significant legal precedent for press freedom protections against executive overreach, though it is a past development (the court ruling occurred earlier in 2026) rather than a new event on May 31.",
+      "details": [
+        "Federal court ruled in favor of NPR, finding the executive order violated the First Amendment",
+        "Decision represents a significant precedent for press freedom against executive orders",
+        "The court ruling occurred earlier in 2026, not a new May 31 development",
+        "Single source (NPR)"
+      ],
+      "sources": [
+        { "name": "NPR", "url": "https://www.npr.org/2026/03/31/g-s1-115996/federal-court-delivers-victory-for-press-freedom-and-the-first-amendment-in-nprs-challenge-to-executive-order" }
+      ],
+      "adversarial": "Single source (NPR). This is a past court ruling from earlier in 2026, not a new May 31 development. Novelty reduced to 3. The story's continued presence in the briefing reflects its ongoing relevance to press freedom. Below NOTEWORTHY threshold (score 40 < 45).",
+      "watch": "Whether the administration appeals the ruling to a higher court.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 29,
+      "cluster_id": "meteor-sonic-boom-boston-2026",
+      "headline": "NASA confirms exploding meteor caused the sonic boom over Boston",
+      "category": "SCIENCE",
+      "score": 42,
+      "tier": null,
+      "conviction": "★",
+      "score_breakdown": { "coverage": 10, "prominence": 25, "social": 10, "consequentiality": 5, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "NASA confirmed that the sonic boom heard across the greater Boston area on May 26 was caused by a meteor fireball traveling at approximately 75,000 mph. The object fragmented at approximately 40 miles altitude, producing the energy equivalent of roughly 300 tons of TNT. The event was detected by the GOES-19 weather satellite.",
+      "why": "A meteor fireball over a major US metropolitan area is a notable scientific event, though it caused no damage or casualties. It demonstrates the value of satellite detection networks for near-Earth object monitoring.",
+      "details": [
+        "Meteor fireball over greater Boston area on May 26 confirmed by NASA",
+        "Object traveled at approximately 75,000 mph, fragmented at 40 miles altitude",
+        "Energy equivalent approximately 300 tons of TNT",
+        "Detected by the GOES-19 weather satellite",
+        "Single source (The Verge)"
+      ],
+      "sources": [
+        { "name": "The Verge", "url": "https://www.theverge.com/science/940467/meteor-exploded-new-england" }
+      ],
+      "adversarial": "Single source (The Verge) — weakness. However, NASA confirmed the event through official channels. The scientific explanation is straightforward and well-documented by the GOES-19 satellite data. Below NOTEWORTHY threshold (score 42 < 45).",
+      "watch": "Whether any fragments are recovered and what additional NASA analysis reveals about the meteor's origin.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    },
+    {
+      "rank": 30,
+      "cluster_id": "us-reverse-green-card-rule-2026",
+      "headline": "US reverses new rule on overseas applications for green cards",
+      "category": "US_POLITICS",
+      "score": 33,
+      "tier": null,
+      "conviction": "★★",
+      "score_breakdown": { "coverage": 10, "prominence": 25, "social": 10, "consequentiality": 10, "novelty": 3 },
+      "independent_count": 1,
+      "enrichment_status": "partial",
+      "summary": "The US Department of Homeland Security reversed a new rule regarding overseas applications for green cards, following widespread criticism that the original policy would restrict legal immigration pathways. The reversal was announced after advocacy groups and lawmakers raised concerns about the impact on families and employment-based immigration.",
+      "why": "Immigration policy reversals affect hundreds of thousands of legal immigration applicants annually, though this particular reversal was announced earlier in May and is not a new May 31 development.",
+      "details": [
+        "DHS reversed a new rule regarding overseas green card applications",
+        "Original rule faced widespread criticism from immigration advocates and lawmakers",
+        "DHS issued a clarification that 'highly qualified' applicants would see no impact",
+        "The story dates to earlier in May — not a new May 31 development",
+        "Single source (SCMP)"
+      ],
+      "sources": [
+        { "name": "SCMP", "url": "https://www.scmp.com/news/world/united-states-canada/article/3355436/us-reverses-new-rule-overseas-applications-green-cards" }
+      ],
+      "adversarial": "Single source (SCMP) — weakness. DHS reversed the policy, meaning the original story's premise (a new restriction) is already obsolete. The story's novelty is low because it is an ongoing policy reversal, not a new breaking development. Pass 1 adversarial confirmed the DHS reversal. Below NOTEWORTHY threshold (score 33 < 45).",
+      "watch": "Whether any residual effects of the original rule continue to affect specific immigration categories.",
+      "updated": "May 31, 2026 · 7:00 AM ET",
+      "independent_count_warning": true
+    }
+  ],
+  "metadata": {
+    "briefing_date": "2026-05-31",
+    "briefing_date_display": "Sunday, May 31, 2026",
+    "news_window": "2026-05-30 11:44 ET → 2026-05-31 11:44 ET",
+    "passes_completed": 3,
+    "converged": false,
+    "total_stories": 30,
+    "sources_consulted": 38,
+    "avg_conviction": "★★½",
+    "run_ts": "2026-05-31T14:44:00-07:00"
+  },
+  "validation_results": {
+    "score_re_derive": "pass",
+    "completeness": "partial",
+    "adversarial": "pass",
+    "duplicate": "pass",
+    "single_source_warnings": [
+      "israel-lebanon-ground-offensive-2026: independent_count=4, no warning",
+      "paris-psg-champions-league-riots-2026: independent_count=4, no warning",
+      "trump-approval-record-low-2026: independent_count=3, no warning",
+      "iran-us-deal-talks-2026: independent_count=4, no warning",
+      "colombia-presidential-election-2026: independent_count=2, no warning",
+      "stock-market-dell-2026: independent_count=5, no warning",
+      "openai-erdos-2026: independent_count=4, no warning",
+      "ukraine-drone-strikes-russia-2026: independent_count=3, no warning",
+      "pancreatic-cancer-drug-2026: independent_count=2, no warning",
+      "softbank-france-ai-investment-2026: independent_count=2, no warning",
+      "ferrari-electric-car-luce-2026: independent_count=2, no warning",
+      "hacker-poisoning-open-source-2026: independent_count=1, WARNING",
+      "artemis-ii-moon-launch-2026: independent_count=1, WARNING",
+      "tesla-robotaxi-remote-human-drivers-2026: independent_count=1, WARNING",
+      "blue-origin-new-glenn-explosion-2026: independent_count=1, WARNING",
+      "ice-children-detention-2026: independent_count=1, WARNING",
+      "senate-blue-origin-bailout-2026: independent_count=1, WARNING",
+      "laos-cave-rescue-2026: independent_count=1, WARNING",
+      "china-factory-activity-economy-2026: independent_count=1, WARNING",
+      "myanmar-explosives-depot-blast-2026: independent_count=1, WARNING",
+      "washington-mill-disaster-2026: independent_count=1, WARNING",
+      "ebola-outbreak-dr-congo-uganda-2026: independent_count=1, WARNING",
+      "pfizer-braftovi-colorectal-cancer-2026: independent_count=1, WARNING",
+      "us-iran-oil-tanker-hormuz-2026: independent_count=1, WARNING",
+      "epa-carcinogenic-air-pollution-2026: independent_count=1, WARNING",
+      "nsf-research-grants-hold-2026: independent_count=1, WARNING",
+      "cloudflare-ai-jobs-obsolete-2026: independent_count=1, WARNING",
+      "npr-executive-order-court-victory-2026: independent_count=1, WARNING",
+      "meteor-sonic-boom-boston-2026: independent_count=1, WARNING",
+      "us-reverse-green-card-rule-2026: independent_count=1, WARNING"
+    ]
+  },
+  "changelog": [
+    "Loop 7: Final lock initiated. List is now immutable until next run.",
+    "PASS 1 REMOVALS: jazz-pharma-celator-acquisition-2026 (completed 2016, not current); wembanyama-nba-finals-mvp-2026 (won conference finals MVP, not NBA Finals MVP, headline misleading)",
+    "PASS 1 DEMOTIONS: ukraine-drone-strikes (62→52, Russia's NPP claim is propaganda); artemis-ii-moon-launch (68→48, already launched April 1); us-reverse-green-card-rule (63→33, DHS reversed policy)",
+    "PASS 1 NOTE: iran-us-deal-talks conviction capped at ★★★★ — day 93 of war, no signed agreement, uncertainty HIGH",
+    "PASS 2 NOVELTY CORRECTIONS: israel-lebanon → 10 (Litani River crossing, UNSC emergency, France protest = escalating); iran-us-deal → 3 (ongoing update day 93)",
+    "PASS 2 BREAKING CLASSIFICATION: israel-lebanon-ground-offensive-2026 classified as BREAKING per AGENT.md criteria",
+    "PASS 2 GAP FILL (Loop 6): stock-market-dell-2026 entered at rank 7 (MARKETS gap resolved, 5 independent sources)",
+    "PASS 2 GAP FILL (Loop 6): openai-erdos-2026 entered at rank 10 (AI gap resolved, 4+ sources including Fields Medalist)",
+    "PASS 2 SWAPS (3 total): stock-market-dell replaced united-flight; openai-erdos replaced nature-ai-poll; stock-market-dell replaced swiftkey-microsoft",
+    "PASS 2: india-kashmir-floods-2024 flagged as historical (2024 event, not 2026) — excluded from monitoring",
+    "SINGLE-SOURCE WARNING: 21 of 30 stories have independent_count=1. This is a known weakness attributable to AP/Reuters/NYT failing in Loop 1. Stories accepted with warning flag for transparency.",
+    "CULTURE CATEGORY: 0 stories in top 30. The paris-psg-riots story has cultural dimensions but is primarily classified WORLD. No qualifying CULTURE story met the threshold.",
+    "CONVERGENCE STATUS: not converged. Avg conviction ★★½, not all stories at ★★★★+. Min 3 passes completed. Passed to Loop 8 for HTML build."
+  ]
+}

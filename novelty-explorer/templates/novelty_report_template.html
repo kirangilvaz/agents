@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novelty-Explorer · Disruptive-Technology Radar</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0e14;--surface:#121821;--surface2:#1b2330;--border:#27303d;
+--text:#e6edf3;--text2:#8b98a9;--accent:#7c5cff;--accent2:#22d3a6;
+--exceptional:#a855f7;--high:#22d3a6;--monitor:#3b9dff;--emerging:#d4a017;--noise:#6b7785;
+--warn:#f87171;
+}
+body{background:radial-gradient(1200px 600px at 80% -10%,rgba(124,92,255,.12),transparent),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.5;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.header{border-bottom:1px solid var(--border);padding:24px 32px;background:linear-gradient(135deg,rgba(124,92,255,.08),transparent)}
+.header-inner{max-width:1500px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.header h1{font-size:23px;font-weight:800;display:flex;align-items:center;gap:12px;letter-spacing:-.3px}
+.header h1 .logo{font-size:26px}
+.header-sub{font-size:13px;color:var(--text2);margin-top:4px}
+.header-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:.4px}
+.badge-pass{background:rgba(34,211,166,.14);color:var(--high);border:1px solid rgba(34,211,166,.3)}
+.badge-progress{background:rgba(212,160,23,.14);color:var(--emerging);border:1px solid rgba(212,160,23,.3)}
+.badge-mode{background:rgba(124,92,255,.14);color:var(--accent);border:1px solid rgba(124,92,255,.3)}
+.badge-updated{color:var(--text2);font-size:12px}
+
+.stat-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:16px 32px}
+.stat-bar-inner{max-width:1500px;margin:0 auto;display:flex;gap:28px;flex-wrap:wrap;justify-content:center}
+.stat{text-align:center;min-width:90px}
+.stat-value{font-size:22px;font-weight:800;color:var(--accent)}
+.stat-label{font-size:10.5px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.stat-exceptional .stat-value{color:var(--exceptional)}
+.stat-high .stat-value{color:var(--high)}
+
+.controls{max-width:1500px;margin:0 auto;padding:18px 32px 0}
+.controls-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.search-input{flex:1;min-width:240px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text2)}
+.select-wrap{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+.select{padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:9px;color:var(--text);font-size:13px;outline:none;cursor:pointer}
+.select:focus{border-color:var(--accent)}
+
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.filter-btn{padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.filter-btn:hover,.filter-btn.active{background:rgba(124,92,255,.12);border-color:var(--accent);color:var(--accent)}
+
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.toggle-chip{padding:5px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:12px;cursor:pointer;transition:all .2s}
+.toggle-chip.active{background:rgba(34,211,166,.12);border-color:var(--high);color:var(--high)}
+
+.content{max-width:1500px;margin:0 auto;padding:24px 32px 64px}
+
+.tier-section{margin-bottom:34px}
+.tier-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.tier-dot{width:10px;height:10px;border-radius:50%}
+.tier-dot.exceptional{background:var(--exceptional)}
+.tier-dot.high_conviction{background:var(--high)}
+.tier-dot.worth_monitoring{background:var(--monitor)}
+.tier-dot.emerging_signal{background:var(--emerging)}
+.tier-label{font-size:13px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}
+.tier-label.exceptional{color:var(--exceptional)}
+.tier-label.high_conviction{color:var(--high)}
+.tier-label.worth_monitoring{color:var(--monitor)}
+.tier-label.emerging_signal{color:var(--emerging)}
+.tier-count{color:var(--text2);font-size:13px}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(390px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--noise)}
+.card.exceptional::before{background:var(--exceptional)}
+.card.high_conviction::before{background:var(--high)}
+.card.worth_monitoring::before{background:var(--monitor)}
+.card.emerging_signal::before{background:var(--emerging)}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.card-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:10px}
+
+.score-ring{position:relative;width:60px;height:60px;flex-shrink:0}
+.score-ring svg{transform:rotate(-90deg)}
+.score-ring circle{fill:none;stroke-width:5}
+.score-ring .bg{stroke:var(--surface2)}
+.score-ring .fg{stroke-linecap:round;transition:stroke-dashoffset .6s ease}
+.score-ring .value{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:16px;font-weight:800}
+
+.card-info{flex:1;min-width:0}
+.card-rank{font-size:11px;color:var(--text2);margin-bottom:3px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cat-tag{display:inline-flex;align-items:center;gap:4px;font-weight:700;letter-spacing:.3px}
+.card-title{font-size:16px;font-weight:700;margin-bottom:3px;line-height:1.3}
+.card-desc{font-size:12.5px;color:var(--text2);line-height:1.45}
+
+.pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:6px;font-size:11px;font-weight:600;border:1px solid var(--border);background:var(--surface2);color:var(--text2)}
+.pill.ttm{color:#c4b5fd;border-color:rgba(168,85,247,.35);background:rgba(168,85,247,.08)}
+.pill.conv{color:var(--high);border-color:rgba(34,211,166,.3);background:rgba(34,211,166,.08)}
+.pill.tier{text-transform:uppercase;letter-spacing:.4px}
+.pill.tier.exceptional{color:var(--exceptional);border-color:rgba(168,85,247,.4)}
+.pill.tier.high_conviction{color:var(--high);border-color:rgba(34,211,166,.4)}
+.pill.tier.worth_monitoring{color:var(--monitor);border-color:rgba(59,157,255,.4)}
+.pill.tier.emerging_signal{color:var(--emerging);border-color:rgba(212,160,23,.4)}
+.pill.life{color:#93c5fd}
+
+.minibars{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:13px}
+.minibar{text-align:center}
+.minibar .mb-track{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.minibar .mb-fill{height:100%;border-radius:3px;background:var(--accent)}
+.minibar .mb-lab{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.3px;margin-top:4px}
+.minibar .mb-val{font-size:11px;font-weight:700;color:var(--text)}
+
+.crowd-row{display:flex;align-items:center;gap:8px;margin-top:13px}
+.crowd-track{flex:1;height:6px;border-radius:4px;background:linear-gradient(90deg,var(--high),var(--emerging),var(--warn))}
+.crowd-marker{position:relative;height:6px;margin-top:-6px}
+.crowd-dot{position:absolute;top:-3px;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--bg);transform:translateX(-50%)}
+.crowd-lab{font-size:10px;color:var(--text2);white-space:nowrap}
+
+.spark{margin-top:12px;display:flex;align-items:center;gap:8px}
+.spark svg{display:block}
+.spark .spark-lab{font-size:10px;color:var(--text2)}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;justify-content:center;align-items:center;padding:24px}
+.modal-overlay.active{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:18px;max-width:840px;width:100%;max-height:88vh;overflow-y:auto;padding:30px;position:relative}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--surface2);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .2s}
+.modal-close:hover{background:var(--border);color:#fff}
+.modal h2{font-size:22px;margin-bottom:4px;padding-right:44px;line-height:1.25}
+.modal-desc{color:var(--text2);font-size:14px;margin-bottom:14px}
+.modal-meta{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px;align-items:center}
+.modal-section{margin-bottom:20px}
+.modal-section h3{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.modal-section p{color:var(--text);font-size:14px;line-height:1.65}
+.thesis{background:linear-gradient(135deg,rgba(124,92,255,.08),rgba(34,211,166,.05));border:1px solid rgba(124,92,255,.25);border-radius:12px;padding:16px 18px;margin-bottom:20px}
+.thesis h3{color:var(--accent);border:none;padding:0;margin-bottom:8px}
+
+.score-grid{display:grid;grid-template-columns:1fr;gap:9px}
+.score-row{display:flex;align-items:center;gap:10px;font-size:13px}
+.score-row .sr-label{width:130px;color:var(--text2);flex-shrink:0}
+.score-row .sr-bar{flex:1;height:9px;background:var(--surface2);border-radius:5px;overflow:hidden}
+.score-row .sr-fill{height:100%;border-radius:5px;background:var(--accent)}
+.score-row .sr-val{width:34px;text-align:right;color:var(--text);font-weight:700}
+.score-row .sr-why{flex-basis:100%;color:var(--text2);font-size:12px;margin:-2px 0 4px 140px}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}
+.kv .k{color:var(--text2)}
+.kv .v{color:var(--text)}
+
+.rounds{display:flex;flex-direction:column;gap:8px}
+.round{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-size:13px}
+.round .r-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.round .r-stage{font-weight:700}
+.round .r-inv{color:var(--text2);font-size:12px;margin-top:3px}
+.tag-strat{color:var(--accent2)}
+
+.ev-list,.risk-list{display:flex;flex-direction:column;gap:7px}
+.ev{background:rgba(124,92,255,.05);border:1px solid rgba(124,92,255,.18);border-radius:8px;padding:8px 12px;font-size:13px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.ev .ev-kind{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);background:var(--surface2);padding:1px 7px;border-radius:5px}
+.risk{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.18);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--text);display:flex;gap:8px;align-items:flex-start}
+.sev{font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:5px;text-transform:uppercase;flex-shrink:0;margin-top:1px}
+.sev.HIGH{background:rgba(248,113,113,.18);color:var(--warn)}
+.sev.MEDIUM{background:rgba(212,160,23,.18);color:var(--emerging)}
+.sev.LOW{background:rgba(139,152,169,.18);color:var(--text2)}
+.counter{font-size:9.5px;color:var(--warn);margin-left:4px}
+
+.adv-note{background:rgba(34,211,166,.06);border:1px solid rgba(34,211,166,.2);border-radius:9px;padding:12px 14px;font-size:13px;color:var(--text);line-height:1.55}
+.amp-list{display:flex;gap:6px;flex-wrap:wrap}
+.amp{font-size:11px;padding:3px 9px;border-radius:6px;background:rgba(34,211,166,.1);color:var(--high);border:1px solid rgba(34,211,166,.25)}
+.sup{font-size:11px;padding:3px 9px;border-radius:6px;background:rgba(248,113,113,.1);color:var(--warn);border:1px solid rgba(248,113,113,.25)}
+
+.changelog{max-width:1500px;margin:0 auto;padding:0 32px 48px}
+.changelog h3{font-size:13px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.cl-list{display:flex;flex-direction:column;gap:6px}
+.cl-item{font-size:13px;color:var(--text2);display:flex;gap:10px;align-items:baseline}
+.cl-type{font-size:10px;font-weight:700;letter-spacing:.4px;padding:1px 8px;border-radius:5px;background:var(--surface2);color:var(--accent);flex-shrink:0;text-transform:uppercase}
+
+.empty{text-align:center;padding:48px;color:var(--text2)}
+.disclaimer{max-width:1500px;margin:0 auto;padding:0 32px 48px;color:var(--text2);font-size:11.5px;line-height:1.6}
+
+@media(max-width:768px){
+.header-inner{flex-direction:column;align-items:flex-start}
+.cards{grid-template-columns:1fr}
+.score-row .sr-why{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="header-inner">
+<div>
+<h1><span class="logo">🛰️</span> Novelty-Explorer</h1>
+<div class="header-sub">Disruptive-Technology Discovery &amp; Conviction Radar · <span id="hdrCount">—</span> opportunities tracked</div>
+</div>
+<div class="header-meta">
+<span class="badge badge-mode">CYCLE __CYCLE__ · __RUN_MODE__</span>
+<span class="badge __PASS_BADGE_CLASS__">PASS __PASSES__ · __CONVERGED__</span>
+<span class="badge-updated">Updated: __GENERATED_AT__</span>
+</div>
+</div>
+</div>
+
+<div class="stat-bar">
+<div class="stat-bar-inner">
+<div class="stat"><div class="stat-value" id="statTotal">—</div><div class="stat-label">Leaderboard</div></div>
+<div class="stat stat-exceptional"><div class="stat-value" id="statExceptional">—</div><div class="stat-label">Exceptional</div></div>
+<div class="stat stat-high"><div class="stat-value" id="statHigh">—</div><div class="stat-label">High Conviction</div></div>
+<div class="stat"><div class="stat-value" id="statAvg">—</div><div class="stat-label">Avg Conviction</div></div>
+<div class="stat"><div class="stat-value" id="statSources">—</div><div class="stat-label">Sources</div></div>
+<div class="stat"><div class="stat-value" id="statEvidence">—</div><div class="stat-label">Evidence</div></div>
+</div>
+</div>
+
+<div class="controls">
+<div class="controls-row">
+<input type="text" class="search-input" id="searchInput" placeholder="Search opportunities, descriptions, investors, domains...">
+<div class="select-wrap">Sort
+<select class="select" id="sortSelect">
+<option value="composite">Raw conviction</option>
+<option value="time_adjusted">Time-adjusted conviction</option>
+<option value="momentum">Momentum</option>
+<option value="novelty">Novelty</option>
+<option value="alpha">Most under-recognized</option>
+</select>
+</div>
+<div class="select-wrap">TTM
+<select class="select" id="ttmSelect">
+<option value="all">All horizons</option>
+<option value="TTM_0_2">0–2 yrs</option>
+<option value="TTM_2_5">2–5 yrs</option>
+<option value="TTM_5_10">5–10 yrs</option>
+<option value="TTM_10_PLUS">10+ yrs</option>
+</select>
+</div>
+</div>
+<div class="filter-bar" id="filterBar"></div>
+<div class="chip-row">
+<button class="toggle-chip" id="chipUnder">💎 Under-recognized only</button>
+<button class="toggle-chip" id="chipRising">📈 Rising only</button>
+<button class="toggle-chip" id="chipConv">🔗 High convergence (5+)</button>
+</div>
+</div>
+
+<div class="content" id="content"></div>
+
+<div class="changelog" id="changelog"></div>
+
+<div class="disclaimer">
+Research &amp; analysis only — <strong>not investment advice</strong>. Every score ships with its evidence chain so you can audit it. Conviction = 25% Novelty + 20% Capital + 20% Momentum + 20% Technical Feasibility + 15% Market Potential, adjusted by signal amplifiers (convergence) and suppressors (hype). Time-adjusted conviction discounts by Time-to-Mainstream.
+</div>
+
+<div class="modal-overlay" id="modalOverlay"><div class="modal" id="modal"></div></div>
+
+<script>
+const DATA = __NOVELTY_DATA__;
+
+const TIER_ORDER = ['EXCEPTIONAL','HIGH_CONVICTION','WORTH_MONITORING','EMERGING_SIGNAL'];
+const TIER_LABEL = {EXCEPTIONAL:'Exceptional',HIGH_CONVICTION:'High Conviction',WORTH_MONITORING:'Worth Monitoring',EMERGING_SIGNAL:'Emerging Signal'};
+const TTM_LABEL = {TTM_0_2:'0–2 yrs',TTM_2_5:'2–5 yrs',TTM_5_10:'5–10 yrs',TTM_10_PLUS:'10+ yrs'};
+const DIM_LABEL = {novelty:'Novelty',capital:'Capital',momentum:'Momentum',feasibility:'Feasibility',market:'Market'};
+const AMP_LABEL = {major_funding_round:'Major funding',rising_patent_filings:'Patents ↑',growing_github_activity:'GitHub ↑',growing_hiring:'Hiring ↑',accelerating_citations:'Citations ↑',fortune500_pilot:'F500 pilot',regulatory_progress:'Regulatory ✓',industry_partnership:'Partnership'};
+const SUP_LABEL = {hype_exceeds_evidence:'Hype > evidence',marketing_exceeds_progress:'Marketing > progress',funding_stagnant:'Funding stagnant',no_customer_adoption:'No adoption',no_prototype:'No prototype',not_reproducible:'Not reproducible',attention_spike_no_substance:'Attention, no substance'};
+const DEFAULT_DOMAIN_META = [
+{id:'AI_INFRA',icon:'🧠',label:'AI & Infra'},{id:'BIOTECH',icon:'🧬',label:'Biotech'},
+{id:'ENERGY',icon:'⚡',label:'Energy'},{id:'QUANTUM',icon:'⚛️',label:'Quantum'},
+{id:'ROBOTICS',icon:'🤖',label:'Robotics'},{id:'SPACE',icon:'🛰️',label:'Space'},
+{id:'MATERIALS',icon:'🔬',label:'Materials'},{id:'CLIMATE',icon:'🌍',label:'Climate'},
+{id:'NEUROTECH',icon:'🧠⚡',label:'Neurotech'},{id:'SECURITY',icon:'🔐',label:'Security'},
+{id:'CRYPTO_WEB3',icon:'⛓️',label:'Crypto / Web3'},{id:'HEALTHTECH',icon:'🩺',label:'Healthtech'},
+{id:'FRONTIER',icon:'🚀',label:'Frontier'}];
+
+let searchTerm='', domainFilter='all', sortKey='composite', ttmFilter='all';
+let onlyUnder=false, onlyRising=false, onlyConv=false;
+
+function opps(){ return Array.isArray(DATA.opportunities)?DATA.opportunities:[]; }
+function domainMeta(){
+const meta=Array.isArray(DATA.domain_meta)&&DATA.domain_meta.length?DATA.domain_meta:DEFAULT_DOMAIN_META;
+const map={}; meta.forEach(m=>{if(m&&m.id)map[m.id]={icon:m.icon||'🚀',label:m.label||m.id};}); return map;
+}
+const DOM=domainMeta();
+function domIcon(id){return (DOM[id]&&DOM[id].icon)||'🚀';}
+function domLabel(id){return (DOM[id]&&DOM[id].label)||id;}
+function tierClass(t){return String(t||'EMERGING_SIGNAL').toLowerCase();}
+function scoreColor(s){if(s>=90)return 'var(--exceptional)';if(s>=80)return 'var(--high)';if(s>=70)return 'var(--monitor)';return 'var(--emerging)';}
+
+function ring(score){
+const s=typeof score==='number'?score:0, r=25, c=2*Math.PI*r, off=c-(s/100)*c;
+return `<div class="score-ring"><svg width="60" height="60" viewBox="0 0 60 60"><circle class="bg" cx="30" cy="30" r="${r}"/><circle class="fg" cx="30" cy="30" r="${r}" stroke="${scoreColor(s)}" stroke-dasharray="${c}" stroke-dashoffset="${off}"/></svg><div class="value" style="color:${scoreColor(s)}">${s}</div></div>`;
+}
+function sparkline(trend){
+const t=Array.isArray(trend)?trend.filter(x=>typeof x==='number'):[];
+if(t.length<2)return '';
+const w=86,h=22,min=Math.min(...t),max=Math.max(...t),span=(max-min)||1;
+const pts=t.map((v,i)=>`${(i/(t.length-1))*w},${h-((v-min)/span)*h}`).join(' ');
+const up=t[t.length-1]>=t[0];
+return `<div class="spark"><svg width="${w}" height="${h}"><polyline fill="none" stroke="${up?'var(--high)':'var(--warn)'}" stroke-width="2" points="${pts}"/></svg><span class="spark-lab">conviction ${up?'▲':'▼'} ${t[0]}→${t[t.length-1]}</span></div>`;
+}
+function crowdMeter(c,label){
+const v=typeof c==='number'?c:50;
+const txt=label==='UNDER_RECOGNIZED'?'💎 Under-recognized':(label==='CROWDED'?'🌊 Crowded':'Balanced');
+return `<div class="crowd-row"><div style="flex:1"><div class="crowd-track"></div><div class="crowd-marker"><div class="crowd-dot" style="left:${v}%"></div></div></div><span class="crowd-lab">${txt}</span></div>`;
+}
+function minibars(scores){
+return `<div class="minibars">`+['novelty','capital','momentum','feasibility','market'].map(k=>{
+const v=(scores&&typeof scores[k]==='number')?scores[k]:0;
+return `<div class="minibar"><div class="mb-val">${v}</div><div class="mb-track"><div class="mb-fill" style="width:${v}%;background:${scoreColor(v)}"></div></div><div class="mb-lab">${DIM_LABEL[k].slice(0,4)}</div></div>`;
+}).join('')+`</div>`;
+}
+
+function renderStatBar(){
+const m=DATA.metadata||{}, all=opps();
+document.getElementById('statTotal').textContent=(m.leaderboard_size!=null?m.leaderboard_size:all.length);
+document.getElementById('statExceptional').textContent=all.filter(o=>o.conviction_tier==='EXCEPTIONAL').length;
+document.getElementById('statHigh').textContent=all.filter(o=>o.conviction_tier==='HIGH_CONVICTION').length;
+document.getElementById('statAvg').textContent=(m.avg_composite!=null?m.avg_composite:'—');
+document.getElementById('statSources').textContent=(m.sources_consulted!=null?m.sources_consulted:'—');
+document.getElementById('statEvidence').textContent=(m.evidence_records!=null?m.evidence_records:'—');
+document.getElementById('hdrCount').textContent=(m.leaderboard_size!=null?m.leaderboard_size:all.length);
+}
+function renderFilters(){
+const bar=document.getElementById('filterBar'), present={};
+opps().forEach(o=>{if(o.domain)present[o.domain]=(present[o.domain]||0)+1;});
+const meta=Array.isArray(DATA.domain_meta)&&DATA.domain_meta.length?DATA.domain_meta:DEFAULT_DOMAIN_META;
+let html=`<button class="filter-btn active" data-filter="all">All (${opps().length})</button>`;
+meta.forEach(m=>{if(!m||!m.id||!present[m.id])return;html+=`<button class="filter-btn" data-filter="${m.id}">${m.icon||'🚀'} ${m.label||m.id} (${present[m.id]})</button>`;});
+bar.innerHTML=html;
+}
+function sortVal(o){
+if(sortKey==='time_adjusted')return o.time_adjusted_score||0;
+if(sortKey==='momentum')return (o.scores&&o.scores.momentum)||0;
+if(sortKey==='novelty')return (o.scores&&o.scores.novelty)||0;
+if(sortKey==='alpha')return 200-(o.crowding!=null?o.crowding:100)+(o.composite_score||0)/10;
+return o.composite_score||0;
+}
+function filterList(list){
+let out=list.slice();
+if(domainFilter!=='all')out=out.filter(o=>o.domain===domainFilter);
+if(ttmFilter!=='all')out=out.filter(o=>o.ttm===ttmFilter);
+if(onlyUnder)out=out.filter(o=>o.crowding_label==='UNDER_RECOGNIZED');
+if(onlyRising)out=out.filter(o=>o.lifecycle_state==='rising');
+if(onlyConv)out=out.filter(o=>(o.convergence_count||0)>=5);
+if(searchTerm){const q=searchTerm.toLowerCase();out=out.filter(o=>
+(o.name||'').toLowerCase().includes(q)||(o.description||'').toLowerCase().includes(q)||
+(o.domain||'').toLowerCase().includes(q)||(o.why_it_matters||'').toLowerCase().includes(q)||
+JSON.stringify(o.capital_signals||{}).toLowerCase().includes(q));}
+return out.sort((a,b)=>sortVal(b)-sortVal(a));
+}
+function card(o){
+const tc=tierClass(o.conviction_tier);
+const ttm=o.ttm?`<span class="pill ttm">⏱ ${TTM_LABEL[o.ttm]||o.ttm}</span>`:'';
+const conv=`<span class="pill conv">🔗 ${o.convergence_count||0}/8 signals</span>`;
+const life=o.lifecycle_state?`<span class="pill life">${o.lifecycle_state.replace('_',' ')}</span>`:'';
+const ta=(o.time_adjusted_score!=null)?`<span class="pill">⌛ ${o.time_adjusted_score} adj</span>`:'';
+return `<div class="card ${tc}" onclick="openModal('${o.opportunity_id}')">
+<div class="card-top">${ring(o.composite_score)}
+<div class="card-info">
+<div class="card-rank">#${o.rank} <span class="cat-tag">${domIcon(o.domain)} ${domLabel(o.domain)}</span></div>
+<div class="card-title">${o.name||''}</div>
+<div class="card-desc">${o.description||''}</div>
+</div></div>
+<div class="pill-row"><span class="pill tier ${tc}">${TIER_LABEL[o.conviction_tier]||o.conviction_tier}</span>${ttm}${conv}${ta}${life}</div>
+${minibars(o.scores)}
+${crowdMeter(o.crowding,o.crowding_label)}
+${sparkline(o.conviction_trend)}
+</div>`;
+}
+function renderContent(){
+const el=document.getElementById('content'), filtered=filterList(opps());
+if(!filtered.length){el.innerHTML='<div class="empty">No opportunities match your filters.</div>';return;}
+// when sorting by composite/time_adjusted, group by tier; otherwise flat
+if(sortKey==='composite'||sortKey==='time_adjusted'){
+const byTier={};TIER_ORDER.forEach(t=>byTier[t]=[]);
+filtered.forEach(o=>{const t=TIER_ORDER.includes(o.conviction_tier)?o.conviction_tier:'EMERGING_SIGNAL';byTier[t].push(o);});
+let html='';
+TIER_ORDER.forEach(t=>{const l=byTier[t];if(!l.length)return;const tc=tierClass(t);
+html+=`<div class="tier-section"><div class="tier-header"><div class="tier-dot ${tc}"></div><span class="tier-label ${tc}">${TIER_LABEL[t]}</span><span class="tier-count">${l.length}</span></div><div class="cards">${l.map(card).join('')}</div></div>`;});
+el.innerHTML=html;
+}else{
+el.innerHTML=`<div class="tier-section"><div class="cards">${filtered.map(card).join('')}</div></div>`;
+}
+}
+function scoreRows(o){
+return ['novelty','capital','momentum','feasibility','market'].map(k=>{
+const v=(o.scores&&typeof o.scores[k]==='number')?o.scores[k]:0;
+const why=(o.scores&&o.scores[k+'_rationale'])?o.scores[k+'_rationale']:'';
+return `<div class="score-row"><span class="sr-label">${DIM_LABEL[k]}</span><span class="sr-bar"><span class="sr-fill" style="width:${v}%;background:${scoreColor(v)}"></span></span><span class="sr-val">${v}</span>${why?`<span class="sr-why">${why}</span>`:''}</div>`;
+}).join('');
+}
+function openModal(id){
+const o=opps().find(x=>x.opportunity_id===id);if(!o)return;
+const tc=tierClass(o.conviction_tier);
+const rounds=((o.capital_signals||{}).recent_rounds||[]).map(r=>`<div class="round"><div class="r-top"><span class="r-stage">${r.stage||'Round'}${r.amount_usd_m!=null?' · $'+r.amount_usd_m+'M':''}</span><span style="color:var(--text2);font-size:12px">${r.date||''}</span></div><div class="r-inv">${(r.lead_investors||[]).join(', ')}${r.investor_quality_tier?` <span class="tag-strat">(${r.investor_quality_tier})</span>`:''}</div></div>`).join('');
+const partners=((o.capital_signals||{}).strategic_partnerships||[]);
+const grants=((o.capital_signals||{}).grants||[]);
+const ev=(o.evidence||[]).map(e=>`<div class="ev"><span>${e.url?`<a href="${e.url}" target="_blank" rel="noopener">${e.label||e.url}</a>`:(e.label||'')}</span><span class="ev-kind">${e.kind||''}${e.source_tier?' · T'+e.source_tier:''}</span></div>`).join('');
+const risks=(o.risks||[]).map(r=>`<div class="risk"><span class="sev ${r.severity||'MEDIUM'}">${r.severity||'MED'}</span><span>${r.risk||''}${r.is_counter_evidence?'<span class="counter">⚑ counter-evidence</span>':''}</span></div>`).join('');
+const amps=(o.amplifiers_fired||[]).map(a=>`<span class="amp">✓ ${AMP_LABEL[a]||a}</span>`).join('');
+const sups=(o.suppressors_fired||[]).map(s=>`<span class="sup">✗ ${SUP_LABEL[s]||s}</span>`).join('');
+const m=document.getElementById('modal');
+m.innerHTML=`<button class="modal-close" onclick="closeModal()">✕</button>
+<h2>${o.name||''}</h2>
+<div class="modal-desc">${domIcon(o.domain)} ${domLabel(o.domain)} · ${o.type||''}</div>
+<div class="modal-meta">${ring(o.composite_score)}
+<span class="pill tier ${tc}">${TIER_LABEL[o.conviction_tier]||o.conviction_tier} · ${o.composite_score}/100</span>
+<span class="pill">⌛ time-adjusted ${o.time_adjusted_score}</span>
+<span class="pill ttm">⏱ ${TTM_LABEL[o.ttm]||o.ttm}</span>
+<span class="pill conv">🔗 ${o.convergence_count||0}/8 signals</span>
+<span class="pill life">${(o.lifecycle_state||'').replace('_',' ')}</span></div>
+${o.investment_thesis?`<div class="thesis"><h3>Investment thesis</h3><p>${o.investment_thesis}</p></div>`:''}
+${o.why_it_matters?`<div class="modal-section"><h3>Why it matters</h3><p>${o.why_it_matters}</p></div>`:''}
+<div class="modal-section"><h3>Signal breakdown</h3><div class="score-grid">${scoreRows(o)}</div></div>
+${(amps||sups)?`<div class="modal-section"><h3>Signal amplifiers / suppressors (net ${o.amplifier_adjustment!=null?(o.amplifier_adjustment>0?'+':'')+o.amplifier_adjustment:'0'})</h3><div class="amp-list">${amps}${sups}</div></div>`:''}
+<div class="modal-section"><h3>Crowding / alpha</h3>${crowdMeter(o.crowding,o.crowding_label)}<p style="color:var(--text2);font-size:12px;margin-top:8px">${o.crowding!=null?o.crowding:'—'}/100 narrative saturation. ${o.crowding_label==='UNDER_RECOGNIZED'?'Under the radar — higher potential alpha.':(o.crowding_label==='CROWDED'?'Already a crowded narrative — lower alpha.':'Moderately covered.')}</p></div>
+${(rounds||partners.length||grants.length)?`<div class="modal-section"><h3>Capital signals${(o.capital_signals||{}).total_known_funding_usd_m!=null?' · $'+o.capital_signals.total_known_funding_usd_m+'M total':''}</h3><div class="rounds">${rounds}</div>${partners.length?`<p style="margin-top:10px"><strong>Partnerships:</strong> ${partners.join(', ')}</p>`:''}${grants.length?`<p style="margin-top:6px"><strong>Grants:</strong> ${grants.join(', ')}</p>`:''}</div>`:''}
+${ev?`<div class="modal-section"><h3>Evidence (${(o.evidence||[]).length}) · ${o.independent_source_count!=null?o.independent_source_count+' independent sources':''}</h3><div class="ev-list">${ev}</div></div>`:''}
+${risks?`<div class="modal-section"><h3>Risks &amp; failure modes</h3><div class="risk-list">${risks}</div></div>`:''}
+${o.adversarial?`<div class="modal-section"><h3>Adversarial review (${o.adversarial.passes||0} passes · ${o.adversarial.latest_verdict||''})</h3><div class="adv-note">${o.adversarial.notes||'No issues found on challenge.'}</div></div>`:''}
+${o.conviction_trend?`<div class="modal-section"><h3>Conviction trend</h3>${sparkline(o.conviction_trend)}</div>`:''}
+${o.updated?`<div class="modal-section" style="margin-bottom:0"><p style="color:var(--text2);font-size:12px">Updated ${o.updated}</p></div>`:''}`;
+document.getElementById('modalOverlay').classList.add('active');
+document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('active');document.body.style.overflow='';}
+
+function renderChangelog(){
+const cl=((DATA.metadata||{}).changelog)||[];const el=document.getElementById('changelog');
+if(!cl.length){el.innerHTML='';return;}
+el.innerHTML=`<h3>What changed since last run</h3><div class="cl-list">`+cl.slice(0,40).map(c=>`<div class="cl-item"><span class="cl-type">${(c.change_type||'').replace(/_/g,' ')}</span><span>${c.name?`<strong>${c.name}</strong> — `:''}${c.detail||''}</span></div>`).join('')+`</div>`;
+}
+
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+document.getElementById('searchInput').addEventListener('input',function(e){searchTerm=e.target.value;renderContent();});
+document.getElementById('sortSelect').addEventListener('change',function(e){sortKey=e.target.value;renderContent();});
+document.getElementById('ttmSelect').addEventListener('change',function(e){ttmFilter=e.target.value;renderContent();});
+document.getElementById('filterBar').addEventListener('click',function(e){const b=e.target.closest('.filter-btn');if(!b)return;domainFilter=b.dataset.filter;document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderContent();});
+document.getElementById('chipUnder').addEventListener('click',function(){onlyUnder=!onlyUnder;this.classList.toggle('active');renderContent();});
+document.getElementById('chipRising').addEventListener('click',function(){onlyRising=!onlyRising;this.classList.toggle('active');renderContent();});
+document.getElementById('chipConv').addEventListener('click',function(){onlyConv=!onlyConv;this.classList.toggle('active');renderContent();});
+
+renderStatBar();renderFilters();renderContent();renderChangelog();
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "diff.schema.json",
+  "title": "Cycle Diff",
+  "description": "Structured changelog vs the previous run for the same ticker. Written by Loop 17 to runs/<ts>/diff.json.",
+  "type": "object",
+  "required": ["ticker", "cycle", "prev_cycle", "completed_at", "summary", "entries"],
+  "properties": {
+    "ticker": { "type": "string" },
+    "cycle": { "type": "integer" },
+    "prev_cycle": { "type": ["integer", "null"] },
+    "completed_at": { "type": "string", "format": "date-time" },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "composite_before": { "type": ["integer", "null"] },
+        "composite_after": { "type": "integer" },
+        "composite_delta": { "type": "number" },
+        "tier_before": { "type": ["string", "null"] },
+        "tier_after": { "type": "string" },
+        "direction_before": { "type": ["string", "null"] },
+        "direction_after": { "type": "string" },
+        "direction_flipped": { "type": "boolean" },
+        "near_term_before": { "type": ["string", "null"] },
+        "near_term_after": { "type": "string" },
+        "long_term_before": { "type": ["string", "null"] },
+        "long_term_after": { "type": "string" },
+        "fair_value_before": { "type": ["number", "null"] },
+        "fair_value_after": { "type": "number" },
+        "subscore_deltas": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "timestamp", "description"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "INIT", "CONFIRMED", "UPGRADE", "DOWNGRADE", "DIRECTION_FLIP",
+              "INVALIDATION_TRIGGERED", "FAIR_VALUE_REVISION", "OUTLOOK_CHANGE",
+              "NEW_RISK", "RISK_CLEARED", "CATALYST_HIT", "CATALYST_MISSED",
+              "SIGNAL_DETECTED", "SIGNAL_PROMOTED", "SIGNAL_EXPIRED",
+              "SIGNAL_SANDBOX", "SIGNAL_DECAY", "REGIME_CHANGE", "NOTE"
+            ]
+          },
+          "timestamp": { "type": "string", "format": "date-time" },
+          "dimension": { "type": "string" },
+          "description": { "type": "string" },
+          "old_value": { "type": ["string", "number", "null"] },
+          "new_value": { "type": ["string", "number", "null"] },
+          "evidence_ids": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "schema_version": "1.0",
+  "description": "Opportunity-score weights, per-dimension component weights, effort/ROI bands, amplifier/suppressor caps, conviction rules, and lifecycle rules. Loop 7 (scoring) and Loop 8 (amplify/suppress) read this. Tuning these adjusts scoring without touching subagent code.",
+
+  "opportunity_weights": {
+    "_doc": "OpportunityScore = sum(dimension_score * weight). Must sum to 1.0. Matches the mission spec EXACTLY: Relevance 30%, Audience Match 25%, Reach 15%, Growth Signals 15%, Ease of Access 10%, Cost Efficiency 5%.",
+    "relevance": 0.30,
+    "audience_match": 0.25,
+    "reach": 0.15,
+    "growth_signals": 0.15,
+    "ease_of_access": 0.10,
+    "cost_efficiency": 0.05
+  },
+
+  "tiers": {
+    "_doc": "The mission says only surface opportunities above 70, so the opportunity_floor is 70. Everything below goes to the watchlist.",
+    "PRIORITY":     { "min": 90, "max": 100 },
+    "STRONG":       { "min": 80, "max": 89  },
+    "QUALIFIED":    { "min": 70, "max": 79  },
+    "BELOW_FLOOR":  { "min": 0,  "max": 69  }
+  },
+  "opportunity_floor": 70,
+
+  "dimension_components": {
+    "_doc": "Each dimension score = clamp(sum(component_value * weight) * source_reliability_multiplier, 0, 100). Component weights per dimension sum to 1.0. Components marked inverse:true mean a HIGH raw observation LOWERS the score (e.g. high cost vs budget => low cost_efficiency).",
+    "relevance": [
+      { "name": "category_topical_fit",        "weight": 0.35 },
+      { "name": "icp_persona_alignment",        "weight": 0.30 },
+      { "name": "niche_promotion_history",      "weight": 0.20 },
+      { "name": "content_format_fit",           "weight": 0.15 }
+    ],
+    "audience_match": [
+      { "name": "demographic_overlap",          "weight": 0.30 },
+      { "name": "intent_buyer_overlap",          "weight": 0.30 },
+      { "name": "geo_match",                     "weight": 0.20 },
+      { "name": "b2b_b2c_alignment",             "weight": 0.20 }
+    ],
+    "reach": [
+      { "name": "verified_audience_size",        "weight": 0.55 },
+      { "name": "engagement_adjusted_reach",     "weight": 0.30 },
+      { "name": "distribution_breadth",          "weight": 0.15 }
+    ],
+    "growth_signals": [
+      { "name": "audience_growth_rate",          "weight": 0.30 },
+      { "name": "recent_funding_or_launch",      "weight": 0.25 },
+      { "name": "engagement_trend",              "weight": 0.25 },
+      { "name": "recent_activity_recency",       "weight": 0.20 }
+    ],
+    "ease_of_access": [
+      { "name": "contact_available",             "weight": 0.30 },
+      { "name": "accepts_sponsors_or_guests",    "weight": 0.30 },
+      { "name": "promotion_allowed",             "weight": 0.25 },
+      { "name": "response_likelihood",           "weight": 0.15 }
+    ],
+    "cost_efficiency": [
+      { "name": "cost_vs_budget",                "weight": 0.45, "inverse": true },
+      { "name": "expected_cpm_or_cac",           "weight": 0.35, "inverse": true },
+      { "name": "owned_or_free_bonus",           "weight": 0.20 }
+    ]
+  },
+
+  "effort_bands": {
+    "_doc": "Set in Loop 7 from ease_of_access + cost_efficiency + the brief budget. Surfaced as an effort badge and used by the quick-win-first sort.",
+    "EFFORT_LOW":  "Apply/DM/post today; little or no spend; published contact + open to promo.",
+    "EFFORT_MED":  "Outreach + negotiation needed; modest spend within budget.",
+    "EFFORT_HIGH": "Contract/retainer/long lead time OR spend near/over budget."
+  },
+
+  "roi_bands": {
+    "_doc": "expected_roi is a coarse band derived from (reach * audience_match * relevance) / max(est_cost, floor). Owned/free channels and high-fit low-cost plays land HIGH.",
+    "HIGH":   "Strong fit + reach for low/no cost, or a confirmed high-converting channel.",
+    "MEDIUM": "Reasonable fit-to-cost ratio within budget.",
+    "LOW":    "Weak fit-to-cost ratio or cost strains the budget (kept only if reach/relevance very high)."
+  },
+
+  "amplifiers": {
+    "_doc": "Loop 8 awards +per_signal for each INDEPENDENT signal type firing, capped at max_amplifier. convergence_count = number of distinct signal types fired (0-8).",
+    "per_signal": 1.5,
+    "max_amplifier": 8,
+    "signal_types": [
+      "sponsorship_or_guest_available",
+      "promoted_competitor_or_peer",
+      "audience_growth_trend",
+      "recent_funding_or_launch",
+      "multiple_reach_confirmations",
+      "published_reachable_contact",
+      "explicit_icp_geo_match",
+      "promotion_allowed_or_partner_program"
+    ]
+  },
+
+  "suppressors": {
+    "_doc": "Loop 8 subtracts per_flag for each vanity/no-substance flag, capped at max_suppressor (a negative number).",
+    "per_flag": -2.5,
+    "max_suppressor": -12,
+    "flags": [
+      "suspected_fake_followers",
+      "dead_or_inactive_community",
+      "engagement_far_below_size",
+      "off_icp_audience",
+      "pay_to_play_placement",
+      "no_verifiable_reach",
+      "strict_no_promotion_no_path",
+      "cost_far_exceeds_budget"
+    ]
+  },
+
+  "conviction": {
+    "_doc": "Independent of the score. How much to trust the score, from independent_source_count + recency + promotion-history evidence. The mission's 'prefer high-conviction over large-but-speculative' rule is enforced by the report's conviction sort and a tier cap on LOW conviction.",
+    "rules": {
+      "HIGH":   "independent_source_count >= 3 AND at least one recent (within Y..Y-2) confirmation AND core reach verified",
+      "MEDIUM": "independent_source_count == 2 AND core reach verified",
+      "LOW":    "independent_source_count <= 1 OR core reach Unverified"
+    },
+    "low_conviction_tier_cap": "QUALIFIED",
+    "_doc_cap": "An opportunity with LOW conviction (or an Unverified core reach claim) cannot exceed the QUALIFIED tier, no matter the raw score."
+  },
+
+  "lifecycle": {
+    "_doc": "Derived in Loop 10 from the score trend in score_history plus any user-logged outreach_status. delta = score(this cycle) - score(prior cycle). User-logged outreach status is never overwritten by discovery.",
+    "states": ["new", "contacted_candidate", "rising", "stable", "declining", "stale"],
+    "rules": {
+      "new": "first appearance this brief",
+      "rising": "delta >= +3 over last cycle",
+      "stable": "|delta| < 3",
+      "declining": "delta <= -3",
+      "stale": "no fresh evidence for 2 consecutive cycles (data_age over TTL) OR dropped below floor",
+      "contacted_candidate": "user has logged an outreach_status of contacted/in_progress (takes precedence as a display state)"
+    }
+  },
+
+  "budget_allocation": {
+    "_doc": "Loop 10 uses these defaults to draft the Recommended Marketing Budget Allocation, then adjusts to the brief's actual budget and the surfaced opportunities. These are starting splits, not hard rules; the plan explains every deviation.",
+    "default_splits_by_objective": {
+      "first_customers": { "communities": 0.10, "influencers_micro": 0.45, "newsletters": 0.25, "content_seo": 0.15, "reserve": 0.05 },
+      "scale_acquisition": { "paid_channel": 0.40, "influencers": 0.25, "newsletters": 0.15, "agency": 0.10, "content_seo": 0.10 },
+      "brand_awareness": { "influencers": 0.35, "podcasts": 0.20, "events": 0.20, "pr_agency": 0.15, "content_seo": 0.10 }
+    },
+    "reserve_pct_default": 0.05
+  }
+}

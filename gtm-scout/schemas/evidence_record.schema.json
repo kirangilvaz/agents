@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence_record.schema.json",
+  "title": "Evidence Record",
+  "description": "One JSONL line per source confirmation per opportunity. Stored at gtm_scout_memory/briefs_data/<brief_id>/evidence/<opportunity_id>.jsonl. Append-only. Loop 7 reads these to compute independent_source_count after source-domain dedup; Loop 9 (adversarial) re-validates against exact_quote. EVERY number, contact, rate, or availability claim used in scoring MUST originate in one of these with a verbatim quote.",
+  "type": "object",
+  "required": [
+    "evidence_id",
+    "opportunity_id",
+    "signal_class",
+    "source_domain",
+    "source_tier",
+    "url",
+    "url_hash",
+    "fetched_at",
+    "exact_quote",
+    "confirmed_in_cycle"
+  ],
+  "properties": {
+    "evidence_id": { "type": "string", "pattern": "^[A-Za-z0-9_-]{8,}$", "description": "ULID or UUID. Primary key." },
+    "opportunity_id": { "type": "string" },
+    "signal_class": {
+      "type": "string",
+      "enum": ["market", "competitor", "influencer", "community", "agency", "partnership", "sponsorship", "lead", "growth_signal"],
+      "description": "Which discovery class this came from (maps to the source tiers)."
+    },
+    "feeds_dimension": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["relevance", "audience_match", "reach", "growth_signals", "ease_of_access", "cost_efficiency"] },
+      "description": "Which scoring dimension(s) this evidence informs."
+    },
+    "source_domain": { "type": "string", "description": "lowercase, no scheme (e.g. 'youtube.com')." },
+    "source_tier": { "type": "integer", "enum": [1, 2, 3, 4, 5, 6] },
+    "url": { "type": "string", "format": "uri" },
+    "url_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "fetched_at": { "type": "string", "format": "date-time" },
+    "report_date": { "type": ["string", "null"], "format": "date", "description": "Date the source data point reflects (publish / post / round / rate-card date)." },
+    "exact_quote": { "type": "string", "minLength": 10, "description": "Verbatim excerpt so Loop 9 can re-validate." },
+    "data_point": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Structured extraction; varies by signal_class.",
+      "properties": {
+        "metric": { "type": "string", "description": "e.g. 'subscriber_count', 'member_count', 'monthly_downloads', 'sponsor_cpm_usd', 'monthly_visits', 'engagement_rate'." },
+        "value": { "type": ["number", "string", "boolean", "null"] },
+        "unit": { "type": "string" },
+        "prior_value": { "type": ["number", "null"], "description": "For growth-rate signals." },
+        "as_of": { "type": "string", "format": "date" }
+      }
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["verified", "estimated", "unverified"],
+      "default": "verified",
+      "description": "verified = from an authoritative/native source; estimated = third-party estimator (e.g. Social Blade, Similarweb); unverified = could not confirm. ESTIMATED + UNVERIFIED values are flagged in the report and excluded from high-conviction scoring."
+    },
+    "cites": { "type": "array", "items": { "type": "string", "format": "uri" }, "description": "URLs this record cites — used by Loop 7 for source-cycle dedup." },
+    "confirmed_in_cycle": { "type": "integer", "minimum": 1 },
+    "rescraped_in_cycles": { "type": "array", "items": { "type": "integer" } },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1, "description": "Extractor confidence the quote supports the claimed signal. <0.7 excluded by Loop 7's independent-source counting." },
+    "data_age_days": { "type": "integer", "minimum": 0 },
+    "fetch_status": { "type": "string", "enum": ["ok", "paywalled", "via_archive", "via_reader", "403", "404", "429", "timeout", "robots_disallowed", "login_required", "error"], "default": "ok" },
+    "is_counter_evidence": { "type": "boolean", "default": false, "description": "Loop 9 marks adversarial counter-evidence; surfaced in risks but NOT counted toward independent_source_count." }
+  }
+}

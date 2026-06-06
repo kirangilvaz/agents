@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "source_reliability.schema.json",
+  "title": "Source Reliability",
+  "description": "Per-source learned precision and weight multiplier, accumulated across cycles. Stored at novelty_explorer_memory/source_reliability.json. Loop 4 applies the multiplier when weighting evidence; Loop 8 updates it. A source that repeatedly backs opportunities later INVALIDATED loses weight automatically.",
+  "type": "object",
+  "required": ["schema_version", "updated_at", "sources"],
+  "properties": {
+    "schema_version": { "type": "string" },
+    "updated_at": { "type": "string", "format": "date-time" },
+    "sources": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["precision", "weight_multiplier"],
+        "properties": {
+          "source_domain": { "type": "string" },
+          "tier": { "type": "integer", "enum": [1, 2, 3, 4, 5] },
+          "candidates_proposed": { "type": "integer", "minimum": 0, "description": "Opportunities this source helped support." },
+          "candidates_confirmed": { "type": "integer", "minimum": 0, "description": "...that survived adversarial review / stayed on the leaderboard." },
+          "candidates_invalidated": { "type": "integer", "minimum": 0, "description": "...that were later INVALIDATED or faded as hype." },
+          "precision": { "type": "number", "minimum": 0, "maximum": 1, "description": "candidates_confirmed / max(candidates_proposed, 1). Neutral prior 0.7." },
+          "weight_multiplier": { "type": "number", "minimum": 0.5, "maximum": 1.5, "description": "clamp(0.5 + precision, 0.5, 1.5)." },
+          "noise_flags": { "type": "array", "items": { "type": "string" } },
+          "history": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cycle": { "type": "integer" },
+                "precision": { "type": "number" },
+                "weight_multiplier": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evidence_record.schema.json",
+  "title": "Evidence Record",
+  "description": "One JSONL line per source confirmation. Stored at interview_questions_knowledge/evidence/<question_id>.jsonl. Append-only. Loop 2 reads these to compute independent_source_count after running citation-cycle dedup against the cites graph.",
+  "type": "object",
+  "required": [
+    "evidence_id",
+    "question_id",
+    "source_domain",
+    "source_tier",
+    "url",
+    "url_hash",
+    "fetched_at",
+    "exact_quote",
+    "confirmed_in_cycle"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "description": "ULID or UUID. Primary key.",
+      "pattern": "^[A-Za-z0-9_-]{8,}$"
+    },
+    "question_id": {
+      "type": "string",
+      "description": "FK to questions/<category>/<question_id>.json"
+    },
+    "source_domain": {
+      "type": "string",
+      "description": "e.g. 'leetcode.com', 'glassdoor.com', '1point3acres.com'. Lowercase, no scheme."
+    },
+    "source_tier": {
+      "type": "integer",
+      "enum": [1, 2, 3, 4, 5],
+      "description": "Tier from AGENT.md source taxonomy. Tier 1 = high signal; Tier 5 = company-specific deep dives."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Full URL of the page that contained the evidence."
+    },
+    "url_hash": {
+      "type": "string",
+      "description": "sha256(url) — also the filename in sources_cache/.",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the source was retrieved (ISO-8601). Used by TTL policy."
+    },
+    "report_year": {
+      "type": ["integer", "null"],
+      "minimum": 2015,
+      "maximum": 2100,
+      "description": "Calendar year the source claims the interview occurred. Used for the rolling Y / Y-1 / Y-2 recency window in Loop 2."
+    },
+    "exact_quote": {
+      "type": "string",
+      "description": "Verbatim excerpt from the source. Required so Loop 4 can challenge whether the quote actually supports the question.",
+      "minLength": 10
+    },
+    "translated_quote": {
+      "type": "string",
+      "description": "English translation if exact_quote is non-English (e.g. 1Point3Acres Chinese content). Same content as exact_quote when source is already English."
+    },
+    "company": {
+      "type": "string",
+      "description": "Company the evidence attributes the question to."
+    },
+    "company_frequency": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "If the source provides an explicit count (e.g. LeetCode 'asked 108 times'), record it here."
+    },
+    "level_tag": {
+      "type": "string",
+      "description": "Role/level the source attributes the question to (e.g. 'L4', 'SDE2', 'New Grad'). Optional."
+    },
+    "cites": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "description": "Other URLs this evidence record cites. Used by Loop 2 to detect citation cycles. If A cites B and B cites A (or transitively), they are NOT independent."
+    },
+    "cited_by": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "description": "Reverse index. Maintained by Loop 2 for fast cycle detection."
+    },
+    "confirmed_in_cycle": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Cycle number when this evidence was added. Append-only; existing records keep their original cycle."
+    },
+    "rescraped_in_cycles": {
+      "type": "array",
+      "items": { "type": "integer" },
+      "description": "Cycles in which the same URL was re-fetched and the quote was re-confirmed."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Source-extractor confidence that the quote actually corresponds to this question. Values < 0.7 are excluded by Loop 2."
+    },
+    "raw_excerpt_path": {
+      "type": "string",
+      "description": "Optional: path to a longer raw excerpt in sources_cache/<url_hash>.json for re-validation by Loop 4."
+    }
+  }
+}

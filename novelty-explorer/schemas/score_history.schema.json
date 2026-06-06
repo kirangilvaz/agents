@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "score_history.schema.json",
+  "title": "Score History Entry",
+  "description": "One JSONL line per cycle per opportunity. Stored at novelty_explorer_memory/score_history/<opportunity_id>.jsonl. Append-only — never overwrite past entries. Loop 8 appends; Loop 0 loads to build the conviction sparkline and derive lifecycle state.",
+  "type": "object",
+  "required": ["cycle", "as_of", "composite", "conviction_tier"],
+  "properties": {
+    "cycle": { "type": "integer", "minimum": 1 },
+    "as_of": { "type": "string", "format": "date-time" },
+    "novelty": { "type": "number", "minimum": 0, "maximum": 100 },
+    "capital": { "type": "number", "minimum": 0, "maximum": 100 },
+    "momentum": { "type": "number", "minimum": 0, "maximum": 100 },
+    "feasibility": { "type": "number", "minimum": 0, "maximum": 100 },
+    "market": { "type": "number", "minimum": 0, "maximum": 100 },
+    "core_composite": { "type": "number", "minimum": 0, "maximum": 100 },
+    "composite": { "type": "number", "minimum": 0, "maximum": 100, "description": "After amplifiers/suppressors." },
+    "time_adjusted": { "type": "number", "minimum": 0, "maximum": 100 },
+    "conviction_tier": { "type": "string", "enum": ["EXCEPTIONAL", "HIGH_CONVICTION", "WORTH_MONITORING", "EMERGING_SIGNAL", "NOISE"] },
+    "ttm": { "type": "string", "enum": ["TTM_0_2", "TTM_2_5", "TTM_5_10", "TTM_10_PLUS"] },
+    "convergence_count": { "type": "integer", "minimum": 0, "maximum": 8 },
+    "crowding": { "type": "number", "minimum": 0, "maximum": 100 },
+    "lifecycle_state": { "type": "string" },
+    "delta_vs_prior": { "type": "number", "description": "composite this cycle minus composite prior cycle." }
+  }
+}

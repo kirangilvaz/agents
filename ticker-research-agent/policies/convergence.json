@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "description": "Iteration / convergence rules and search-budget caps. Loop 15 (iterative-refinement) reads this between every refinement pass and stops when criteria are met OR max_passes is hit.",
+  "cold_after_days": 7,
+  "delta_after_hours": 24,
+  "min_passes": 5,
+  "max_passes": 8,
+  "convergence": {
+    "max_conviction_delta": 2,
+    "max_single_signal_share": 0.40,
+    "require_adversarial_passes": 2,
+    "min_sources_per_dim": 2,
+    "min_correlated_tickers": 10,
+    "require_dimensions_with_data": 8,
+    "require_invalidation_triggers": 3
+  },
+  "delta_mode": {
+    "loops_to_run": [0, 5, 6, 8, 11, 16, 17],
+    "conditional_loops": {
+      "12": "Run Loop 12 (adversarial) ONLY if Loop 11's recompute crosses a conviction-tier boundary or flips direction vs the prior canonical. Inserted between Loop 11 and Loop 16 when triggered. Otherwise skipped to keep delta runs fast."
+    },
+    "preserve_thesis_unless_invalidated": true,
+    "refresh_price_in_loop_0": true,
+    "always_refresh_dims": ["news", "sentiment_social", "sentiment_community", "macro_policy"],
+    "always_recompute": ["price", "composite_score", "near_term_outlook"]
+  },
+  "search_budget": {
+    "_note_loop_15": "loop_15 is the iteration controller; it runs 0 searches of its own. The budget it appears to consume in metrics.json (e.g. 489) is the SUM of the re-dispatched Loops 11-14 across passes 2..N. Per-pass sub-loop spend draws from each sub-loop's own per_loop budget. The per_cycle_total_cap below bounds the whole cycle including all iteration passes.",
+    "per_loop": {
+      "loop_0": 0,
+      "loop_1": 100,
+      "loop_2": 50,
+      "loop_3": 100,
+      "loop_4": 80,
+      "loop_5": 120,
+      "loop_6": 80,
+      "loop_7": 150,
+      "loop_8": 80,
+      "loop_9": 60,
+      "loop_10": 30,
+      "loop_11": 0,
+      "loop_12": 150,
+      "loop_13": 80,
+      "loop_14": 60,
+      "loop_15": 0,
+      "loop_16": 30,
+      "loop_17": 0
+    },
+    "per_cycle_total_cap": 1200,
+    "delta_total_cap": 250,
+    "warn_at_pct": 80,
+    "abort_at_pct": 100
+  },
+  "stopping_rules": {
+    "stop_if_conviction_delta_below": 2,
+    "stop_if_consecutive_no_change_passes": 2,
+    "stop_if_search_budget_exhausted": true,
+    "stop_if_fatal_error": true
+  }
+}

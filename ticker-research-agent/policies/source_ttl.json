@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "description": "Per-domain cache TTL, rate limits, and Terms-of-Service notes. Loops 1-10 consult this before every fetch. A cache hit (now < expires_at) skips the fetch entirely and consumes 0 search budget. TTLs are tuned to data volatility: price/news short, fundamentals/13F long.",
+  "default": {
+    "ttl_hours": 12,
+    "rate_limit_rps": 0.5,
+    "min_delay_ms": 2000,
+    "respect_robots_txt": true,
+    "max_retries": 2,
+    "user_agent": "ticker-research-agent/1.0 (+research; contact-via-readme)"
+  },
+  "domains": {
+    "finviz.com":            { "tier": 1, "ttl_hours": 6,   "rate_limit_rps": 0.5, "notes": "Snapshot table. Fast TTL because price + ratings shift daily." },
+    "finance.yahoo.com":     { "tier": 1, "ttl_hours": 6,   "rate_limit_rps": 0.5 },
+    "marketbeat.com":        { "tier": 1, "ttl_hours": 12,  "rate_limit_rps": 0.5 },
+    "benzinga.com":          { "tier": 1, "ttl_hours": 4,   "rate_limit_rps": 0.5 },
+    "seekingalpha.com":      { "tier": 1, "ttl_hours": 24,  "rate_limit_rps": 0.3, "notes": "Paywall on most articles. Mark fetch_status='403_paywall' if blocked and downgrade to Tier 3 for the cycle." },
+    "stockanalysis.com":     { "tier": 1, "ttl_hours": 24,  "rate_limit_rps": 0.5 },
+    "sec.gov":               { "tier": 1, "ttl_hours": 168, "rate_limit_rps": 1.0, "notes": "EDGAR. Honor the SEC's 10-rps API cap. User-Agent must include contact email per SEC policy." },
+    "nasdaq.com":            { "tier": 1, "ttl_hours": 12,  "rate_limit_rps": 0.5 },
+
+    "zacks.com":             { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.5 },
+    "tipranks.com":          { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.5 },
+    "koyfin.com":            { "tier": 2, "ttl_hours": 24,  "rate_limit_rps": 0.5, "notes": "Most data behind login. Use only for free-tier metrics." },
+    "morningstar.com":       { "tier": 2, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "Fair value rarely changes intra-week." },
+    "simplywall.st":         { "tier": 2, "ttl_hours": 168, "rate_limit_rps": 0.5 },
+
+    "whalewisdom.com":       { "tier": 3, "ttl_hours": 168, "rate_limit_rps": 0.3, "notes": "13F filings update quarterly. Long TTL is appropriate." },
+    "fintel.io":             { "tier": 3, "ttl_hours": 24,  "rate_limit_rps": 0.5 },
+    "openinsider.com":       { "tier": 3, "ttl_hours": 12,  "rate_limit_rps": 0.5 },
+    "barchart.com":          { "tier": 3, "ttl_hours": 6,   "rate_limit_rps": 0.5 },
+    "marketchameleon.com":   { "tier": 3, "ttl_hours": 12,  "rate_limit_rps": 0.5 },
+
+    "reuters.com":           { "tier": 4, "ttl_hours": 4,   "rate_limit_rps": 0.5 },
+    "bloomberg.com":         { "tier": 4, "ttl_hours": 4,   "rate_limit_rps": 0.3, "notes": "Mostly paywalled. Use as headline source via search snippets." },
+    "wsj.com":               { "tier": 4, "ttl_hours": 4,   "rate_limit_rps": 0.3, "notes": "Paywalled — same fallback as Bloomberg." },
+    "ft.com":                { "tier": 4, "ttl_hours": 4,   "rate_limit_rps": 0.3, "notes": "Paywalled." },
+    "cnbc.com":              { "tier": 4, "ttl_hours": 4,   "rate_limit_rps": 0.5 },
+    "fred.stlouisfed.org":   { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 1.0, "notes": "Macro series update daily/weekly/monthly. Long TTL OK." },
+    "bls.gov":               { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 1.0 },
+    "federalreserve.gov":    { "tier": 4, "ttl_hours": 168, "rate_limit_rps": 1.0 },
+    "treasury.gov":          { "tier": 4, "ttl_hours": 24,  "rate_limit_rps": 1.0 },
+
+    "reddit.com":            { "tier": 5, "ttl_hours": 2,   "rate_limit_rps": 1.0, "notes": "Use the public JSON API (.json suffix). Respect User-Agent and Reddit's API rate limit (60 rpm)." },
+    "stocktwits.com":        { "tier": 5, "ttl_hours": 2,   "rate_limit_rps": 0.5 },
+    "twitter.com":           { "tier": 5, "ttl_hours": 2,   "rate_limit_rps": 0.5, "notes": "X/Twitter — most cashtag data behind paid API. Use search snippets only." },
+    "x.com":                 { "tier": 5, "ttl_hours": 2,   "rate_limit_rps": 0.5 },
+    "news.ycombinator.com":  { "tier": 5, "ttl_hours": 4,   "rate_limit_rps": 1.0, "notes": "Use the Algolia HN API." },
+    "substack.com":          { "tier": 5, "ttl_hours": 24,  "rate_limit_rps": 0.5, "noise_flags": ["low_signal", "click_bait"], "notes": "Independent writer quality varies wildly. Source-reliability multiplier should govern weight." },
+
+    "coingecko.com":         { "tier": 6, "ttl_hours": 1,   "rate_limit_rps": 1.0, "notes": "Crypto only." },
+    "coinmarketcap.com":     { "tier": 6, "ttl_hours": 1,   "rate_limit_rps": 1.0 },
+    "glassnode.com":         { "tier": 6, "ttl_hours": 12,  "rate_limit_rps": 0.5 },
+    "cryptoquant.com":       { "tier": 6, "ttl_hours": 12,  "rate_limit_rps": 0.5 },
+    "defillama.com":         { "tier": 6, "ttl_hours": 6,   "rate_limit_rps": 1.0 },
+    "messari.io":            { "tier": 6, "ttl_hours": 24,  "rate_limit_rps": 0.5 },
+    "farside.co.uk":         { "tier": 6, "ttl_hours": 12,  "rate_limit_rps": 0.5, "notes": "BTC / ETH ETF flow tracker." }
+  },
+  "global_rules": {
+    "honor_robots_txt": true,
+    "honor_x_robots_tag": true,
+    "skip_if_disallowed": true,
+    "stop_on_429_for": "60s",
+    "circuit_breaker": {
+      "errors_to_trip": 5,
+      "cool_down_seconds": 600
+    },
+    "paywall_fallback_tier_demotion": 1
+  }
+}
